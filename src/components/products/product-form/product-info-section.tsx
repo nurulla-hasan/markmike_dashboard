@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ProductFormValues, ProductFormInput } from "@/schemas/product.schema";
 
 interface ProductInfoSectionProps {
@@ -23,11 +24,15 @@ interface ProductInfoSectionProps {
 
 export function ProductInfoSection({ form }: ProductInfoSectionProps) {
   return (
-    <div className="space-y-4">
-      <FormField
-        control={form.control}
-        name="name"
-        render={({ field }) => (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base">Product Information</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
           <FormItem>
             <FormLabel>Name</FormLabel>
             <FormControl>
@@ -152,6 +157,7 @@ export function ProductInfoSection({ form }: ProductInfoSectionProps) {
           </FormItem>
         )}
       />
-    </div>
+      </CardContent>
+    </Card>
   );
 }

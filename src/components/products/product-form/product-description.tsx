@@ -25,7 +25,7 @@ export function ProductDescription({ form }: ProductDescriptionProps) {
           <FormControl>
             <Textarea
               placeholder="Type here"
-              className="min-h-37.5"
+              className="min-h-70"
               {...field}
             />
           </FormControl>
