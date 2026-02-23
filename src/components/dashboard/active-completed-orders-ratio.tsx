@@ -38,6 +38,7 @@ const ActiveCompletedOrdersRatio = () => {
                     backgroundColor: "var(--card)",
                     color: "var(--card-foreground)"
                  }}
+                 itemStyle={{ color: "var(--card-foreground)" }}
               />
             </PieChart>
           </ResponsiveContainer>

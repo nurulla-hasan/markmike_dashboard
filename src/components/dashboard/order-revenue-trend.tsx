@@ -55,6 +55,8 @@ const OrderRevenueTrend = () => {
                     backgroundColor: "var(--card)",
                     color: "var(--card-foreground)"
                 }}
+                itemStyle={{ color: "var(--card-foreground)" }}
+                labelStyle={{ color: "var(--card-foreground)" }}
                 cursor={{ stroke: "var(--border)", strokeWidth: 2 }}
               />
               <Line
