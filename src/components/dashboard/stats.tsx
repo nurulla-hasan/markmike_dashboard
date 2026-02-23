@@ -1,16 +1,18 @@
-import { User, Handshake, Users, ShieldCheck } from "lucide-react";
+import { Wallet, Package, Users, PenTool } from "lucide-react";
 
 type Stat = {
   label: string;
   value: string;
   icon: React.ElementType;
+  bgColor: string;
+  iconColor: string;
 };
 
 interface StatsData {
-  totalTeacher: number;
-  totalAssistant: number;
-  totalStudent: number;
-  totalParents: number;
+  totalEarnings: string;
+  totalOrders: number;
+  totalStaff: number;
+  totalDigitizedLogos: number;
 }
 
 interface StatsProps {
@@ -19,10 +21,34 @@ interface StatsProps {
 
 const Stats = ({ data }: StatsProps) => {
   const items: Stat[] = [
-    { label: "Total Teacher", value: data?.totalTeacher?.toString() || "0", icon: User },
-    { label: "Total Assistant", value: data?.totalAssistant?.toString() || "0", icon: Handshake },
-    { label: "Total Student", value: data?.totalStudent?.toString() || "0", icon: Users },
-    { label: "Total Parents", value: data?.totalParents?.toString() || "0", icon: ShieldCheck },
+    { 
+      label: "Total Earnings", 
+      value: data?.totalEarnings || "$0", 
+      icon: Wallet,
+      bgColor: "bg-[#FFF9E5] dark:bg-yellow-500/10", // Light yellow
+      iconColor: "text-[#FFC107] dark:text-yellow-500" 
+    },
+    { 
+      label: "Total Orders", 
+      value: data?.totalOrders?.toString() || "0", 
+      icon: Package,
+      bgColor: "bg-[#FEECEB] dark:bg-pink-500/10", // Light pink
+      iconColor: "text-[#FF808B] dark:text-pink-500"
+    },
+    { 
+      label: "Total Staff", 
+      value: data?.totalStaff?.toString() || "0", 
+      icon: Users,
+      bgColor: "bg-[#E5FBF3] dark:bg-emerald-500/10", // Light green
+      iconColor: "text-[#00C292] dark:text-emerald-500"
+    },
+    { 
+      label: "Total Digitized Logos", 
+      value: data?.totalDigitizedLogos?.toString() || "0", 
+      icon: PenTool,
+      bgColor: "bg-[#E0F7FA] dark:bg-cyan-500/10", // Light cyan
+      iconColor: "text-[#00BCD4] dark:text-cyan-500"
+    },
   ];
 
   return (
@@ -30,26 +56,22 @@ const Stats = ({ data }: StatsProps) => {
       {items.map((s, idx) => (
         <div 
           key={idx} 
-          className="group relative overflow-hidden rounded-2xl bg-card border border-border p-6 shadow-sm hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1"
+          className={`rounded-2xl p-6 ${s.bgColor} border-none shadow-sm transition-all duration-300 hover:shadow-md`}
         >
-          <div className="flex justify-between items-start mb-4 relative z-10">
-            <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
-              <s.icon className="w-6 h-6" />
+          <div className="flex flex-col h-full justify-between space-y-4">
+            <div className="p-3 w-fit rounded-xl bg-white/50 dark:bg-black/20">
+                <s.icon className={`w-6 h-6 ${s.iconColor}`} />
+            </div>
+            
+            <div>
+              <span className="text-3xl font-bold text-foreground block mb-1">
+                {s.value}
+              </span>
+              <h3 className="text-sm font-medium text-muted-foreground">
+                {s.label}
+              </h3>
             </div>
           </div>
-          
-          <div className="relative z-10">
-            <h3 className="text-sm font-medium text-muted-foreground mb-1">
-              {s.label}
-            </h3>
-            <span className="text-3xl font-bold text-card-foreground">
-              {s.value}
-            </span>
-          </div>
-
-          {/* Decorative elements */}
-          <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-all duration-300" />
-          <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-transparent to-foreground/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         </div>
       ))}
     </div>
