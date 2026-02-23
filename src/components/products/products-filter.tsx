@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -8,6 +8,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Link } from "react-router-dom";
+import { Button } from "../ui/button";
 
 export type ProductsFilterState = {
   category?: string | "all";
@@ -53,6 +55,13 @@ export const ProductsFilter = ({ filter, setFilter }: ProductsFilterProps) => {
             }
           />
         </div>
+
+        <Link to="/products/add">
+          <Button className="rounded-full">
+            <Plus />
+            Add New Product
+          </Button>
+        </Link>
       </div>
     </div>
   );

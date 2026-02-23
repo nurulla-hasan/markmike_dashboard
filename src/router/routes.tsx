@@ -30,6 +30,7 @@ const StaffManagements = lazy(() => import("@/app/management/staff-managements/S
 const MakeAdmin = lazy(() => import("@/app/management/make-admin/MakeAdmin"));
 
 const AllProducts = lazy(() => import("@/app/products/all-products/AllProducts"));
+const AddProduct = lazy(() => import("@/app/products/add-product/AddProduct"));
 const Categories = lazy(() => import("@/app/products/categories/Categories"));
 const ProductAttributes = lazy(() => import("@/app/products/product-attributes/ProductAttributes"));
 
@@ -67,6 +68,7 @@ export const router = createBrowserRouter([
 
             // Products
             { path: "products/all", element: <AllProducts /> },
+            { path: "products/add", element: <AddProduct /> },
             { path: "products/categories", element: <Categories /> },
             { path: "products/attributes", element: <ProductAttributes /> },
             

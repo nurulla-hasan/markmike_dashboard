@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Plus } from "lucide-react";
 
 import PageLayout from "@/components/common/page-layout";
 import { ProductCard } from "@/components/products/product-card";
@@ -7,7 +6,6 @@ import {
   ProductsFilter,
   type ProductsFilterState,
 } from "@/components/products/products-filter";
-import { Button } from "@/components/ui/button";
 import type { TProduct } from "@/types/product.type";
 
 const mockProducts = [
@@ -129,14 +127,7 @@ const AllProducts = () => {
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <h1 className="text-2xl font-bold tracking-tight">All products</h1>
 
-          <div className="flex flex-1 flex-col gap-3 md:flex-row md:items-center md:justify-end">
-            <ProductsFilter filter={filter} setFilter={setFilter} />
-
-            <Button>
-              <Plus />
-              Add New Product
-            </Button>
-          </div>
+          <ProductsFilter filter={filter} setFilter={setFilter}/>
         </div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
