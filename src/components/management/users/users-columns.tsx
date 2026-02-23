@@ -46,18 +46,6 @@ export const usersColumns: ColumnDef<TUser>[] = [
     ),
   },
   {
-    accessorKey: "role",
-    header: "Role",
-    cell: ({ row }) => (
-      <Badge
-        variant="outline"
-        className="rounded-full px-3 py-1 text-xs font-normal bg-primary/10 border-primary/40 text-primary capitalize"
-      >
-        {row.original.role}
-      </Badge>
-    ),
-  },
-  {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {

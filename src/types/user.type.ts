@@ -6,7 +6,6 @@ export type TUser = {
   email: string;
   contact: string;
   status: string;
-  role: string;
   fcmToken?: string;
   isOtpVerified: boolean;
   createdAt: string;
