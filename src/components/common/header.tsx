@@ -1,0 +1,207 @@
+import { Moon, Sun, Menu, LogOutIcon } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useTheme } from "@/theme/theme-provider";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+// import { useAppDispatch } from "@/redux/hooks";
+// import { Logout } from "@/redux/feature/auth/authSlice";
+import { getInitials } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
+// import { useMyProfileQuery } from "@/redux/feature/auth/authApis";
+// import type { Admin } from "@/types/admin.type";
+// import { useGetMyNotificationsQuery } from "@/redux/feature/notification/notificationApi";
+// import type { TNotification } from "@/types/notification.type";
+
+const Header = ({ onMenuClick }: { onMenuClick: () => void }) => {
+  const { setTheme, theme } = useTheme();
+
+  const admin = {
+    fullName: "Nurulla Hasan",
+    email: "nurulla.hasan@example.com",
+    role: "admin",
+    image: "https://github.com/shadcn.png",
+  };
+  const isLoading = false;
+  // const dispatch = useAppDispatch();
+  // const { data: profileData, isLoading } = useMyProfileQuery(undefined);
+  // const { data: notificationsData } = useGetMyNotificationsQuery(undefined, {
+  //   pollingInterval: 30000, // Poll every 30 seconds
+  // });
+  // const admin: Admin | undefined = profileData?.data;
+
+  // const notifications = notificationsData?.data?.notifications || [];
+  // const unreadCount = notifications.filter((n: TNotification) => !n.isRead).length;
+
+  const handleLogout = () => {
+    // dispatch(Logout());
+  };
+
+  return (
+    <header className="fixed top-0 right-0 left-0 lg:left-64 h-20 z-30 bg-sidebar">
+      <div className="relative h-full flex items-center justify-between px-4">
+        {/* Left side: mobile menu or spacer */}
+        <div className="flex items-center gap-4">
+          <Button
+            variant="outline"
+            size="icon"
+            className="lg:hidden"
+            onClick={onMenuClick}
+          >
+            <Menu />
+          </Button>
+        </div>
+
+        {/* Right: notification + theme toggle + profile */}
+        <div className="flex items-center space-x-3 md:space-x-5">
+          {/* Notification icon */}
+          {/* <Link to="/notifications">
+            <Button
+              variant="outline"
+              size="icon-sm"
+              className="rounded-full text-primary dark:text-primary-foreground relative"
+            >
+              <Bell />
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 rounded-full border-2 border-background flex items-center justify-center text-[10px] font-bold text-white">
+                  {unreadCount > 9 ? "9+" : unreadCount}
+                </span>
+              )}
+            </Button>
+          </Link> */}
+
+          {/* Theme toggle */}
+          <Button
+            variant="outline"
+            size="icon-sm"
+            className="rounded-full hidden lg:flex"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            aria-label={
+              theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+            }
+          >
+            {theme === "dark" ? (
+              <Sun />
+            ) : (
+              <Moon />
+            )}
+          </Button>
+
+          <div className="flex items-center pl-2">
+            {/* Profile dropdown menu */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
+                  {isLoading ? (
+                    <>
+                      <Skeleton className="h-10 w-10 rounded-full" />
+                      <Skeleton className="h-4 w-28 rounded-sm hidden lg:block" />
+                    </>
+                  ) : (
+                    <>
+                      <Avatar className="h-10 w-10">
+                        <AvatarImage
+                          src={admin?.image}
+                          alt={admin?.fullName || "user"}
+                        />
+                        <AvatarFallback>
+                          {getInitials(admin?.fullName || "user")}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="md:flex flex-col hidden">
+                        <span
+                          className="text-sm font-semibold leading-none"
+                          title={admin?.fullName || "user"}
+                        >
+                          {admin?.fullName || "user"}
+                        </span>
+                        <span className="text-[10px]">
+                          {admin?.role || "Admin"}
+                        </span>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-64 mt-2">
+                {isLoading ? (
+                  <div className="p-2 min-w-50">
+                    <Skeleton className="h-4 w-28 rounded mb-2" />
+                    <Skeleton className="h-3 w-40 rounded" />
+                  </div>
+                ) : (
+                  <DropdownMenuLabel className="flex min-w-0 flex-col">
+                    <span className="text-foreground truncate text-sm font-medium">
+                      {admin?.fullName || "user"}
+                    </span>
+                    <span className="text-muted-foreground truncate text-xs font-normal">
+                      {admin?.email || ""}
+                    </span>
+                  </DropdownMenuLabel>
+                )}
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem asChild>
+                    <Link to="/settings/profile" className="w-full flex items-center">
+                      <Avatar className="h-4 w-4 mr-2">
+                        <AvatarImage src={admin?.image} />
+                        <AvatarFallback>{getInitials(admin?.fullName || "user")}</AvatarFallback>
+                      </Avatar>
+                      <span>Profile</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  {/* <DropdownMenuItem asChild>
+                    <Link
+                      to="/notifications"
+                      className="w-full flex items-center"
+                    >
+                      <Bell
+                        size={16}
+                        className="opacity-60 mr-2"
+                        aria-hidden="true"
+                      />
+                      <span>Notifications</span>
+                    </Link>
+                  </DropdownMenuItem> */}
+                  <DropdownMenuItem
+                    onClick={() =>
+                      setTheme(theme === "dark" ? "light" : "dark")
+                    }
+                  >
+                    {theme === "dark" ? (
+                      <Sun size={16} className="opacity-60 mr-2" />
+                    ) : (
+                      <Moon size={16} className="opacity-60 mr-2" />
+                    )}
+                    <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+
+                <DropdownMenuSeparator />
+
+                <DropdownMenuItem onClick={handleLogout}>
+                  <LogOutIcon
+                    size={16}
+                    className="opacity-60 mr-2"
+                    aria-hidden="true"
+                  />
+                  <span>logout</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default Header;
