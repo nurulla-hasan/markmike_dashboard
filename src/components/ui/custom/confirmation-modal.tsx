@@ -64,7 +64,9 @@ export function ConfirmationModal({
           <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={(e) => {
-              e.preventDefault();
+              if (isLoading) {
+                e.preventDefault();
+              }
               onConfirm();
             }}
             disabled={isLoading}

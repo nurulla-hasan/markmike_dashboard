@@ -1,11 +1,11 @@
 import { useState } from "react";
 
 import PageLayout from "@/components/common/page-layout";
-import { ProductCard } from "@/components/products/product-card";
+import { ProductCard } from "@/components/products/all-products/product-card";
 import {
   ProductsFilter,
   type ProductsFilterState,
-} from "@/components/products/products-filter";
+} from "@/components/products/all-products/products-filter";
 import type { TProduct } from "@/types/product.type";
 
 const mockProducts = [

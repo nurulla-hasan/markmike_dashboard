@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Link } from "react-router-dom";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 export type ProductsFilterState = {
   category?: string | "all";
