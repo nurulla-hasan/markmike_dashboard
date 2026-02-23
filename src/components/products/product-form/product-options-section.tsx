@@ -138,7 +138,13 @@ export function ProductOptionsSection({ form }: ProductOptionsSectionProps) {
           />
         </CardContent>
       </Card>
+    </div>
+  );
+}
 
+export function ProductDeliverySection({ form }: ProductOptionsSectionProps) {
+  return (
+    <div className="space-y-6">
       {/* Minimum Quantity */}
       <Card>
         <CardHeader>

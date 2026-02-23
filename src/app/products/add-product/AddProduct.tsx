@@ -13,7 +13,7 @@ import {
 } from "@/schemas/product.schema";
 import { ProductMediaSection } from "@/components/products/product-form/product-media-section";
 import { ProductInfoSection } from "@/components/products/product-form/product-info-section";
-import { ProductOptionsSection } from "@/components/products/product-form/product-options-section";
+import { ProductOptionsSection, ProductDeliverySection } from "@/components/products/product-form/product-options-section";
 import { ProductDescription } from "@/components/products/product-form/product-description";
 import { ProductVariantsSection } from "@/components/products/product-form/product-variants-section";
 import { ProductPricingSection } from "@/components/products/product-form/product-pricing-section";
@@ -62,29 +62,28 @@ export function AddProduct() {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-              {/* Left Column: Media */}
-              <div className="lg:col-span-3 space-y-6">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+              {/* Left Column */}
+              <div className="space-y-6">
                 <ProductMediaSection form={form} />
-              </div>
-
-              {/* Middle Column: Basic Info */}
-              <div className="lg:col-span-5 space-y-6">
-                <ProductInfoSection form={form} />
-                <ProductVariantsSection form={form} />
-              </div>
-
-              {/* Right Column: Options */}
-              <div className="lg:col-span-4">
                 <ProductOptionsSection form={form} />
               </div>
+
+              {/* Middle Column */}
+              <div className="space-y-6">
+                <ProductInfoSection form={form} />
+                <ProductDeliverySection form={form} />
+              </div>
+
+              {/* Right Column */}
+              <div className="space-y-6">
+                <ProductDescription form={form} />
+              </div>
             </div>
 
-            {/* Full Width Sections */}
-            <div className="space-y-8">
-              <ProductDescription form={form} />
-            </div>
-            <div className="space-y-8">
+            {/* Bottom Section: Tables */}
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+              <ProductVariantsSection form={form} />
               <ProductPricingSection form={form} />
             </div>
 

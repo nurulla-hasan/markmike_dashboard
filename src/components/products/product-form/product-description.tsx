@@ -8,6 +8,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ProductFormValues, ProductFormInput } from "@/schemas/product.schema";
 
 interface ProductDescriptionProps {
@@ -16,22 +17,29 @@ interface ProductDescriptionProps {
 
 export function ProductDescription({ form }: ProductDescriptionProps) {
   return (
-    <FormField
-      control={form.control}
-      name="description"
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Description</FormLabel>
-          <FormControl>
-            <Textarea
-              placeholder="Type here"
-              className="min-h-70"
-              {...field}
-            />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base">Description</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="sr-only">Description</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Type here"
+                  className="md:min-h-224 h-100"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </CardContent>
+    </Card>
   );
 }
