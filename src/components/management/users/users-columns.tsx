@@ -51,8 +51,8 @@ export const usersColumns: ColumnDef<TUser>[] = [
     cell: ({ row }) => {
       const status = row.original.status;
       let variant = "default";
-      if (status === "in-progress" || status === "Approved") variant = "success";
-      if (status === "blocked" || status === "Decline") variant = "destructive";
+      if (status === "active") variant = "success";
+      if (status === "inactive") variant = "destructive";
       
       return (
         <Badge variant={variant as any} className="rounded-full px-3 py-1 capitalize">
