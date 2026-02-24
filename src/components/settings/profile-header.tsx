@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Mail, Camera, X } from "lucide-react";
 import { formatDate } from "@/lib/utils";
-import type { Admin } from "@/types/admin.type";
+// import type { Admin } from "@/types/admin.type";
 import { useRef } from "react";
 
 interface ProfileHeaderProps {
-  user: Admin;
+  user: any;
   selectedImage: File | null;
   setSelectedImage: (file: File | null) => void;
 }
@@ -39,7 +40,7 @@ const ProfileHeader = ({ user, selectedImage, setSelectedImage }: ProfileHeaderP
   const displayImage = selectedImage ? URL.createObjectURL(selectedImage) : user.image;
 
   return (
-    <Card className="mb-6 overflow-hidden border-none shadow-sm bg-linear-to-r from-primary/10 via-background to-background">
+    <Card className="mb-6 overflow-hidden border-none shadow-sm bg-linear-to-r from-primary/10 via-background to-secondary/10">
       <CardContent className="p-6">
         <div className="flex flex-col md:flex-row items-center gap-6">
           <div className="relative group cursor-pointer" onClick={handleImageClick}>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -13,11 +14,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Phone, Mail, User } from "lucide-react";
-import { useEditProfileMutation } from "@/redux/feature/auth/authApis";
+// import { useEditProfileMutation } from "@/redux/feature/auth/authApis";
 import { useEffect } from "react";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 import type { TError } from "@/types/global.types";
-import type { Admin } from "@/types/admin.type";
+// import type { Admin } from "@/types/admin.type";
 
 const profileSchema = z.object({
   firstName: z
@@ -37,13 +38,14 @@ type ProfileFormValues = z.infer<typeof profileSchema>;
 const EditProfileForm = ({
   user,
   selectedImage,
-  setSelectedImage,
+  // setSelectedImage,
 }: {
-  user: Admin;
+  user: any;
   selectedImage: File | null;
   setSelectedImage: (file: File | null) => void;
 }) => {
-  const [editProfile, { isLoading }] = useEditProfileMutation();
+  // const [editProfile, { isLoading }] = useEditProfileMutation();
+  const isLoading = false;
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
@@ -79,11 +81,13 @@ const EditProfileForm = ({
     }
 
     try {
-      const res = await editProfile(formData).unwrap();
-      if (res.success) {
-        SuccessToast(res.message || "Profile updated successfully");
-        setSelectedImage(null);
-      }
+      // const res = await editProfile(formData).unwrap();
+      // if (res.success) {
+      //   SuccessToast(res.message || "Profile updated successfully");
+      //   setSelectedImage(null);
+      // }
+      console.log("Submitting Profile Update:", values);
+      SuccessToast("Profile updated successfully (Fake)");
     } catch (err) {
       const error = err as TError;
       ErrorToast(error?.data?.message || "Failed to update profile");

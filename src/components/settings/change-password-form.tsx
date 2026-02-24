@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Lock, Eye, EyeOff, KeyRound } from "lucide-react";
-import { useChangePasswordMutation } from "@/redux/feature/auth/authApis";
+// import { useChangePasswordMutation } from "@/redux/feature/auth/authApis";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 import type { TError } from "@/types/global.types";
 
@@ -41,7 +41,8 @@ const ChangePasswordForm = () => {
   const [showCurrent, setShowCurrent] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [changePassword, { isLoading }] = useChangePasswordMutation();
+  // const [changePassword, { isLoading }] = useChangePasswordMutation();
+  const isLoading = false;
 
   const form = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordSchema),
@@ -54,11 +55,14 @@ const ChangePasswordForm = () => {
 
   async function onSubmit(values: PasswordFormValues) {
     try {
-      const res = await changePassword(values).unwrap();
-      if (res.success) {
-        SuccessToast(res.message || "Password changed successfully");
-        form.reset();
-      }
+      // const res = await changePassword(values).unwrap();
+      // if (res.success) {
+      //   SuccessToast(res.message || "Password changed successfully");
+      //   form.reset();
+      // }
+      console.log("Submitting Password Change:", values);
+      SuccessToast("Password changed successfully (Fake)");
+      form.reset();
     } catch (err) {
       const error = err as TError;
       ErrorToast(error?.data?.message || "Failed to change password");
