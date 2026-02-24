@@ -114,8 +114,8 @@ const Users = () => {
     total: mockUsers.length,
     totalPage: 1,
   };
-  const isLoading = false;
-  const isError = false;
+  // const isLoading = false;
+  // const isError = false;
 
   return (
     <PageLayout>
@@ -132,10 +132,10 @@ const Users = () => {
       <DataTable
         columns={usersColumns}
         data={data || []}
-        meta={meta}
+        // meta={meta}
         // onPageChange={setPage} 
-        isLoading={isLoading}
-        isError={isError}
+        // isLoading={isLoading}
+        // isError={isError}
       />
     </PageLayout>
   );

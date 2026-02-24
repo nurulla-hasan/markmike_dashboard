@@ -11,8 +11,6 @@ const Notifications = lazy(() => import("@/app/notifications/Notifications"));
 const Profile = lazy(() => import("@/app/settings/profile/Profile"));
 const Privacy = lazy(() => import("@/app/settings/privacy/Privacy"));
 const Terms = lazy(() => import("@/app/settings/terms/Terms"));
-const About = lazy(() => import("@/app/settings/about-us/About"));
-const FAQ = lazy(() => import("@/app/settings/faq/Faq"));
 const HeroBanner = lazy(() => import("@/app/settings/hero-banner/HeroBanner"));
 const ContactUs = lazy(() => import("@/app/settings/contact-us/ContactUs"));
 
@@ -75,10 +73,8 @@ export const router = createBrowserRouter([
             // Settings
             { path: "notifications", element: <Notifications /> },
             { path: "settings/profile", element: <Profile /> },
-            { path: "settings/about", element: <About /> },
             { path: "settings/terms", element: <Terms /> },
             { path: "settings/privacy", element: <Privacy /> },
-            { path: "settings/faq", element: <FAQ /> },
             { path: "settings/hero-banner", element: <HeroBanner /> },
             { path: "settings/contact-us", element: <ContactUs /> },
         ]
