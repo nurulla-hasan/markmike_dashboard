@@ -1,16 +1,12 @@
-import { useState } from "react";
+
 
 import PageLayout from "@/components/common/page-layout";
 import { ordersColumns } from "@/components/management/orders/orders-columns";
 import { OrdersFilter } from "@/components/management/orders/orders-filter";
 import { DataTable } from "@/components/ui/custom/data-table";
 import PageHeader from "@/components/ui/custom/page-header";
-import type { OrderStatus, TOrder } from "@/types/order.type";
+import type { TOrder } from "@/types/order.type";
 
-type OrdersFilterState = {
-  status?: OrderStatus | "all";
-  search?: string;
-};
 
 const mockOrders: TOrder[] = [
   {
@@ -175,10 +171,6 @@ const mockOrders: TOrder[] = [
 ];
 
 const Orders = () => {
-  const [filter, setFilter] = useState<OrdersFilterState>({
-    status: "all",
-    search: "",
-  });
 
   return (
     <PageLayout>
@@ -189,7 +181,7 @@ const Orders = () => {
             description="View and manage all customer orders."
             length={mockOrders.length}
           />
-          <OrdersFilter filter={filter} setFilter={setFilter} />
+          <OrdersFilter />
         </div>
 
         <DataTable columns={ordersColumns} data={mockOrders} pageSize={5} />

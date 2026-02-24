@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 import PageLayout from "@/components/common/page-layout";
 import { usersColumns } from "@/components/management/users/users-columns";
@@ -107,9 +106,7 @@ const Users = () => {
   */
 
   // Mock State
-  const [filter, setFilter] = useState<
-    Partial<{ page: number; limit: number; search: string }>
-  >({ page: 1, limit: 10, search: "" });
+
   const data = mockUsers;
   const meta = {
     page: 1,
@@ -119,8 +116,6 @@ const Users = () => {
   };
   const isLoading = false;
   const isError = false;
-  const setPage = (page: number) =>
-    setFilter((prev) => ({ ...prev, page: page }));
 
   return (
     <PageLayout>
@@ -131,14 +126,14 @@ const Users = () => {
           length={meta?.total || 0}
         />
 
-        <UsersFilter filter={filter} setFilter={setFilter} />
+        <UsersFilter />
       </div>
 
       <DataTable
         columns={usersColumns}
         data={data || []}
         meta={meta}
-        onPageChange={setPage}
+        // onPageChange={setPage}
         isLoading={isLoading}
         isError={isError}
       />

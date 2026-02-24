@@ -29,9 +29,24 @@ interface DealProductsSectionProps {
 }
 
 const PRODUCTS = [
-  { id: "1", name: "Canvas t-shirt", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=100&auto=format&fit=crop&q=60" },
-  { id: "2", name: "Hat", image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=100&auto=format&fit=crop&q=60" },
-  { id: "3", name: "Hoodie", image: "https://images.unsplash.com/photo-1503341455253-b2e72333dbdb?w=100&auto=format&fit=crop&q=60" },
+  {
+    id: "1",
+    name: "Canvas t-shirt",
+    image:
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=100&auto=format&fit=crop&q=60",
+  },
+  {
+    id: "2",
+    name: "Hat",
+    image:
+      "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=100&auto=format&fit=crop&q=60",
+  },
+  {
+    id: "3",
+    name: "Hoodie",
+    image:
+      "https://images.unsplash.com/photo-1503341455253-b2e72333dbdb?w=100&auto=format&fit=crop&q=60",
+  },
 ];
 
 const SIZES = ["S", "M", "L", "XL", "XXL"];
@@ -78,7 +93,10 @@ export function DealProductsSection({ form }: DealProductsSectionProps) {
         <div className="flex flex-col gap-4 md:flex-row md:items-end">
           <div className="flex-1 space-y-2">
             <FormLabel>Select products</FormLabel>
-            <Select value={selectedProductId} onValueChange={setSelectedProductId}>
+            <Select
+              value={selectedProductId}
+              onValueChange={setSelectedProductId}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Select product" />
               </SelectTrigger>
@@ -115,35 +133,36 @@ export function DealProductsSection({ form }: DealProductsSectionProps) {
             </Select>
           </div>
 
-          <div className="w-full md:w-32 space-y-2">
-            <FormLabel>Quantity</FormLabel>
-            <Input
-              type="number"
-              placeholder="Type here"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-            />
-          </div>
+            <div className="w-full md:w-32 space-y-2">
+              <FormLabel>Quantity</FormLabel>
+              <Input
+                type="number"
+                placeholder="Type here"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+              />
+            </div>
 
-          <Button
-            type="button"
-            className="w-full md:w-auto bg-red-600 hover:bg-red-700 text-white"
-            onClick={handleAddProduct}
-            disabled={!selectedProductId || !selectedSize || !quantity}
-          >
-            Add
-          </Button>
+            <Button
+              type="button"
+              className="w-full md:w-auto"
+              onClick={handleAddProduct}
+              disabled={!selectedProductId || !selectedSize || !quantity}
+            >
+              Add
+            </Button>
         </div>
 
         {/* Product Variants Table */}
         <div className="space-y-4">
           <h3 className="font-semibold text-base">Product variants</h3>
-          <div className="rounded-md border">
+          <div className="rounded-md border overflow-hidden">
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-12.5">#</TableHead>
-                  <TableHead>Color</TableHead> {/* User image says "Color" but shows Product Name/Image */}
+                  <TableHead>Color</TableHead>{" "}
+                  {/* User image says "Color" but shows Product Name/Image */}
                   <TableHead>Size</TableHead>
                   <TableHead>Quantity</TableHead>
                   <TableHead className="text-right">Action</TableHead>

@@ -95,7 +95,7 @@ const AddFAQModal = ({ mode = "add", faq, children }: AddFAQModalProps) => {
       description={mode === "add" ? "Add a new frequently asked question" : "Edit the frequently asked question"}
       actionTrigger={
         children || (
-          <Button className="rounded-full">
+          <Button>
             <Plus />
             Add FAQ
           </Button>

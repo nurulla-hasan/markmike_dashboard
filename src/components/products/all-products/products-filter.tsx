@@ -57,7 +57,7 @@ export const ProductsFilter = ({ filter, setFilter }: ProductsFilterProps) => {
         </div>
 
         <Link to="/products/add">
-          <Button className="rounded-full">
+          <Button>
             <Plus />
             Add New Product
           </Button>
