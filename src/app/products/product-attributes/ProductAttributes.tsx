@@ -64,7 +64,7 @@ const ProductAttributes = () => {
           </div>
 
           <TabsContent value="color" className="space-y-4">
-            <div className="rounded-md border">
+            <div className="rounded-md border overflow-hidden">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -92,7 +92,7 @@ const ProductAttributes = () => {
           </TabsContent>
 
           <TabsContent value="size" className="space-y-4">
-            <div className="rounded-md border">
+            <div className="rounded-md border overflow-hidden">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -120,7 +120,7 @@ const ProductAttributes = () => {
           </TabsContent>
 
           <TabsContent value="material" className="space-y-4">
-            <div className="rounded-md border">
+            <div className="rounded-md border overflow-hidden">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -146,7 +146,7 @@ const ProductAttributes = () => {
           </TabsContent>
 
           <TabsContent value="brands" className="space-y-4">
-            <div className="rounded-md border">
+            <div className="rounded-md border overflow-hidden">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -176,7 +176,7 @@ const ProductAttributes = () => {
           </TabsContent>
 
           <TabsContent value="branch" className="space-y-4">
-            <div className="rounded-md border">
+            <div className="rounded-md border overflow-hidden">
               <Table>
                 <TableHeader>
                   <TableRow>

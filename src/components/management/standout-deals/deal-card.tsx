@@ -1,0 +1,76 @@
+import { Edit, Trash2, Star, Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+
+export interface Deal {
+  id: string;
+  name: string;
+  image: string;
+  rating: number;
+  reviews: number;
+  price: number;
+  currency: string;
+  deliveryTime: string;
+}
+
+interface DealCardProps {
+  deal: Deal;
+}
+
+export function DealCard({ deal }: DealCardProps) {
+  return (
+    <Card className="pt-0 border-none shadow-none">
+      <div className="relative aspect-12/8 overflow-hidden rounded-xl bg-muted mb-3">
+        <img
+          src={deal.image}
+          alt={deal.name}
+          className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+        />
+        <div className="absolute top-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+          STAND OUT!
+        </div>
+      </div>
+
+      <CardContent className="space-y-1.5">
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="font-semibold text-base line-clamp-1">
+            {deal.name}
+          </h3>
+          <div className="flex items-center gap-1">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-muted-foreground hover:text-primary"
+            >
+              <Edit className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-muted-foreground hover:text-destructive"
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-1 text-sm text-muted-foreground">
+          <Star className="h-4 w-4 fill-muted-foreground text-muted-foreground" />
+          <span className="font-medium text-foreground">{deal.rating}</span>
+          <span>({(deal.reviews / 1000).toFixed(1)}k+)</span>
+        </div>
+
+        <div className="text-lg font-bold text-red-500">
+          {deal.price.toFixed(2)} {deal.currency}
+        </div>
+
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex h-6 w-6 items-center justify-center rounded bg-green-100 text-green-600">
+            <Zap className="h-4 w-4 fill-current" />
+          </div>
+          <span>{deal.deliveryTime}</span>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
