@@ -1,17 +1,7 @@
 import { Edit, Trash2, Star, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-
-export interface Deal {
-  id: string;
-  name: string;
-  image: string;
-  rating: number;
-  reviews: number;
-  price: number;
-  currency: string;
-  deliveryTime: string;
-}
+import type { Deal } from "@/types/deal.type";
 
 interface DealCardProps {
   deal: Deal;
@@ -65,7 +55,7 @@ export function DealCard({ deal }: DealCardProps) {
         </div>
 
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <div className="flex h-6 w-6 items-center justify-center rounded bg-green-100 text-green-600">
+          <div className="flex h-6 w-6 items-center justify-center rounded bg-secondary text-secondary-foreground">
             <Zap className="h-4 w-4 fill-current" />
           </div>
           <span>{deal.deliveryTime}</span>

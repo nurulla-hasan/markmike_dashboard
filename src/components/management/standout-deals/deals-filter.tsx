@@ -11,7 +11,7 @@ type DealsActionProps = {
   setFilter: React.Dispatch<React.SetStateAction<DealsFilterState>>;
 };
 
-export const DealsAction = ({ filter, setFilter }: DealsActionProps) => {
+export const DealsFilter = ({ filter, setFilter }: DealsActionProps) => {
   return (
     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-end">
       <div className="flex w-full items-center gap-3 md:w-auto">
@@ -27,7 +27,7 @@ export const DealsAction = ({ filter, setFilter }: DealsActionProps) => {
           />
         </div>
 
-        <Button>
+        <Button className="rounded-full">
           <Plus />
           Add New Deals
         </Button>

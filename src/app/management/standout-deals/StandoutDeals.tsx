@@ -1,7 +1,8 @@
 import { useState } from "react";
 import PageLayout from "@/components/common/page-layout";
-import { DealsAction, type DealsFilterState } from "@/components/management/standout-deals/deals-action";
-import { DealCard, type Deal } from "@/components/management/standout-deals/deal-card";
+import { DealsFilter, type DealsFilterState } from "@/components/management/standout-deals/deals-filter";
+import { DealCard } from "@/components/management/standout-deals/deal-card";
+import type { Deal } from "@/types/deal.type";
 
 const mockDeals: Deal[] = [
   {
@@ -56,7 +57,7 @@ const StandoutDeals = () => {
       <div className="space-y-6">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <h1 className="text-2xl font-bold tracking-tight">All Deals</h1>
-          <DealsAction filter={filter} setFilter={setFilter} />
+          <DealsFilter filter={filter} setFilter={setFilter} />
         </div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
