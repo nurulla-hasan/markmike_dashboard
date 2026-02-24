@@ -14,15 +14,16 @@ const FAQ = lazy(() => import("@/app/settings/faq/Faq"));
 
 const Dashboard = lazy(() => import("@/app/dashboard/Dashboard"));
 const Users = lazy(() => import("@/app/management/users/Users"));
-const Courses = lazy(() => import("@/app/management/courses/Courses"));
-const CourseDetails = lazy(() => import("@/app/management/courses/CourseDetails"));
-const TeacherList = lazy(() => import("@/app/management/teachers/Teachers"));
-const AssistanceList = lazy(() => import("@/app/management/assistance/Assistance"));
-const StudentsList = lazy(() => import("@/app/management/students/Students"));
-const ParentsList = lazy(() => import("@/app/management/parents/Parents"));
+// const Courses = lazy(() => import("@/app/management/courses/Courses"));
+// const CourseDetails = lazy(() => import("@/app/management/courses/CourseDetails"));
+// const TeacherList = lazy(() => import("@/app/management/teachers/Teachers"));
+// const AssistanceList = lazy(() => import("@/app/management/assistance/Assistance"));
+// const StudentsList = lazy(() => import("@/app/management/students/Students"));
+// const ParentsList = lazy(() => import("@/app/management/parents/Parents"));
 
 const Orders = lazy(() => import("@/app/management/orders/Orders"));
 const StandoutDeals = lazy(() => import("@/app/management/standout-deals/StandoutDeals"));
+const AddDeal = lazy(() => import("@/app/management/standout-deals/add-deal/AddDeal"));
 const Miwahdiss = lazy(() => import("@/app/management/miwahdiss/Miwahdiss"));
 const Logo = lazy(() => import("@/app/management/logo/Logo"));
 const QuoteRequest = lazy(() => import("@/app/management/quote-request/QuoteRequest"));
@@ -55,11 +56,12 @@ export const router = createBrowserRouter([
 
             // Management
             { path: "users", element: <Users /> },
-            { path: "courses", element: <Courses /> },
-            { path: "courses/:id", element: <CourseDetails /> },
+            // { path: "courses", element: <Courses /> },
+            // { path: "courses/:id", element: <CourseDetails /> },
             
             { path: "orders", element: <Orders /> },
             { path: "standout-deals", element: <StandoutDeals /> },
+            { path: "standout-deals/add", element: <AddDeal /> },
             { path: "miwahdiss", element: <Miwahdiss /> },
             { path: "logo", element: <Logo /> },
             { path: "quote-request", element: <QuoteRequest /> },
@@ -73,10 +75,10 @@ export const router = createBrowserRouter([
             { path: "products/attributes", element: <ProductAttributes /> },
             
             // User Roles
-            { path: "teachers", element: <TeacherList /> },
-            { path: "assistance", element: <AssistanceList /> },
-            { path: "students", element: <StudentsList /> },
-            { path: "parents", element: <ParentsList /> },
+            // { path: "teachers", element: <TeacherList /> },
+            // { path: "assistance", element: <AssistanceList /> },
+            // { path: "students", element: <StudentsList /> },
+            // { path: "parents", element: <ParentsList /> },
 
             { path: "notifications", element: <Notifications /> },
             // Settings

@@ -1,4 +1,5 @@
 import { Plus, Search } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -27,10 +28,12 @@ export const DealsFilter = ({ filter, setFilter }: DealsActionProps) => {
           />
         </div>
 
-        <Button className="rounded-full">
-          <Plus />
-          Add New Deals
-        </Button>
+        <Link to="/standout-deals/add">
+          <Button className="rounded-full">
+            <Plus />
+            Add New Deals
+          </Button>
+        </Link>
       </div>
     </div>
   );
