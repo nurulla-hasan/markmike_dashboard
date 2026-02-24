@@ -1,10 +1,10 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import type { QuoteRequest } from "@/schemas/quote-request.schema";
+import type { StaffManagement } from "@/schemas/staff-managements-schema";
 import { Ban, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ConfirmationModal } from "@/components/ui/custom/confirmation-modal";
 
-export const columns: ColumnDef<QuoteRequest>[] = [
+export const columns: ColumnDef<StaffManagement>[] = [
   {
     accessorKey: "name",
     header: "Name",
@@ -48,7 +48,7 @@ export const columns: ColumnDef<QuoteRequest>[] = [
       const item = row.original;
 
       return (
-        <div className="flex items-center justify-end gap-2 py-2">
+        <div className="flex items-center justify-end gap-2">
           <ConfirmationModal
             title="Block User?"
             description={`Are you sure you want to block ${item.name}? This user will lose access to the platform.`}

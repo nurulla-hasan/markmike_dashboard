@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const quoteRequestSchema = z.object({
+export const staffManagementSchema = z.object({
   name: z.string().min(2, "Name is required"),
   email: z.string().email("Invalid email address"),
   designation: z.string().min(2, "Designation is required"),
@@ -8,9 +8,9 @@ export const quoteRequestSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters").optional(),
 });
 
-export type QuoteRequestFormValues = z.infer<typeof quoteRequestSchema>;
+export type StaffManagementFormValues = z.infer<typeof staffManagementSchema>;
 
-export interface QuoteRequest {
+export interface StaffManagement {
   id: string;
   name: string;
   email: string;

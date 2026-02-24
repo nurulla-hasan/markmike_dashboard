@@ -18,19 +18,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  quoteRequestSchema,
-  type QuoteRequestFormValues,
-} from "@/schemas/quote-request.schema";
 import { Plus, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import { staffManagementSchema, type StaffManagementFormValues } from "@/schemas/staff-managements-schema";
 
-export function QuoteRequestModal() {
+export function StaffManagementModal() {
   const [open, setOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const form = useForm<QuoteRequestFormValues>({
-    resolver: zodResolver(quoteRequestSchema),
+  const form = useForm<StaffManagementFormValues>({
+    resolver: zodResolver(staffManagementSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -40,7 +37,7 @@ export function QuoteRequestModal() {
     },
   });
 
-  const handleSubmit = (data: QuoteRequestFormValues) => {
+  const handleSubmit = (data: StaffManagementFormValues) => {
     console.log("Submitting staff:", data);
     form.reset();
     setOpen(false);
@@ -110,7 +107,7 @@ export function QuoteRequestModal() {
                       placeholder="Type here...."
                       {...field}
                     />
-                    <button
+                    <button 
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 transition-colors hover:text-muted-foreground"
