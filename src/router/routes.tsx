@@ -6,6 +6,7 @@ import AuthLayout from "@/layout/auth-layout";
 
 //======================================================================================================================
 // App pages (all under src/app)
+const Notifications = lazy(() => import("@/app/notifications/Notifications"));
 const Profile = lazy(() => import("@/app/settings/profile/Profile"));
 const Privacy = lazy(() => import("@/app/settings/privacy/Privacy"));
 const Terms = lazy(() => import("@/app/settings/terms/Terms"));
@@ -14,16 +15,10 @@ const FAQ = lazy(() => import("@/app/settings/faq/Faq"));
 
 const Dashboard = lazy(() => import("@/app/dashboard/Dashboard"));
 const Users = lazy(() => import("@/app/management/users/Users"));
-// const Courses = lazy(() => import("@/app/management/courses/Courses"));
-// const CourseDetails = lazy(() => import("@/app/management/courses/CourseDetails"));
-// const TeacherList = lazy(() => import("@/app/management/teachers/Teachers"));
-// const AssistanceList = lazy(() => import("@/app/management/assistance/Assistance"));
-// const StudentsList = lazy(() => import("@/app/management/students/Students"));
-// const ParentsList = lazy(() => import("@/app/management/parents/Parents"));
-
 const Orders = lazy(() => import("@/app/management/orders/Orders"));
 const StandoutDeals = lazy(() => import("@/app/management/standout-deals/StandoutDeals"));
 const AddDeal = lazy(() => import("@/app/management/standout-deals/add-deal/AddDeal"));
+const EditDeal = lazy(() => import("@/app/management/standout-deals/edit-deal/EditDeal"));
 const Miwahdiss = lazy(() => import("@/app/management/miwahdiss/Miwahdiss"));
 const Logo = lazy(() => import("@/app/management/logo/Logo"));
 const QuoteRequest = lazy(() => import("@/app/management/quote-request/QuoteRequest"));
@@ -35,7 +30,6 @@ const AddProduct = lazy(() => import("@/app/products/add-product/AddProduct"));
 const Categories = lazy(() => import("@/app/products/categories/Categories"));
 const ProductAttributes = lazy(() => import("@/app/products/product-attributes/ProductAttributes"));
 
-const Notifications = lazy(() => import("@/app/notifications/Notifications"));
 const Login = lazy(() => import("@/app/auth/Login"));
 const ForgotPassword = lazy(() => import("@/app/auth/ForgotPassword"));
 const ResetPassword = lazy(() => import("@/app/auth/ResetPassword"));
@@ -53,15 +47,12 @@ export const router = createBrowserRouter([
         ),
         children: [
             { index: true, element: <Dashboard /> },
-
             // Management
             { path: "users", element: <Users /> },
-            // { path: "courses", element: <Courses /> },
-            // { path: "courses/:id", element: <CourseDetails /> },
-            
             { path: "orders", element: <Orders /> },
             { path: "standout-deals", element: <StandoutDeals /> },
             { path: "standout-deals/add", element: <AddDeal /> },
+            { path: "standout-deals/edit/:id", element: <EditDeal /> },
             { path: "miwahdiss", element: <Miwahdiss /> },
             { path: "logo", element: <Logo /> },
             { path: "quote-request", element: <QuoteRequest /> },
@@ -74,14 +65,8 @@ export const router = createBrowserRouter([
             { path: "products/categories", element: <Categories /> },
             { path: "products/attributes", element: <ProductAttributes /> },
             
-            // User Roles
-            // { path: "teachers", element: <TeacherList /> },
-            // { path: "assistance", element: <AssistanceList /> },
-            // { path: "students", element: <StudentsList /> },
-            // { path: "parents", element: <ParentsList /> },
-
-            { path: "notifications", element: <Notifications /> },
             // Settings
+            { path: "notifications", element: <Notifications /> },
             { path: "settings/profile", element: <Profile /> },
             { path: "settings/about", element: <About /> },
             { path: "settings/terms", element: <Terms /> },

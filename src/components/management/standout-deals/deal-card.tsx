@@ -2,6 +2,8 @@ import { Edit, Trash2, Star, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import type { Deal } from "@/types/deal.type";
+import { Link } from "react-router-dom";
+import { ConfirmationModal } from "@/components/ui/custom/confirmation-modal";
 
 interface DealCardProps {
   deal: Deal;
@@ -27,20 +29,29 @@ export function DealCard({ deal }: DealCardProps) {
             {deal.name}
           </h3>
           <div className="flex items-center gap-1">
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              className="text-muted-foreground hover:text-primary"
-            >
-              <Edit/>
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              className="text-muted-foreground hover:text-destructive"
-            >
-              <Trash2 />
-            </Button>
+            <Link to={`/standout-deals/edit/${deal.id}`} state={deal}>
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                className="text-muted-foreground hover:text-primary"
+              >
+                <Edit />
+              </Button>
+            </Link>
+            <ConfirmationModal
+              title="Delete Deal?"
+              description="Are you sure you want to delete this deal? This action cannot be undone."
+              onConfirm={() => console.log("Delete deal", deal.id)}
+              trigger={
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  className="text-muted-foreground hover:text-destructive"
+                >
+                  <Trash2 />
+                </Button>
+              }
+            />
           </div>
         </div>
 
