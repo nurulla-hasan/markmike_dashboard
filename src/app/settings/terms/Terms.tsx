@@ -57,8 +57,8 @@ const Terms = () => {
   return (
     <PageLayout>
       <PageHeader
-        title="Terms and Conditions"
-        description="Manage the Terms and Conditions page content"
+        title="Terms & Condition"
+        description="Manage the Terms & Condition page content"
       />
 
       <Form {...form}>

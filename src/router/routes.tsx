@@ -13,6 +13,8 @@ const Privacy = lazy(() => import("@/app/settings/privacy/Privacy"));
 const Terms = lazy(() => import("@/app/settings/terms/Terms"));
 const About = lazy(() => import("@/app/settings/about-us/About"));
 const FAQ = lazy(() => import("@/app/settings/faq/Faq"));
+const HeroBanner = lazy(() => import("@/app/settings/hero-banner/HeroBanner"));
+const ContactUs = lazy(() => import("@/app/settings/contact-us/ContactUs"));
 
 const Dashboard = lazy(() => import("@/app/dashboard/Dashboard"));
 const Users = lazy(() => import("@/app/management/users/Users"));
@@ -77,6 +79,8 @@ export const router = createBrowserRouter([
             { path: "settings/terms", element: <Terms /> },
             { path: "settings/privacy", element: <Privacy /> },
             { path: "settings/faq", element: <FAQ /> },
+            { path: "settings/hero-banner", element: <HeroBanner /> },
+            { path: "settings/contact-us", element: <ContactUs /> },
         ]
     },
     {

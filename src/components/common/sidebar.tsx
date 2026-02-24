@@ -10,11 +10,11 @@ import {
   LogOut,
   ChevronDown,
   UserRoundPen,
-  MessageCircleQuestion,
+  // MessageCircleQuestion,
   LayoutGrid,
   User,
   FileText,
-  Info,
+  // Info,
   Shield,
   Briefcase,
   ShoppingCart,
@@ -58,11 +58,13 @@ const PRODUCTS_SUB_ITEMS = [
 ];
 
 const SETTINGS_SUB_ITEMS = [
+  { name: "Hero Banner", icon: Image, href: "/settings/hero-banner" },
   { name: "Profile", icon: UserRoundPen, href: "/settings/profile" },
-  { name: "FAQ", icon: MessageCircleQuestion, href: "/settings/faq" },
-  { name: "About Us", icon: Info, href: "/settings/about" },
-  { name: "Privacy Policy", icon: Shield, href: "/settings/privacy" },
-  { name: "Terms", icon: FileText, href: "/settings/terms" },
+  // { name: "FAQ", icon: MessageCircleQuestion, href: "/settings/faq" },
+  // { name: "About Us", icon: Info, href: "/settings/about" },
+  { name: "Privacy policy", icon: Shield, href: "/settings/privacy" },
+  { name: "Terms & Condition", icon: FileText, href: "/settings/terms" },
+  { name: "Contact us", icon: MessageCircle, href: "/settings/contact-us" },
 ];
 
 const Sidebar = ({

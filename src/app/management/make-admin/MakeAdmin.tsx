@@ -75,9 +75,7 @@ const MakeAdmin = () => {
             description="Assign and manage administrative privileges for staff."
           />
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <div className="w-full sm:w-72">
               <SearchInput placeholder="Search..." />
-            </div>
             <MakeAdminModal />
           </div>
         </div>

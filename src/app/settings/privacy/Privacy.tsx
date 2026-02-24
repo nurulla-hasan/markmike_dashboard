@@ -57,8 +57,8 @@ const Privacy = () => {
   return (
     <PageLayout>
       <PageHeader
-        title="Privacy Policy"
-        description="Manage the Privacy Policy page content"
+        title="Privacy policy"
+        description="Manage the Privacy policy page content"
       />
 
       <Form {...form}>
