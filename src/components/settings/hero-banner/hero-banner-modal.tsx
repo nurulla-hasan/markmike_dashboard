@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -13,12 +13,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Plus, Upload, X } from "lucide-react";
+import { Plus, Upload, X, Search } from "lucide-react";
 
 const heroBannerSchema = z.object({
-  title: z.string().min(2, "Title is required"),
+  header: z.string().min(2, "Header is required"),
   description: z.string().min(10, "Description must be at least 10 characters"),
+  productId: z.string().min(1, "Product selection is required"),
   image: z.any().optional(),
 });
 
@@ -27,8 +27,9 @@ type HeroBannerFormValues = z.infer<typeof heroBannerSchema>;
 interface HeroBannerModalProps {
   mode?: "add" | "edit";
   initialData?: {
-    title: string;
+    header: string;
     description: string;
+    productId: string;
     image?: string;
   };
   trigger?: React.ReactNode;
@@ -47,10 +48,30 @@ export function HeroBannerModal({
   const form = useForm<HeroBannerFormValues>({
     resolver: zodResolver(heroBannerSchema),
     defaultValues: {
-      title: initialData?.title || "",
+      header: initialData?.header || "",
       description: initialData?.description || "",
+      productId: initialData?.productId || "",
     },
   });
+
+  useEffect(() => {
+    if (open && initialData) {
+      form.reset({
+        header: initialData.header,
+        description: initialData.description,
+        productId: initialData.productId,
+      });
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setPreview(initialData.image || null);
+    } else if (open && mode === "add") {
+      form.reset({
+        header: "",
+        description: "",
+        productId: "",
+      });
+      setPreview(null);
+    }
+  }, [open, initialData, form, mode]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -90,10 +111,9 @@ export function HeroBannerModal({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-6 p-8 pt-4"
+          className="space-y-6 p-6"
         >
           <div>
-            <FormLabel className="mb-2">Banner Image</FormLabel>
             <div className="relative group">
               {preview ? (
                 <div className="relative aspect-video w-full overflow-hidden rounded-xl border-2 border-dashed border-muted-foreground/20">
@@ -118,11 +138,8 @@ export function HeroBannerModal({
                     <div className="mb-3 rounded-full bg-primary/10 p-3 text-primary">
                       <Upload className="h-6 w-6" />
                     </div>
-                    <p className="mb-2 text-sm font-semibold text-muted-foreground">
-                      Click to upload image
-                    </p>
-                    <p className="text-xs text-muted-foreground/60">
-                      PNG, JPG or WebP (Max. 2MB)
+                    <p className="text-sm font-medium text-muted-foreground">
+                      Upload avatar image
                     </p>
                   </div>
                   <input
@@ -138,12 +155,12 @@ export function HeroBannerModal({
 
           <FormField
             control={form.control}
-            name="title"
+            name="header"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
+                <FormLabel>Header</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter banner title" {...field} />
+                  <Input placeholder="Type here...." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -155,13 +172,34 @@ export function HeroBannerModal({
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description</FormLabel>
+                <FormLabel>
+                  Description
+                </FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder="Enter banner description"
-                    className="min-h-30 resize-none"
-                    {...field}
-                  />
+                  <Input placeholder="Type here...." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="productId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Select Product
+                </FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <Input
+                      placeholder="Search to select Product"
+                      className="pr-10"
+                      {...field}
+                    />
+                    <Search className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -169,8 +207,12 @@ export function HeroBannerModal({
           />
 
           <div className="flex justify-end">
-            <Button type="submit" className="w-full max-w-50">
-              {mode === "add" ? "Add Banner" : "Update Banner"}
+            <Button
+              type="submit"
+              variant="destructive"
+              className="w-full max-w-50 font-bold"
+            >
+              +Add New Banners
             </Button>
           </div>
         </form>
