@@ -127,7 +127,7 @@ export function HeroBannerModal({
                     size="icon-sm"
                     variant="destructive"
                     onClick={() => setPreview(null)}
-                    className="absolute right-2 top-2 rounded-full transition-transform hover:scale-110"
+                    className="absolute right-2 top-2"
                   >
                     <X />
                   </Button>

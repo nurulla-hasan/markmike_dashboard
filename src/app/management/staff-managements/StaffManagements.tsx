@@ -68,7 +68,6 @@ const DUMMY_STAFF_MANAGEMENTS: StaffManagement[] = [
 const StaffManagements = () => {
   return (
     <PageLayout>
-      <div className="space-y-8">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
           <PageHeader
             title="All Staff"
@@ -81,7 +80,6 @@ const StaffManagements = () => {
         </div>
 
         <DataTable columns={columns} data={DUMMY_STAFF_MANAGEMENTS} />
-      </div>
     </PageLayout>
   );
 };

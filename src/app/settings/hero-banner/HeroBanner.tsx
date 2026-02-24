@@ -39,65 +39,63 @@ const DUMMY_BANNERS = [
 const HeroBanner = () => {
   return (
     <PageLayout>
-      <div className="space-y-8">
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
-          <PageHeader
-            title="Hero Banner"
-            description="Manage the content and images of the homepage hero banner"
-          />
-          <HeroBannerModal mode="add" />
-        </div>
+      <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+        <PageHeader
+          title="Hero Banner"
+          description="Manage the content and images of the homepage hero banner"
+        />
+        <HeroBannerModal mode="add" />
+      </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {DUMMY_BANNERS.map((banner) => (
-            <Card key={banner.id} className="pt-0 overflow-hidden group">
-              <div className="relative aspect-video overflow-hidden">
-                <img
-                  src={banner.image}
-                  alt={banner.header}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-102"
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+        {DUMMY_BANNERS.map((banner) => (
+          <Card key={banner.id} className="pt-0 overflow-hidden group">
+            <div className="relative aspect-video overflow-hidden">
+              <img
+                src={banner.image}
+                alt={banner.header}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-102"
+              />
+              <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center gap-3">
+                <HeroBannerModal
+                  mode="edit"
+                  initialData={banner}
+                  trigger={
+                    <Button
+                      variant="secondary"
+                      size="icon-lg"
+                      className="rounded-full"
+                    >
+                      <Edit2 />
+                    </Button>
+                  }
                 />
-                <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center gap-3">
-                  <HeroBannerModal
-                    mode="edit"
-                    initialData={banner}
-                    trigger={
-                      <Button
-                        variant="secondary"
-                        size="icon-lg"
-                        className="rounded-full"
-                      >
-                        <Edit2 />
-                      </Button>
-                    }
-                  />
-                  <ConfirmationModal
-                    title="Delete Banner"
-                    description={`Are you sure you want to delete "${banner.header}"? This action cannot be undone.`}
-                    onConfirm={() => console.log("Deleting banner:", banner.id)}
-                    trigger={
-                      <Button
-                        variant="destructive"
-                        size="icon-lg"
-                        className="rounded-full"
-                      >
-                        <Trash2 />
-                      </Button>
-                    }
-                  />
-                </div>
+                <ConfirmationModal
+                  title="Delete Banner"
+                  description={`Are you sure you want to delete "${banner.header}"? This action cannot be undone.`}
+                  onConfirm={() => console.log("Deleting banner:", banner.id)}
+                  trigger={
+                    <Button
+                      variant="destructive"
+                      size="icon-lg"
+                      className="rounded-full"
+                    >
+                      <Trash2 />
+                    </Button>
+                  }
+                />
               </div>
-              <CardContent className="space-y-3">
-                <h3 className="text-lg font-bold text-foreground line-clamp-1">
-                  {banner.header}
-                </h3>
-                <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-                  {banner.description}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+            </div>
+            <CardContent className="space-y-3">
+              <h3 className="text-lg font-bold text-foreground line-clamp-1">
+                {banner.header}
+              </h3>
+              <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+                {banner.description}
+              </p>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </PageLayout>
   );

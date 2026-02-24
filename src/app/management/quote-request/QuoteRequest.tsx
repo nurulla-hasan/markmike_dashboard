@@ -6,7 +6,11 @@ import { SearchInput } from "@/components/ui/custom/search-input";
 import type { QuoteRequest } from "@/schemas/quote-request.schema";
 import { columns } from "@/components/management/quote-request/columns";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
@@ -63,41 +67,42 @@ const QuoteRequest = () => {
 
   return (
     <PageLayout>
-      <div className="space-y-8">
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
-          <PageHeader
-            title="Customer Queries"
-            description="Manage and respond to customer quote requests."
-          />
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-full sm:w-fit justify-start text-left",
-                    !date && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon  />
-                  {date ? format(date, "PPP") : <span>Filter by date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0 rounded-2xl overflow-hidden" align="start">
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
-            <SearchInput placeholder="Search requests..." />
-          </div>
+      <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+        <PageHeader
+          title="Customer Queries"
+          description="Manage and respond to customer quote requests."
+        />
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant={"outline"}
+                className={cn(
+                  "w-full sm:w-fit justify-start text-left",
+                  !date && "text-muted-foreground",
+                )}
+              >
+                <CalendarIcon />
+                {date ? format(date, "PPP") : <span>Filter by date</span>}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent
+              className="w-auto p-0 overflow-hidden"
+              align="start"
+            >
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+          <SearchInput placeholder="Search requests..." />
         </div>
-
-        <DataTable columns={columns} data={DUMMY_QUOTES} />
       </div>
+
+      <DataTable columns={columns} data={DUMMY_QUOTES} />
     </PageLayout>
   );
 };

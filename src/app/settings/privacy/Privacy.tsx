@@ -1,5 +1,5 @@
 import PageLayout from "@/components/common/page-layout";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -13,10 +13,10 @@ import TiptapEditor from "@/components/ui/custom/tiptap-editor";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 import { Save } from "lucide-react";
 import PageHeader from "@/components/ui/custom/page-header";
-import {
-  useGetPrivacyPolicyQuery,
-  useUpdatePrivacyPolicyMutation,
-} from "@/redux/feature/settings/settingsApis";
+// import {
+//   useGetPrivacyPolicyQuery,
+//   useUpdatePrivacyPolicyMutation,
+// } from "@/redux/feature/settings/settingsApis";
 import type { TError } from "@/types/global.types";
 
 type FormValues = {
@@ -24,30 +24,33 @@ type FormValues = {
 };
 
 const Privacy = () => {
-  const { data: privacyData, isLoading: isFetching } = useGetPrivacyPolicyQuery(undefined);
-  const [updatePrivacyPolicy, { isLoading: isSubmitting }] =
-    useUpdatePrivacyPolicyMutation();
+  // const { data: privacyData, isLoading: isFetching } = useGetPrivacyPolicyQuery(undefined);
+  // const [updatePrivacyPolicy, { isLoading: isSubmitting }] =
+  //   useUpdatePrivacyPolicyMutation();
+  const isFetching = false;
+  const isSubmitting = false;
 
   const form = useForm<FormValues>({
     defaultValues: {
-      content: "",
+      content: "<h1>Privacy Policy</h1><p>This is a fake privacy policy content for demonstration purposes.</p>",
     },
   });
 
-  useEffect(() => {
-    if (privacyData?.data?.privacyPolicy) {
-      form.reset({
-        content: privacyData.data.privacyPolicy,
-      });
-    }
-  }, [privacyData, form]);
+  // useEffect(() => {
+  //   if (privacyData?.data?.privacyPolicy) {
+  //     form.reset({
+  //       content: privacyData.data.privacyPolicy,
+  //     });
+  //   }
+  // }, [privacyData, form]);
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const res = await updatePrivacyPolicy({
-        privacyPolicy: data.content,
-      }).unwrap();
-      SuccessToast(res.message || "Privacy Policy saved successfully");
+      // const res = await updatePrivacyPolicy({
+      //   privacyPolicy: data.content,
+      // }).unwrap();
+      console.log("Saving Privacy Policy:", data.content);
+      SuccessToast("Privacy Policy saved successfully (Fake)");
     } catch (err) {
       const error = err as TError;
       ErrorToast(error?.data?.message || "Failed to save Privacy Policy");

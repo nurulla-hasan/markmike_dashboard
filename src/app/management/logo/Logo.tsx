@@ -102,22 +102,20 @@ const DUMMY_LOGOS: DigitizedLogo[] = [
 const Logo = () => {
   return (
     <PageLayout>
-      <div className="space-y-8">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <PageHeader
-            title="All Digitized logo"
-            description="Manage and view all your digitized logos."
-          />
-          <div>
-            <SearchInput placeholder="Search..." />
-          </div>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <PageHeader
+          title="All Digitized logo"
+          description="Manage and view all your digitized logos."
+        />
+        <div>
+          <SearchInput placeholder="Search..." />
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {DUMMY_LOGOS.map((logo) => (
-            <LogoCard key={logo.id} item={logo} />
-          ))}
-        </div>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        {DUMMY_LOGOS.map((logo) => (
+          <LogoCard key={logo.id} item={logo} />
+        ))}
       </div>
     </PageLayout>
   );

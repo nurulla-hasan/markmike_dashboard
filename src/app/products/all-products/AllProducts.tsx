@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import PageLayout from "@/components/common/page-layout";
+import PageHeader from "@/components/ui/custom/page-header";
 import { ProductCard } from "@/components/products/all-products/product-card";
 import {
   ProductsFilter,
@@ -123,18 +124,19 @@ const AllProducts = () => {
 
   return (
     <PageLayout>
-      <div className="space-y-6">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <h1 className="text-2xl font-bold tracking-tight">All products</h1>
+      <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+        <PageHeader
+          title="All Products"
+          description="View and manage your entire product catalog."
+        />
 
-          <ProductsFilter filter={filter} setFilter={setFilter}/>
-        </div>
+        <ProductsFilter filter={filter} setFilter={setFilter} />
+      </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {mockProducts.map((product) => (
-            <ProductCard key={product.id} product={product as TProduct} />
-          ))}
-        </div>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {mockProducts.map((product) => (
+          <ProductCard key={product.id} product={product as TProduct} />
+        ))}
       </div>
     </PageLayout>
   );

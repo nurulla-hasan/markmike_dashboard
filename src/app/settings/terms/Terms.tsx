@@ -1,5 +1,5 @@
 import PageLayout from "@/components/common/page-layout";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -13,10 +13,10 @@ import TiptapEditor from "@/components/ui/custom/tiptap-editor";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 import { Save } from "lucide-react";
 import PageHeader from "@/components/ui/custom/page-header";
-import {
-  useGetTermsConditionsQuery,
-  useUpdateTermsConditionsMutation,
-} from "@/redux/feature/settings/settingsApis";
+// import {
+//   useGetTermsConditionsQuery,
+//   useUpdateTermsConditionsMutation,
+// } from "@/redux/feature/settings/settingsApis";
 import type { TError } from "@/types/global.types";
 
 type FormValues = {
@@ -24,30 +24,33 @@ type FormValues = {
 };
 
 const Terms = () => {
-  const { data: termsData, isLoading: isFetching } = useGetTermsConditionsQuery(undefined);
-  const [updateTermsConditions, { isLoading: isSubmitting }] =
-    useUpdateTermsConditionsMutation();
+  // const { data: termsData, isLoading: isFetching } = useGetTermsConditionsQuery(undefined);
+  // const [updateTermsConditions, { isLoading: isSubmitting }] =
+  //   useUpdateTermsConditionsMutation();
+  const isFetching = false;
+  const isSubmitting = false;
 
   const form = useForm<FormValues>({
     defaultValues: {
-      content: "",
+      content: "<h1>Terms and Conditions</h1><p>This is a fake terms and conditions content for demonstration purposes.</p>",
     },
   });
 
-  useEffect(() => {
-    if (termsData?.data?.termsCondition) {
-      form.reset({
-        content: termsData.data.termsCondition,
-      });
-    }
-  }, [termsData, form]);
+  // useEffect(() => {
+  //   if (termsData?.data?.termsCondition) {
+  //     form.reset({
+  //       content: termsData.data.termsCondition,
+  //     });
+  //   }
+  // }, [termsData, form]);
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const res = await updateTermsConditions({
-        termsCondition: data.content,
-      }).unwrap();
-      SuccessToast(res.message || "Terms and Conditions saved successfully");
+      // const res = await updateTermsConditions({
+      //   termsCondition: data.content,
+      // }).unwrap();
+      console.log("Saving Terms and Conditions:", data.content);
+      SuccessToast("Terms and Conditions saved successfully (Fake)");
     } catch (err) {
       const error = err as TError;
       ErrorToast(error?.data?.message || "Failed to save Terms and Conditions");

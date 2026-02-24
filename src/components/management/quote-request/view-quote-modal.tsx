@@ -21,7 +21,6 @@ export function ViewQuoteModal({ quote }: ViewQuoteModalProps) {
         <Button
           variant="ghost"
           size="icon-sm"
-          className="text-primary hover:text-primary/80 hover:bg-primary/10"
           title="View Details"
         >
           <Eye />

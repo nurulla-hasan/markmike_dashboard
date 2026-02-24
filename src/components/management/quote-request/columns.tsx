@@ -72,7 +72,6 @@ export const columns: ColumnDef<QuoteRequest>[] = [
               <Button
                 variant="ghost"
                 size="icon-sm"
-                className="text-destructive hover:text-destructive/80 hover:bg-destructive/10"
                 title="Delete Request"
               >
                 <Trash2 />

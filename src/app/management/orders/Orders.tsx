@@ -174,7 +174,7 @@ const Orders = () => {
 
   return (
     <PageLayout>
-      <div className="space-y-6">
+      {/* <div className="space-y-6"> */}
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <PageHeader
             title="Orders"
@@ -185,7 +185,7 @@ const Orders = () => {
         </div>
 
         <DataTable columns={ordersColumns} data={mockOrders} pageSize={5} />
-      </div>
+      {/* </div> */}
     </PageLayout>
   );
 };

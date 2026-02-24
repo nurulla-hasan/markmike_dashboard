@@ -68,20 +68,18 @@ const DUMMY_ADMINS: Admin[] = [
 const MakeAdmin = () => {
   return (
     <PageLayout>
-      <div className="space-y-8">
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
-          <PageHeader
-            title="Make Admin"
-            description="Assign and manage administrative privileges for staff."
-          />
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <SearchInput placeholder="Search..." />
-            <MakeAdminModal />
-          </div>
+      <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+        <PageHeader
+          title="Make Admin"
+          description="Assign and manage administrative privileges for staff."
+        />
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+          <SearchInput placeholder="Search..." />
+          <MakeAdminModal />
         </div>
-
-        <DataTable columns={columns} data={DUMMY_ADMINS} />
       </div>
+
+      <DataTable columns={columns} data={DUMMY_ADMINS} />
     </PageLayout>
   );
 };
