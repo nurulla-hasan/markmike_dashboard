@@ -20,6 +20,8 @@ const StandoutDeals = lazy(() => import("@/app/management/standout-deals/Standou
 const AddDeal = lazy(() => import("@/app/management/standout-deals/add-deal/AddDeal"));
 const EditDeal = lazy(() => import("@/app/management/standout-deals/edit-deal/EditDeal"));
 const Miwahdiss = lazy(() => import("@/app/management/miwahdiss/Miwahdiss"));
+const AddEvent = lazy(() => import("@/app/management/miwahdiss/add-event/AddEvent"));
+const EditEvent = lazy(() => import("@/app/management/miwahdiss/edit-event/EditEvent"));
 const Logo = lazy(() => import("@/app/management/logo/Logo"));
 const QuoteRequest = lazy(() => import("@/app/management/quote-request/QuoteRequest"));
 const StaffManagements = lazy(() => import("@/app/management/staff-managements/StaffManagements"));
@@ -54,6 +56,8 @@ export const router = createBrowserRouter([
             { path: "standout-deals/add", element: <AddDeal /> },
             { path: "standout-deals/edit/:id", element: <EditDeal /> },
             { path: "miwahdiss", element: <Miwahdiss /> },
+            { path: "miwahdiss/add", element: <AddEvent /> },
+            { path: "miwahdiss/edit/:id", element: <EditEvent /> },
             { path: "logo", element: <Logo /> },
             { path: "quote-request", element: <QuoteRequest /> },
             { path: "staff-managements", element: <StaffManagements /> },

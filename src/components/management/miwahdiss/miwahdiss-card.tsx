@@ -1,4 +1,5 @@
 import { Edit, Trash2 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ConfirmationModal } from "@/components/ui/custom/confirmation-modal";
@@ -9,15 +10,6 @@ interface MiwahdissCardProps {
 }
 
 export function MiwahdissCard({ item }: MiwahdissCardProps) {
-  const handleEdit = (id: string) => {
-    // Implement edit logic
-    console.log("Edit event:", id);
-  };
-
-  const handleDelete = (id: string) => {
-    // Implement delete logic
-    console.log("Delete event:", id);
-  };
 
   return (
     <Card className="pt-0">
@@ -28,27 +20,27 @@ export function MiwahdissCard({ item }: MiwahdissCardProps) {
           className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
         />
       </div>
-      <CardContent className="space-y-1.5">
+      <CardContent>
         <div className="flex items-start justify-between gap-2">
           <h3 className="font-semibold text-base line-clamp-1">{item.title}</h3>
           <div className="flex items-center gap-1">
             <Button
+              asChild
               variant="ghost"
               size="icon-sm"
-              className="text-muted-foreground hover:text-primary"
-              onClick={() => handleEdit(item.id)}
             >
-              <Edit />
+              <Link to={`/miwahdiss/edit/${item.id}`}>
+                <Edit />
+              </Link>
             </Button>
             <ConfirmationModal
               title="Delete Event?"
               description="Are you sure you want to delete this event? This action cannot be undone."
-              onConfirm={() => handleDelete(item.id)}
+              onConfirm={() => console.log("Delete event:", item.id)}
               trigger={
                 <Button
                   variant="ghost"
                   size="icon-sm"
-                  className="text-muted-foreground hover:text-destructive"
                 >
                   <Trash2 />
                 </Button>
