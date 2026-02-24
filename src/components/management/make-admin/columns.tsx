@@ -1,10 +1,10 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import type { StaffManagement } from "@/schemas/staff-managements-schema";
+import type { Admin } from "@/schemas/admin.schema";
 import { Ban, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ConfirmationModal } from "@/components/ui/custom/confirmation-modal";
 
-export const columns: ColumnDef<StaffManagement>[] = [
+export const columns: ColumnDef<Admin>[] = [
   {
     accessorKey: "name",
     header: "Name",
@@ -16,7 +16,7 @@ export const columns: ColumnDef<StaffManagement>[] = [
   },
   {
     accessorKey: "email",
-    header: () => <div className="text-center">Email</div>,
+    header: () => <div>Email</div>,
     cell: ({ row }) => (
       <div>
         {row.getValue("email")}
@@ -25,7 +25,7 @@ export const columns: ColumnDef<StaffManagement>[] = [
   },
   {
     accessorKey: "designation",
-    header: () => <div className="text-center">Designation</div>,
+    header: () => <div>Designation</div>,
     cell: ({ row }) => (
       <div>
         {row.getValue("designation")}
@@ -34,7 +34,7 @@ export const columns: ColumnDef<StaffManagement>[] = [
   },
   {
     accessorKey: "branch",
-    header: () => <div className="text-center">Branch</div>,
+    header: () => <div>Branch</div>,
     cell: ({ row }) => (
       <div>
         {row.getValue("branch")}
@@ -50,16 +50,16 @@ export const columns: ColumnDef<StaffManagement>[] = [
       return (
         <div className="flex items-center justify-end">
           <ConfirmationModal
-            title="Block User?"
-            description={`Are you sure you want to block ${item.name}? This user will lose access to the platform.`}
-            onConfirm={() => console.log("Blocking user:", item.id)}
+            title="Block Admin?"
+            description={`Are you sure you want to block ${item.name}? This admin will lose access to the platform.`}
+            onConfirm={() => console.log("Blocking admin:", item.id)}
             confirmButtonText="Block"
             trigger={
               <Button
                 variant="ghost"
                 size="icon-sm"
                 className="text-amber-500 hover:text-amber-600 hover:bg-amber-50"
-                title="Block User"
+                title="Block Admin"
               >
                 <Ban />
               </Button>
@@ -67,16 +67,16 @@ export const columns: ColumnDef<StaffManagement>[] = [
           />
 
           <ConfirmationModal
-            title="Delete User?"
+            title="Delete Admin?"
             description={`Are you sure you want to delete ${item.name}? This action cannot be undone.`}
-            onConfirm={() => console.log("Deleting user:", item.id)}
+            onConfirm={() => console.log("Deleting admin:", item.id)}
             confirmButtonText="Delete"
             trigger={
               <Button
                 variant="ghost"
                 size="icon-sm"
                 className="text-destructive hover:text-destructive/80 hover:bg-destructive/10"
-                title="Delete User"
+                title="Delete Admin"
               >
                 <Trash2 />
               </Button>
