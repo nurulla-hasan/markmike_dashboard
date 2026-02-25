@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Type, Image as ImageIcon, Upload, Download, Shapes, Palette, MoreHorizontal, LayoutPanelLeft, ChevronLeft, ChevronRight, Minimize2, Smartphone, Search, Pipette, Ban } from "lucide-react";
+import { Type, Image as ImageIcon, Upload, Download, Shapes, Palette, LayoutPanelLeft, ChevronLeft, ChevronRight, Smartphone, Search, Pipette, Ban } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // Helper functions for color conversion
@@ -59,6 +59,18 @@ const hexToHsv = (hex: string) => {
   return { h: h * 360, s: s * 100, v: v * 100 };
 };
 
+interface ShapeGraphic {
+  id: string;
+  type: 'rect' | 'circle' | 'triangle';
+  color: string;
+}
+
+interface ImageGraphic {
+  id: string;
+  url: string;
+  label: string;
+}
+
 interface SidebarProps {
   canvas: fabric.Canvas | null;
   canvasSize: { width: number; height: number };
@@ -66,10 +78,130 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) => {
-  const [activeTab, setActiveTab] = useState('uploads');
+  const [activeTab, setActiveTab] = useState('graphics');
   const [isOpen, setIsOpen] = useState(true);
   const [textInput, setTextInput] = useState('');
   const [bgInput, setBgInput] = useState('#ffffff');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [uploadedImages, setUploadedImages] = useState<ImageGraphic[]>([]);
+  
+  // Mock data for graphics
+  const [graphicsData, setGraphicsData] = useState<{
+    shapes: ShapeGraphic[];
+    images: ImageGraphic[];
+    icons: ImageGraphic[];
+    illustrations: ImageGraphic[];
+  }>({
+    shapes: [],
+    images: [],
+    icons: [],
+    illustrations: []
+  });
+
+  // Fetch mock data
+  useEffect(() => {
+    // Simulate backend fetch
+    const fetchData = async () => {
+      // In real app: const response = await fetch('/api/graphics');
+      const data: {
+        shapes: ShapeGraphic[];
+        images: ImageGraphic[];
+        icons: ImageGraphic[];
+        illustrations: ImageGraphic[];
+      } = {
+        shapes: [
+          { id: 'rect', type: 'rect', color: '#000000' },
+          { id: 'circle', type: 'circle', color: '#000000' },
+          { id: 'triangle', type: 'triangle', color: '#000000' },
+          { id: 'pentagon', type: 'rect', color: '#000000' }, // Simplified for mock
+          { id: 'line', type: 'rect', color: '#000000' },
+          { id: 'arrow', type: 'rect', color: '#000000' },
+          { id: 'double-arrow', type: 'rect', color: '#000000' },
+          { id: 'star', type: 'rect', color: '#000000' },
+          { id: 'speech-bubble', type: 'rect', color: '#000000' },
+          { id: 'speech-bubble-rect', type: 'rect', color: '#000000' },
+        ],
+        images: [
+          { id: 'img1', url: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200', label: 'Watch' },
+          { id: 'img2', url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200', label: 'Headphones' },
+          { id: 'img3', url: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=200', label: 'Shoes' },
+          { id: 'img4', url: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200', label: 'Nike' },
+          { id: 'img5', url: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=200', label: 'Sneakers' },
+          { id: 'img6', url: 'https://images.unsplash.com/photo-1518002171953-a080ee817e1f?w=200', label: 'Blue Shoes' },
+        ],
+        icons: [
+          { id: 'icon1', url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4ab.png', label: 'Star' },
+          { id: 'icon2', url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f525.png', label: 'Fire' },
+          { id: 'icon3', url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2728.png', label: 'Sparkles' },
+          { id: 'icon4', url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f308.png', label: 'Rainbow' },
+          { id: 'icon5', url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f30a.png', label: 'Wave' },
+          { id: 'icon6', url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/26a1.png', label: 'Lightning' },
+        ],
+        illustrations: [
+          { id: 'ill1', url: 'https://illustrations.popsy.co/amber/graphic-design.svg', label: 'Design' },
+          { id: 'ill2', url: 'https://illustrations.popsy.co/amber/shaking-hands.svg', label: 'Hands' },
+          { id: 'ill3', url: 'https://illustrations.popsy.co/amber/success.svg', label: 'Success' },
+          { id: 'ill4', url: 'https://illustrations.popsy.co/amber/remote-work.svg', label: 'Work' },
+          { id: 'ill5', url: 'https://illustrations.popsy.co/amber/web-design.svg', label: 'Web' },
+          { id: 'ill6', url: 'https://illustrations.popsy.co/amber/launching-soon.svg', label: 'Launch' },
+        ]
+      };
+      setGraphicsData(data);
+      
+      // Simulate backend fetch for uploaded images
+      setUploadedImages([
+        { id: 'up1', url: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200', label: 'Watch' },
+        { id: 'up2', url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200', label: 'Headphones' },
+        { id: 'up3', url: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=200', label: 'Shoes' },
+        { id: 'up4', url: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200', label: 'Nike' },
+      ]);
+    };
+    fetchData();
+  }, []);
+
+  const addShape = (type: string) => {
+    if (!canvas) return;
+    let shape;
+    const common = {
+      left: 100,
+      top: 100,
+      fill: '#000000',
+      width: 100,
+      height: 100,
+    };
+
+    if (type === 'rect') shape = new fabric.Rect(common);
+    else if (type === 'circle') shape = new fabric.Circle({ ...common, radius: 50 });
+    else if (type === 'triangle') shape = new fabric.Triangle(common);
+
+    if (shape) {
+      canvas.add(shape);
+      canvas.setActiveObject(shape);
+      canvas.renderAll();
+    }
+  };
+
+  const addGraphic = (url: string) => {
+    if (!canvas) return;
+    fabric.FabricImage.fromURL(url, { crossOrigin: 'anonymous' }).then((img) => {
+      img.scaleToWidth(150);
+      img.set({
+        left: 100,
+        top: 100,
+      });
+      canvas.add(img);
+      canvas.setActiveObject(img);
+      canvas.renderAll();
+    });
+  };
+
+  const filteredGraphics = {
+    shapes: graphicsData.shapes.filter(s => s.type.toLowerCase().includes(searchQuery.toLowerCase())),
+    images: graphicsData.images.filter(i => i.label.toLowerCase().includes(searchQuery.toLowerCase())),
+    icons: graphicsData.icons.filter(i => i.label.toLowerCase().includes(searchQuery.toLowerCase())),
+    illustrations: graphicsData.illustrations.filter(i => i.label.toLowerCase().includes(searchQuery.toLowerCase())),
+  };
   
   // Color picker state
   const [hsv, setHsv] = useState({ h: 0, s: 0, v: 100 });
@@ -86,7 +218,6 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
     { id: 'uploads', icon: ImageIcon, label: 'Uploads' },
     { id: 'graphics', icon: Shapes, label: 'Graphics' },
     { id: 'background', icon: Palette, label: 'Background' },
-    { id: 'more', icon: MoreHorizontal, label: 'More' },
   ];
 
   const presetColors = [
@@ -210,6 +341,14 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
           canvas.add(img);
           canvas.setActiveObject(img);
           canvas.renderAll();
+          
+          // Add to recently uploaded (local state simulation)
+          const newUpload: ImageGraphic = {
+            id: `up-local-${Date.now()}`,
+            url: data,
+            label: file.name
+          };
+          setUploadedImages(prev => [newUpload, ...prev].slice(0, 6));
         });
       }
     };
@@ -260,32 +399,53 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
 
           <div className="p-4 flex items-center justify-between border-b">
             <h2 className="font-semibold text-lg capitalize">{activeTab.replace('-', ' ')}</h2>
-            <button className="p-1 hover:bg-muted rounded text-muted-foreground">
-              <Minimize2 size={16} strokeWidth={2} />
-            </button>
           </div>
 
           <div className="flex-1 overflow-y-auto p-4">
             {activeTab === 'uploads' && (
-              <div className="space-y-6">
+              <div className="space-y-8">
                 <div className="space-y-3">
-                  <Button className="w-full" onClick={() => document.getElementById('image-upload')?.click()}>
-                    <Upload /> Upload from this device
+                  <Button 
+                    className="w-full bg-[#cc0000] hover:bg-[#b30000] text-white h-12 rounded-xl text-base font-semibold gap-2" 
+                    onClick={() => document.getElementById('image-upload')?.click()}
+                  >
+                    <Upload className="h-5 w-5" /> Upload from this device
                   </Button>
-                  <Button variant="outline" className="w-full">
-                    <Smartphone className="h-4 w-4 mr-2" strokeWidth={2} />
+                  <Button 
+                    variant="outline" 
+                    className="w-full h-12 rounded-xl text-base font-semibold gap-2 border-border/60"
+                  >
+                    <Smartphone className="h-5 w-5" strokeWidth={2} />
                     Upload from phone
                   </Button>
                   <input type="file" id="image-upload" className="hidden" accept="image/*" onChange={handleImageUpload} />
                 </div>
                 
-                <div className="space-y-3">
-                  <h3 className="text-sm font-semibold">Recently uploaded</h3>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[1, 2, 3, 4].map((i) => (
-                      <div key={i} className="aspect-square bg-muted rounded border border-dashed border-border flex items-center justify-center cursor-pointer hover:border-primary transition-colors overflow-hidden group">
-                        <div className="w-full h-full bg-muted/50 group-hover:scale-105 transition-transform" />
+                <div className="space-y-4">
+                  <h3 className="text-lg font-bold text-[#442222]">Recently uploaded</h3>
+                  <div className="grid grid-cols-3 gap-3">
+                    {uploadedImages.map((img) => (
+                      <div 
+                        key={img.id} 
+                        onClick={() => addGraphic(img.url)}
+                        className="aspect-square bg-muted/30 rounded-2xl border border-dashed border-border/40 flex items-center justify-center cursor-pointer hover:border-primary/50 transition-all overflow-hidden group shadow-sm"
+                      >
+                        <img 
+                          src={img.url} 
+                          alt={img.label} 
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" 
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = 'https://www.svgrepo.com/show/357886/image-broken.svg';
+                          }}
+                        />
                       </div>
+                    ))}
+                    {/* Add empty slots to match the screenshot look if there are few images */}
+                    {uploadedImages.length < 6 && Array.from({ length: 6 - uploadedImages.length }).map((_, i) => (
+                      <div 
+                        key={`empty-${i}`} 
+                        className="aspect-square bg-muted/20 rounded-2xl border border-dashed border-border/30 flex items-center justify-center"
+                      />
                     ))}
                   </div>
                 </div>
@@ -315,24 +475,252 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
 
             {activeTab === 'graphics' && (
               <div className="space-y-6">
-                <div className="relative">
-                  <Input placeholder="Search for content" />
-                  <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" strokeWidth={2} />
-                </div>
-
-                {['Shapes', 'Images', 'Icons', 'Illustrations'].map((category) => (
-                  <div key={category} className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-semibold">{category}</h3>
-                      <ChevronRight className="h-4 w-4 text-muted-foreground cursor-pointer" />
+                {!activeCategory ? (
+                  <>
+                    <div className="relative">
+                      <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        placeholder="Search graphics..."
+                        className="pl-8"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                      />
                     </div>
-                    <div className="grid grid-cols-3 gap-2">
-                      {[1, 2, 3].map((i) => (
-                        <div key={i} className="aspect-square bg-muted rounded hover:bg-muted/80 transition-colors cursor-pointer" />
+
+                    <div className="space-y-6">
+                      {/* Shapes */}
+                      <div className="space-y-3">
+                        <div 
+                          className="flex items-center justify-between cursor-pointer group"
+                          onClick={() => setActiveCategory('Shapes')}
+                        >
+                          <h3 className="text-sm font-semibold group-hover:text-primary transition-colors">Shapes</h3>
+                          <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </div>
+                        <div className="grid grid-cols-3 gap-3">
+                          {filteredGraphics.shapes.slice(0, 3).map((shape) => (
+                            <div 
+                              key={shape.id} 
+                              onClick={() => addShape(shape.type)}
+                              className="aspect-square bg-muted rounded-lg border border-border/50 hover:border-primary/30 transition-all cursor-pointer flex items-center justify-center p-4 group shadow-sm hover:shadow-md"
+                            >
+                              <div className={cn(
+                                "bg-black group-hover:scale-110 transition-transform duration-200",
+                                shape.type === 'rect' && "w-full h-full rounded-sm",
+                                shape.type === 'circle' && "w-full h-full rounded-full",
+                              )} 
+                              style={shape.type === 'triangle' ? { 
+                                width: 0, 
+                                height: 0, 
+                                borderLeft: '24px solid transparent', 
+                                borderRight: '24px solid transparent', 
+                                borderBottom: '40px solid black',
+                                backgroundColor: 'transparent'
+                              } : {}}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                        <div className="flex justify-center gap-1.5 pt-1">
+                          <div className="w-6 h-2 bg-primary rounded-full" />
+                          {[1, 2, 3].map(i => <div key={i} className="w-2 h-2 bg-muted rounded-full" />)}
+                        </div>
+                      </div>
+
+                      {/* Images */}
+                      <div className="space-y-3">
+                        <div 
+                          className="flex items-center justify-between cursor-pointer group"
+                          onClick={() => setActiveCategory('Images')}
+                        >
+                          <h3 className="text-sm font-semibold group-hover:text-primary transition-colors">Images</h3>
+                          <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </div>
+                        <div className="grid grid-cols-3 gap-3">
+                          {filteredGraphics.images.slice(0, 3).map((img) => (
+                            <div 
+                              key={img.id} 
+                              onClick={() => addGraphic(img.url)}
+                              className="aspect-square bg-muted rounded-lg border border-border/50 hover:border-primary/30 transition-all cursor-pointer overflow-hidden group shadow-sm hover:shadow-md"
+                            >
+                              <img src={img.url} alt={img.label} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                            </div>
+                          ))}
+                        </div>
+                        <div className="flex justify-center gap-1.5 pt-1">
+                          <div className="w-6 h-2 bg-primary rounded-full" />
+                          {[1, 2, 3].map(i => <div key={i} className="w-2 h-2 bg-muted rounded-full" />)}
+                        </div>
+                      </div>
+
+                      {/* Icons */}
+                      <div className="space-y-3">
+                        <div 
+                          className="flex items-center justify-between cursor-pointer group"
+                          onClick={() => setActiveCategory('Icons')}
+                        >
+                          <h3 className="text-sm font-semibold group-hover:text-primary transition-colors">Icons</h3>
+                          <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </div>
+                        <div className="grid grid-cols-3 gap-3">
+                          {filteredGraphics.icons.slice(0, 3).map((icon) => (
+                            <div 
+                              key={icon.id} 
+                              onClick={() => addGraphic(icon.url)}
+                              className="aspect-square bg-muted rounded-lg border border-border/50 hover:border-primary/30 transition-all cursor-pointer flex items-center justify-center p-3 group shadow-sm hover:shadow-md"
+                            >
+                              <img 
+                                src={icon.url} 
+                                alt={icon.label} 
+                                className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-200" 
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).src = 'https://www.svgrepo.com/show/357886/image-broken.svg';
+                                }}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                        <div className="flex justify-center gap-1.5 pt-1">
+                          <div className="w-6 h-2 bg-primary rounded-full" />
+                          {[1, 2, 3].map(i => <div key={i} className="w-2 h-2 bg-muted rounded-full" />)}
+                        </div>
+                      </div>
+
+                      {/* Illustrations */}
+                      <div className="space-y-3">
+                        <div 
+                          className="flex items-center justify-between cursor-pointer group"
+                          onClick={() => setActiveCategory('Illustrations')}
+                        >
+                          <h3 className="text-sm font-semibold group-hover:text-primary transition-colors">Illustrations</h3>
+                          <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </div>
+                        <div className="grid grid-cols-3 gap-3">
+                          {filteredGraphics.illustrations.slice(0, 3).map((ill) => (
+                            <div 
+                              key={ill.id} 
+                              onClick={() => addGraphic(ill.url)}
+                              className="aspect-square bg-muted rounded-lg border border-border/50 hover:border-primary/30 transition-all cursor-pointer flex items-center justify-center p-2 group shadow-sm hover:shadow-md overflow-hidden"
+                            >
+                              <img 
+                                src={ill.url} 
+                                alt={ill.label} 
+                                className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-200" 
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).src = 'https://www.svgrepo.com/show/357886/image-broken.svg';
+                                }}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                        <div className="flex justify-center gap-1.5 pt-1">
+                          <div className="w-6 h-2 bg-primary rounded-full" />
+                          {[1, 2, 3].map(i => <div key={i} className="w-2 h-2 bg-muted rounded-full" />)}
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between pb-2">
+                      <div className="flex items-center gap-2">
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          className="h-8 w-8 rounded-full hover:bg-muted"
+                          onClick={() => setActiveCategory(null)}
+                        >
+                          <ChevronLeft className="h-5 w-5" />
+                        </Button>
+                        <h3 className="text-lg font-semibold">{activeCategory}</h3>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-3">
+                      {activeCategory === 'Shapes' && filteredGraphics.shapes.map((shape) => (
+                        <div 
+                          key={shape.id} 
+                          onClick={() => addShape(shape.type)}
+                          className="aspect-square bg-muted/50 rounded-lg border border-border/30 hover:border-primary/30 transition-all cursor-pointer flex items-center justify-center p-4 group shadow-sm hover:shadow-md"
+                        >
+                          <div className={cn(
+                            "bg-black group-hover:scale-110 transition-transform duration-200",
+                            shape.id === 'rect' && "w-full h-full rounded-sm",
+                            shape.id === 'circle' && "w-full h-full rounded-full",
+                            shape.id === 'triangle' && "w-0 h-0 border-l-20 border-l-transparent border-r-20 border-r-transparent border-bottom-[32px] border-bottom-black",
+                            shape.id === 'pentagon' && "w-[80%] h-[80%] [clip-path:polygon(50%_0%,100%_38%,82%_100%,18%_100%,0%_38%)]",
+                            shape.id === 'line' && "w-full h-1 rotate-45",
+                            shape.id === 'arrow' && "w-full h-full [clip-path:polygon(0%_35%,60%_35%,60%_0%,100%_50%,60%_100%,60%_65%,0%_65%)]",
+                            shape.id === 'double-arrow' && "w-full h-full [clip-path:polygon(0%_50%,25%_0%,25%_35%,75%_35%,75%_0%,100%_50%,75%_100%,75%_65%,25%_65%,25%_100%)]",
+                            shape.id === 'star' && "w-full h-full [clip-path:polygon(50%_0%,61%_35%,98%_35%,68%_57%,79%_91%,50%_70%,21%_91%,32%_57%,2%_35%,39%_35%)]",
+                            shape.id === 'speech-bubble' && "w-full h-full [clip-path:polygon(0%_0%,100%_0%,100%_75%,50%_75%,25%_100%,25%_75%,0%_75%)] rounded-full",
+                            shape.id === 'speech-bubble-rect' && "w-full h-full [clip-path:polygon(0%_0%,100%_0%,100%_75%,40%_75%,20%_100%,20%_75%,0%_75%)] rounded-sm",
+                          )} 
+                          style={shape.id === 'triangle' ? { 
+                            width: 0, 
+                            height: 0, 
+                            borderLeft: '20px solid transparent', 
+                            borderRight: '20px solid transparent', 
+                            borderBottom: '32px solid black',
+                            backgroundColor: 'transparent'
+                          } : {}}
+                          />
+                        </div>
+                      ))}
+
+                      {activeCategory === 'Images' && filteredGraphics.images.map((img) => (
+                        <div 
+                          key={img.id} 
+                          onClick={() => addGraphic(img.url)}
+                          className="aspect-square bg-muted/50 rounded-lg border border-border/30 hover:border-primary/30 transition-all cursor-pointer overflow-hidden group shadow-sm hover:shadow-md"
+                        >
+                          <img 
+                            src={img.url} 
+                            alt={img.label} 
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" 
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = 'https://www.svgrepo.com/show/357886/image-broken.svg';
+                            }}
+                          />
+                        </div>
+                      ))}
+
+                      {activeCategory === 'Icons' && filteredGraphics.icons.map((icon) => (
+                        <div 
+                          key={icon.id} 
+                          onClick={() => addGraphic(icon.url)}
+                          className="aspect-square bg-muted/50 rounded-lg border border-border/30 hover:border-primary/30 transition-all cursor-pointer flex items-center justify-center p-3 group shadow-sm hover:shadow-md"
+                        >
+                          <img 
+                            src={icon.url} 
+                            alt={icon.label} 
+                            className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-200" 
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = 'https://www.svgrepo.com/show/357886/image-broken.svg';
+                            }}
+                          />
+                        </div>
+                      ))}
+
+                      {activeCategory === 'Illustrations' && filteredGraphics.illustrations.map((ill) => (
+                        <div 
+                          key={ill.id} 
+                          onClick={() => addGraphic(ill.url)}
+                          className="aspect-square bg-muted/50 rounded-lg border border-border/30 hover:border-primary/30 transition-all cursor-pointer flex items-center justify-center p-2 group shadow-sm hover:shadow-md overflow-hidden"
+                        >
+                          <img 
+                            src={ill.url} 
+                            alt={ill.label} 
+                            className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-200" 
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = 'https://www.svgrepo.com/show/357886/image-broken.svg';
+                            }}
+                          />
+                        </div>
                       ))}
                     </div>
                   </div>
-                ))}
+                )}
               </div>
             )}
 
