@@ -49,6 +49,7 @@ const MANAGEMENT_SUB_ITEMS = [
   { name: "Quote Request", icon: FileQuestion, href: "/quote-request" },
   { name: "Staff Managements", icon: Users, href: "/staff-managements" },
   { name: "Make admin", icon: ShieldAlert, href: "/make-admin" },
+  { name: "Canvas Editor", icon: LayoutGrid, href: "/canvas-editor" },
 ];
 
 const PRODUCTS_SUB_ITEMS = [
@@ -88,6 +89,7 @@ const Sidebar = ({
     "quote-request",
     "staff-managements",
     "make-admin",
+    "canvas-editor",
   ].includes(section);
   const isProductsPath = section === "products";
 

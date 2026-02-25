@@ -27,6 +27,7 @@ const Logo = lazy(() => import("@/app/management/logo/Logo"));
 const QuoteRequest = lazy(() => import("@/app/management/quote-request/QuoteRequest"));
 const StaffManagements = lazy(() => import("@/app/management/staff-managements/StaffManagements"));
 const MakeAdmin = lazy(() => import("@/app/management/make-admin/MakeAdmin"));
+const CanvasEditor = lazy(() => import("@/app/management/canvas-editor/CanvasEditor"));
 
 const AllProducts = lazy(() => import("@/app/products/all-products/AllProducts"));
 const AddProduct = lazy(() => import("@/app/products/add-product/AddProduct"));
@@ -63,6 +64,7 @@ export const router = createBrowserRouter([
             { path: "quote-request", element: <QuoteRequest /> },
             { path: "staff-managements", element: <StaffManagements /> },
             { path: "make-admin", element: <MakeAdmin /> },
+            { path: "canvas-editor", element: <CanvasEditor /> },
 
             // Products
             { path: "products/all", element: <AllProducts /> },
