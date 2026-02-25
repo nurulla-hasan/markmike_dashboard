@@ -521,10 +521,6 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
                             </div>
                           ))}
                         </div>
-                        <div className="flex justify-center gap-1.5 pt-1">
-                          <div className="w-6 h-2 bg-primary rounded-full" />
-                          {[1, 2, 3].map(i => <div key={i} className="w-2 h-2 bg-muted rounded-full" />)}
-                        </div>
                       </div>
 
                       {/* Images */}
@@ -546,10 +542,6 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
                               <img src={img.url} alt={img.label} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
                             </div>
                           ))}
-                        </div>
-                        <div className="flex justify-center gap-1.5 pt-1">
-                          <div className="w-6 h-2 bg-primary rounded-full" />
-                          {[1, 2, 3].map(i => <div key={i} className="w-2 h-2 bg-muted rounded-full" />)}
                         </div>
                       </div>
 
@@ -580,10 +572,6 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
                             </div>
                           ))}
                         </div>
-                        <div className="flex justify-center gap-1.5 pt-1">
-                          <div className="w-6 h-2 bg-primary rounded-full" />
-                          {[1, 2, 3].map(i => <div key={i} className="w-2 h-2 bg-muted rounded-full" />)}
-                        </div>
                       </div>
 
                       {/* Illustrations */}
@@ -612,10 +600,6 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
                               />
                             </div>
                           ))}
-                        </div>
-                        <div className="flex justify-center gap-1.5 pt-1">
-                          <div className="w-6 h-2 bg-primary rounded-full" />
-                          {[1, 2, 3].map(i => <div key={i} className="w-2 h-2 bg-muted rounded-full" />)}
                         </div>
                       </div>
                     </div>
