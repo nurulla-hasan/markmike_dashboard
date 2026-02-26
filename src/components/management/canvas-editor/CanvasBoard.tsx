@@ -415,8 +415,9 @@ const CanvasBoard: React.FC<CanvasBoardProps> = ({ canvasSize, onCanvasInit, zoo
   }, [settings.grids, canvasSize, zoom, getRealPixels]);
 
   return (
-    <div ref={containerRef} className="w-full h-full overflow-hidden bg-muted/20 flex items-center justify-center">
-      <div className="relative">
+    <div ref={containerRef} className="w-full h-full overflow-auto bg-muted/20">
+      <div className="min-w-full min-h-full flex items-center justify-center p-20">
+        <div className="relative shrink-0">
         {/* Dimension Rulers */}
           {settings.rulers && (
             <div className="absolute inset-0 pointer-events-none">
@@ -476,6 +477,7 @@ const CanvasBoard: React.FC<CanvasBoardProps> = ({ canvasSize, onCanvasInit, zoo
           )}
         </div>
       </div>
+    </div>
   );
 };
 

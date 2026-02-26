@@ -45,7 +45,7 @@ export const UploadsTab: React.FC<UploadsTabProps> = ({
       </div>
       
       <div className="space-y-4">
-        <h3 className="text-lg font-bold text-[#442222]">Recently uploaded</h3>
+        <h3 className="text-lg font-bold text-primary">Recently uploaded</h3>
         <div className="grid grid-cols-3 gap-3">
           {uploadedImages.map((img) => (
             <div 
