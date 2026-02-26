@@ -103,8 +103,6 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
     if (!canvas) return;
     let shape;
     const common = {
-      left: 100,
-      top: 100,
       fill: '#000000',
       width: 100,
       height: 100,
@@ -178,6 +176,7 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
 
     if (shape) {
       canvas.add(shape);
+      canvas.centerObject(shape);
       canvas.setActiveObject(shape);
       canvas.renderAll();
     }
@@ -187,11 +186,8 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
     if (!canvas) return;
     fabric.FabricImage.fromURL(url, { crossOrigin: 'anonymous' }).then((img) => {
       img.scaleToWidth(150);
-      img.set({
-        left: 100,
-        top: 100,
-      });
       canvas.add(img);
+      canvas.centerObject(img);
       canvas.setActiveObject(img);
       canvas.renderAll();
     });
@@ -227,17 +223,22 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
     '#008000', '#800080', '#008080', '#000080', '#FFA500', '#A52A2A'
   ];
 
-  // Update HSV when bgInput changes (from external sources)
+  // Synchronize HSV state when bgInput changes from external sources
   useEffect(() => {
-    if (!isDraggingGradient && !isDraggingHue && /^#[0-9A-F]{3,6}$/i.test(bgInput)) {
+    // Only synchronize if we're not currently dragging the color picker
+    if (isDraggingGradient || isDraggingHue) return;
+
+    if (/^#[0-9A-F]{3,6}$/i.test(bgInput)) {
       const newHsv = hexToHsv(bgInput);
-      // Only update if the color is actually different to avoid rubber-banding
       const currentHex = hsvToHex(hsv.h, hsv.s, hsv.v).toUpperCase();
+      
       if (currentHex !== bgInput.toUpperCase()) {
+        // Use functional update to avoid dependency on hsv state itself
         setHsv(newHsv);
       }
     }
-  }, [bgInput, isDraggingGradient, isDraggingHue, hsv]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bgInput, isDraggingGradient, isDraggingHue]); // Removed hsv from dependencies to avoid cascading renders
 
   const handleBgChange = useCallback((color: string) => {
     if (!canvas) return;
@@ -305,8 +306,6 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
   const addText = () => {
     if (!canvas) return;
     const text = new fabric.Textbox(textInput || 'Add Your Text', {
-      left: 100,
-      top: 100,
       width: 250,
       fontFamily: 'Arimo',
       fontSize: 28,
@@ -317,6 +316,7 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
     });
     
     canvas.add(text);
+    canvas.centerObject(text);
     canvas.setActiveObject(text);
     canvas.renderAll();
     setTextInput('');
@@ -334,11 +334,8 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
       if (typeof data === 'string') {
         fabric.FabricImage.fromURL(data).then((img) => {
           img.scaleToWidth(200);
-          img.set({
-            left: 100,
-            top: 100,
-          });
           canvas.add(img);
+          canvas.centerObject(img);
           canvas.setActiveObject(img);
           canvas.renderAll();
           

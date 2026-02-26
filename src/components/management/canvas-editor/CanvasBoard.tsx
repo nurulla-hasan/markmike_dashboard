@@ -327,25 +327,25 @@ const CanvasBoard: React.FC<CanvasBoardProps> = ({ canvasSize, onCanvasInit, zoo
       }
     });
 
-    // Initial Fit to Container
-    const fitToContainer = () => {
-      if (!containerRef.current) return;
-      const containerWidth = containerRef.current.clientWidth - 150;
-      const containerHeight = containerRef.current.clientHeight - 150;
-      
-      const scale = Math.min(
-        containerWidth / width,
-        containerHeight / height
-      );
-      
-      setZoom(scale);
-    };
+    // Initial Fit to Container (Commented out to maintain initial 50% zoom as requested)
+    // const fitToContainer = () => {
+    //   if (!containerRef.current) return;
+    //   const containerWidth = containerRef.current.clientWidth - 150;
+    //   const containerHeight = containerRef.current.clientHeight - 150;
+    //   
+    //   const scale = Math.min(
+    //     containerWidth / width,
+    //     containerHeight / height
+    //   );
+    //   
+    //   setZoom(scale);
+    // };
 
-    fitToContainer();
-    window.addEventListener('resize', fitToContainer);
+    // fitToContainer();
+    // window.addEventListener('resize', fitToContainer);
 
     return () => {
-      window.removeEventListener('resize', fitToContainer);
+      // window.removeEventListener('resize', fitToContainer);
       fabricCanvasRef.current = null;
       canvas.dispose().catch(err => console.error('Error disposing canvas:', err));
     };

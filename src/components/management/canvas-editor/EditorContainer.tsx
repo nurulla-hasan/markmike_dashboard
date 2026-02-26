@@ -13,7 +13,7 @@ const EditorContainer = () => {
   const [currentSide, setCurrentSide] = useState<'front' | 'back'>('front');
   const [sidesData, setSidesData] = useState<Record<'front' | 'back', any>>({ front: null, back: null });
   const [canvasSize, setCanvasSize] = useState({ width: 8.5, height: 11 }); // Inches
-  const [zoom, setZoom] = useState(1);
+  const [zoom, setZoom] = useState(0.5);
   const [showSettings, setShowSettings] = useState(false);
   const [settings, setSettings] = useState({
     rulers: true,
