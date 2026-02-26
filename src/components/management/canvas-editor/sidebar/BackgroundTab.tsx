@@ -64,19 +64,19 @@ export const BackgroundTab: React.FC<BackgroundTabProps> = ({
             </div>
           </div>
 
-          <div className="mt-2">
+          <div className="mt-4">
             <div 
               ref={hueRef}
-              className="h-2 w-full rounded-full relative cursor-pointer"
+              className="h-2.5 w-full rounded-full relative cursor-pointer"
               style={{ 
                 background: 'linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)' 
               }}
               onMouseDown={onHueMouseDown}
             >
               <div 
-                className="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full border-2 border-white shadow-[0_0_4px_rgba(0,0,0,0.3)] cursor-grab active:cursor-grabbing pointer-events-none transition-transform hover:scale-110" 
+                className="absolute top-1/2 w-5 h-5 rounded-full border-2 border-white shadow-[0_0_4px_rgba(0,0,0,0.3)] cursor-grab active:cursor-grabbing pointer-events-none transition-transform hover:scale-110" 
                 style={{ 
-                  left: `${(hsv.h / 360) * 100}%`,
+                  left: `${Math.max(4, Math.min(96, (hsv.h / 360) * 100))}%`,
                   backgroundColor: hsvToHex(hsv.h, hsv.s, hsv.v),
                   transform: 'translate(-50%, -50%)'
                 }} 
@@ -90,7 +90,10 @@ export const BackgroundTab: React.FC<BackgroundTabProps> = ({
           ref={colorInputRef} 
           className="hidden" 
           value={bgInput}
-          onChange={(e) => onBgChange(e.target.value)}
+          onChange={(e) => {
+            const val = e.target.value.toUpperCase();
+            onBgChange(val);
+          }}
         />
         
         <div className="flex items-center gap-2 pt-1">

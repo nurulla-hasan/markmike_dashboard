@@ -231,16 +231,19 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
   useEffect(() => {
     if (!isDraggingGradient && !isDraggingHue && /^#[0-9A-F]{3,6}$/i.test(bgInput)) {
       const newHsv = hexToHsv(bgInput);
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setHsv(newHsv);
+      // Only update if the color is actually different to avoid rubber-banding
+      const currentHex = hsvToHex(hsv.h, hsv.s, hsv.v).toUpperCase();
+      if (currentHex !== bgInput.toUpperCase()) {
+        setHsv(newHsv);
+      }
     }
-  }, [bgInput, isDraggingGradient, isDraggingHue]);
+  }, [bgInput, isDraggingGradient, isDraggingHue, hsv]);
 
   const handleBgChange = useCallback((color: string) => {
     if (!canvas) return;
     canvas.set({ backgroundColor: color });
     canvas.renderAll();
-    setBgInput(color);
+    setBgInput(color.toUpperCase());
   }, [canvas]);
 
   const handleColorClick = () => {
@@ -257,13 +260,11 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
     const newS = x * 100;
     const newV = (1 - y) * 100;
     
-    setHsv(prev => {
-      const updated = { ...prev, s: newS, v: newV };
-      const hex = hsvToHex(updated.h, updated.s, updated.v);
-      handleBgChange(hex);
-      return updated;
-    });
-  }, [handleBgChange]);
+    setHsv(prev => ({ ...prev, s: newS, v: newV }));
+    
+    const hex = hsvToHex(hsv.h, newS, newV);
+    handleBgChange(hex);
+  }, [handleBgChange, hsv.h]);
 
   // Hue dragging logic
   const handleHueMove = useCallback((e: MouseEvent | React.MouseEvent) => {
@@ -273,13 +274,11 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
     
     const newH = x * 360;
     
-    setHsv(prev => {
-      const updated = { ...prev, h: newH };
-      const hex = hsvToHex(updated.h, updated.s, updated.v);
-      handleBgChange(hex);
-      return updated;
-    });
-  }, [handleBgChange]);
+    setHsv(prev => ({ ...prev, h: newH }));
+    
+    const hex = hsvToHex(newH, hsv.s, hsv.v);
+    handleBgChange(hex);
+  }, [handleBgChange, hsv.s, hsv.v]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
