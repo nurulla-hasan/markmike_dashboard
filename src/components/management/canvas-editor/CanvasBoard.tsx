@@ -315,12 +315,13 @@ const CanvasBoard: React.FC<CanvasBoardProps> = ({ canvasSize, onCanvasInit, zoo
       const isZoom = opt.e.ctrlKey || opt.e.altKey;
       
       if (isZoom) {
-        let newZoom = canvas.getZoom();
+        let newZoom = zoom; // Use current zoom state
         newZoom *= 0.999 ** delta;
         if (newZoom > 20) newZoom = 20;
         if (newZoom < 0.01) newZoom = 0.01;
         
-        canvas.zoomToPoint(new fabric.Point(opt.e.offsetX, opt.e.offsetY), newZoom);
+        // Instead of zoomToPoint (which pans the canvas), just update state.
+        // The useEffect will handle resetting the transform correctly.
         setZoom(newZoom);
         opt.e.preventDefault();
         opt.e.stopPropagation();
@@ -359,13 +360,18 @@ const CanvasBoard: React.FC<CanvasBoardProps> = ({ canvasSize, onCanvasInit, zoo
 
     const { width, height } = getRealPixels();
 
-    // Update internal dimensions and scale
+    // Reset to Standard Fabric Zoom Logic
+    // 1. Internal dimensions match the zoomed size for maximum sharpness
     canvas.setDimensions({
       width: width * zoom,
       height: height * zoom
     });
     
-    canvas.setZoom(zoom);
+    // 2. Use internal setZoom and RESET viewport transform to remove any pan/offset
+    // This ensures the "paper" always starts at the top-left of the canvas element.
+    canvas.setViewportTransform([zoom, 0, 0, zoom, 0, 0]);
+    
+    canvas.calcOffset();
     canvas.renderAll();
   }, [zoom, canvasSize, getRealPixels]);
 

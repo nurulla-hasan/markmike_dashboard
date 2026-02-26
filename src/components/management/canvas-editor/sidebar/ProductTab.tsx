@@ -3,16 +3,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Download } from "lucide-react";
+import { FileText } from "lucide-react";
 
 interface ProductTabProps {
   canvasSize: { width: number; height: number };
   onSizeChange: (dim: 'width' | 'height', val: string) => void;
+  onDownloadPDF: () => void;
 }
 
 export const ProductTab: React.FC<ProductTabProps> = ({
   canvasSize,
   onSizeChange,
+  onDownloadPDF,
 }) => {
   return (
     <div className="space-y-4">
@@ -41,8 +43,8 @@ export const ProductTab: React.FC<ProductTabProps> = ({
       </div>
       <Separator />
       <div className="flex flex-col gap-2">
-        <Button variant="outline" className="w-full justify-start" onClick={() => {}}>
-          <Download className="h-4 w-4 mr-2" /> Save to JSON
+        <Button variant="outline" className="w-full justify-start" onClick={onDownloadPDF}>
+          <FileText className="h-4 w-4 mr-2" /> Save to PDF
         </Button>
       </div>
     </div>

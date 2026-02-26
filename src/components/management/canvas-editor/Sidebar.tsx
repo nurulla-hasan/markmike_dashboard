@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import * as fabric from 'fabric';
 import { LayoutPanelLeft, Type, Image as ImageIcon, Shapes, Palette, ChevronLeft, ChevronRight } from "lucide-react";
@@ -99,6 +100,26 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
     fetchData();
   }, []);
 
+  const DPI = 96;
+
+  const centerObjectInDesign = (obj: any) => {
+    if (!canvas) return;
+    
+    // Calculate the absolute center based on the design size (DPI * inches)
+    // regardless of the current zoom level.
+    const designWidth = canvasSize.width * DPI;
+    const designHeight = canvasSize.height * DPI;
+    
+    obj.set({
+      left: designWidth / 2,
+      top: designHeight / 2,
+      originX: 'center',
+      originY: 'center'
+    });
+    
+    obj.setCoords();
+  };
+
   const addShape = (type: string) => {
     if (!canvas) return;
     let shape;
@@ -176,7 +197,7 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
 
     if (shape) {
       canvas.add(shape);
-      canvas.centerObject(shape);
+      centerObjectInDesign(shape);
       canvas.setActiveObject(shape);
       canvas.renderAll();
     }
@@ -187,7 +208,7 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
     fabric.FabricImage.fromURL(url, { crossOrigin: 'anonymous' }).then((img) => {
       img.scaleToWidth(150);
       canvas.add(img);
-      canvas.centerObject(img);
+      centerObjectInDesign(img);
       canvas.setActiveObject(img);
       canvas.renderAll();
     });
@@ -316,7 +337,7 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
     });
     
     canvas.add(text);
-    canvas.centerObject(text);
+    centerObjectInDesign(text);
     canvas.setActiveObject(text);
     canvas.renderAll();
     setTextInput('');
@@ -335,7 +356,7 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
         fabric.FabricImage.fromURL(data).then((img) => {
           img.scaleToWidth(200);
           canvas.add(img);
-          canvas.centerObject(img);
+          centerObjectInDesign(img);
           canvas.setActiveObject(img);
           canvas.renderAll();
           
@@ -356,6 +377,41 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
     const num = parseFloat(val);
     if (!isNaN(num)) {
       setCanvasSize({ ...canvasSize, [dim]: num });
+    }
+  };
+
+  const handleDownloadPDF = async () => {
+    if (!canvas) return;
+
+    try {
+      // Import jsPDF dynamically to avoid build-time issues if not installed
+      const { jsPDF } = await import('jspdf');
+
+      // Get high-res image data from canvas
+      // We multiply by 2 (or more) for better quality in the PDF
+      const dataUrl = canvas.toDataURL({
+        format: 'png',
+        quality: 1,
+        multiplier: 2
+      });
+
+      // Create PDF
+      // Orientation: p (portrait) or l (landscape)
+      const orientation = canvasSize.width > canvasSize.height ? 'l' : 'p';
+      const pdf = new jsPDF({
+        orientation,
+        unit: 'in',
+        format: [canvasSize.width, canvasSize.height]
+      });
+
+      // Add image to PDF
+      pdf.addImage(dataUrl, 'PNG', 0, 0, canvasSize.width, canvasSize.height);
+
+      // Download
+      pdf.save('markmike-design.pdf');
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert('Failed to generate PDF. Please try again.');
     }
   };
 
@@ -447,6 +503,7 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) 
               <ProductTab 
                 canvasSize={canvasSize} 
                 onSizeChange={handleSizeChange} 
+                onDownloadPDF={handleDownloadPDF}
               />
             )}
           </div>

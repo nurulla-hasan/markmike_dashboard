@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Upload, Smartphone } from "lucide-react";
+import { Upload } from "lucide-react";
 
 interface ImageGraphic {
   id: string;
@@ -20,20 +20,13 @@ export const UploadsTab: React.FC<UploadsTabProps> = ({
   onAddGraphic 
 }) => {
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div className="space-y-3">
         <Button 
-          className="w-full bg-[#cc0000] hover:bg-[#b30000] text-white h-12 rounded-xl text-base font-semibold gap-2" 
+          className="w-full" 
           onClick={() => document.getElementById('image-upload')?.click()}
         >
           <Upload className="h-5 w-5" /> Upload from this device
-        </Button>
-        <Button 
-          variant="outline" 
-          className="w-full h-12 rounded-xl text-base font-semibold gap-2 border-border/60"
-        >
-          <Smartphone className="h-5 w-5" strokeWidth={2} />
-          Upload from phone
         </Button>
         <input 
           type="file" 
