@@ -33,36 +33,38 @@ export const BackgroundTab: React.FC<BackgroundTabProps> = ({
   return (
     <div className="space-y-6">
       <div className="space-y-4">
-        <h3 className="text-sm font-semibold">Background color</h3>
+        <h3 className="text-sm font-semibold mb-2">Background color</h3>
         
-        <div className="space-y-5">
-          <div 
-            ref={gradientRef}
-            className="aspect-video w-full relative cursor-crosshair group"
-            onMouseDown={onGradientMouseDown}
-          >
+        <div className="space-y-6">
+          <div className="relative">
             <div 
-              className="absolute inset-0 rounded-xl border border-muted/20 overflow-hidden shadow-sm"
-              style={{ 
-                background: `
-                  linear-gradient(to bottom, transparent, #000),
-                  linear-gradient(to right, #fff, transparent),
-                  ${hsvToHex(hsv.h, 100, 100)}
-                `,
-                backgroundBlendMode: 'multiply, normal'
-              }}
-            />
-            
-            <div 
-              className="absolute w-4 h-4 border-2 border-white rounded-full -translate-x-1/2 -translate-y-1/2 shadow-[0_0_4px_rgba(0,0,0,0.3)] pointer-events-none z-10"
-              style={{ 
-                left: `${hsv.s}%`, 
-                top: `${100 - hsv.v}%` 
-              }}
-            />
+              ref={gradientRef}
+              className="aspect-video w-full relative cursor-crosshair group rounded-xl border border-muted/20 shadow-sm"
+              onMouseDown={onGradientMouseDown}
+            >
+              <div 
+                className="absolute inset-0 rounded-xl overflow-hidden"
+                style={{ 
+                  background: `
+                    linear-gradient(to bottom, transparent, #000),
+                    linear-gradient(to right, #fff, transparent),
+                    ${hsvToHex(hsv.h, 100, 100)}
+                  `,
+                  backgroundBlendMode: 'multiply, normal'
+                }}
+              />
+              
+              <div 
+                className="absolute w-4 h-4 border-2 border-white rounded-full -translate-x-1/2 -translate-y-1/2 shadow-[0_0_4px_rgba(0,0,0,0.3)] pointer-events-none z-10"
+                style={{ 
+                  left: `${Math.max(4, Math.min(96, hsv.s))}%`, 
+                  top: `${Math.max(8, Math.min(92, 100 - hsv.v))}%` 
+                }}
+              />
+            </div>
           </div>
 
-          <div className="px-0.5">
+          <div className="mt-2">
             <div 
               ref={hueRef}
               className="h-2 w-full rounded-full relative cursor-pointer"
@@ -75,7 +77,8 @@ export const BackgroundTab: React.FC<BackgroundTabProps> = ({
                 className="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full border-2 border-white shadow-[0_0_4px_rgba(0,0,0,0.3)] cursor-grab active:cursor-grabbing pointer-events-none transition-transform hover:scale-110" 
                 style={{ 
                   left: `${(hsv.h / 360) * 100}%`,
-                  backgroundColor: hsvToHex(hsv.h, hsv.s, hsv.v)
+                  backgroundColor: hsvToHex(hsv.h, hsv.s, hsv.v),
+                  transform: 'translate(-50%, -50%)'
                 }} 
               />
             </div>
