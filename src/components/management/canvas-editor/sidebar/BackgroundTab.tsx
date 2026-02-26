@@ -128,20 +128,6 @@ export const BackgroundTab: React.FC<BackgroundTabProps> = ({
         </div>
 
         <div className="space-y-3">
-          <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Recent colors</h4>
-          <div className="flex gap-2">
-            <div 
-              className="w-8 h-8 rounded-full border bg-black cursor-pointer" 
-              onClick={() => onBgChange('#000000')}
-            />
-            <div 
-              className="w-8 h-8 rounded-full border bg-white cursor-pointer" 
-              onClick={() => onBgChange('#ffffff')}
-            />
-          </div>
-        </div>
-
-        <div className="space-y-3">
           <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Pre-set colors</h4>
           <div className="grid grid-cols-6 gap-2">
             {presetColors.map((color, i) => (
