@@ -319,31 +319,11 @@ const CanvasBoard: React.FC<CanvasBoardProps> = ({ canvasSize, onCanvasInit, zoo
         newZoom *= 0.999 ** delta;
         if (newZoom > 20) newZoom = 20;
         if (newZoom < 0.01) newZoom = 0.01;
-        
-        // Instead of zoomToPoint (which pans the canvas), just update state.
-        // The useEffect will handle resetting the transform correctly.
         setZoom(newZoom);
         opt.e.preventDefault();
         opt.e.stopPropagation();
       }
     });
-
-    // Initial Fit to Container (Commented out to maintain initial 50% zoom as requested)
-    // const fitToContainer = () => {
-    //   if (!containerRef.current) return;
-    //   const containerWidth = containerRef.current.clientWidth - 150;
-    //   const containerHeight = containerRef.current.clientHeight - 150;
-    //   
-    //   const scale = Math.min(
-    //     containerWidth / width,
-    //     containerHeight / height
-    //   );
-    //   
-    //   setZoom(scale);
-    // };
-
-    // fitToContainer();
-    // window.addEventListener('resize', fitToContainer);
 
     return () => {
       // window.removeEventListener('resize', fitToContainer);

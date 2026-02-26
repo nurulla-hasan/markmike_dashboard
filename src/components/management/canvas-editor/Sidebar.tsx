@@ -18,7 +18,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ canvas, canvasSize, setCanvasSize }) => {
-  const [activeTab, setActiveTab] = useState('graphics');
+  const [activeTab, setActiveTab] = useState('uploads');
   const [isOpen, setIsOpen] = useState(true);
   const [textInput, setTextInput] = useState('');
   const [bgInput, setBgInput] = useState('#ffffff');
