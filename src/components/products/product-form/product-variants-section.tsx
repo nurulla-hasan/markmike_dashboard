@@ -157,7 +157,7 @@ export function ProductVariantsSection({ form }: ProductVariantsSectionProps) {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  fields.map((field, index) => {
+                  fields.map((field: any, index) => {
                     const colorObj = COLORS.find((c) => c.value === field.color);
                     return (
                       <TableRow key={field.id}>

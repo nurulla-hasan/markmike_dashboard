@@ -102,7 +102,7 @@ export function ProductPricingSection({ form }: ProductPricingSectionProps) {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  fields.map((field, index) => (
+                  fields.map((field: any, index) => (
                     <TableRow key={field.id}>
                       <TableCell>{index + 1}</TableCell>
                       <TableCell>{field.minQuantity}</TableCell>
