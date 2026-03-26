@@ -1,5 +1,5 @@
-
 import { SearchInput } from "@/components/ui/custom/search-input";
+import { AddUserModal } from "./add-user-modal";
 
 export const UsersFilter = () => {
   return (
@@ -10,6 +10,8 @@ export const UsersFilter = () => {
         // value={search}
         // onChange={(e) => setSearch?.(e.target.value)}
       />
+
+      <AddUserModal />
     </div>
   );
 };

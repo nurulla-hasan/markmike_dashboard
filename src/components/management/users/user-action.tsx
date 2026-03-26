@@ -1,6 +1,7 @@
 
 import { useState } from "react";
-import { Ban, Trash2, CheckCircle } from "lucide-react";
+import { Ban, Trash2, CheckCircle, Eye } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import { ConfirmationModal } from "@/components/ui/custom/confirmation-modal";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ interface UserActionProps {
 }
 
 export const UserAction = ({ user }: UserActionProps) => {
+  const navigate = useNavigate();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isBlockOpen, setIsBlockOpen] = useState(false);
 
@@ -66,6 +68,15 @@ export const UserAction = ({ user }: UserActionProps) => {
 
   return (
     <div className="flex items-center justify-end gap-2">
+      <Button
+        variant="ghost"
+        size="icon-sm"
+        onClick={() => navigate(`/users/${user._id}`)}
+        className="text-primary hover:text-primary"
+      >
+        <Eye />
+      </Button>
+
       <ConfirmationModal
         open={isBlockOpen}
         onOpenChange={setIsBlockOpen}

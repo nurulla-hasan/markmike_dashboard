@@ -16,6 +16,7 @@ const ContactUs = lazy(() => import("@/app/settings/contact-us/ContactUs"));
 
 const Dashboard = lazy(() => import("@/app/dashboard/Dashboard"));
 const Users = lazy(() => import("@/app/management/users/Users"));
+const UserDetails = lazy(() => import("@/app/management/users/details/UserDetails"));
 const Orders = lazy(() => import("@/app/management/orders/Orders"));
 const StandoutDeals = lazy(() => import("@/app/management/standout-deals/StandoutDeals"));
 const AddDeal = lazy(() => import("@/app/management/standout-deals/add-deal/AddDeal"));
@@ -53,6 +54,7 @@ export const router = createBrowserRouter([
             { index: true, element: <Dashboard /> },
             // Management
             { path: "users", element: <Users /> },
+            { path: "users/:id", element: <UserDetails /> },
             { path: "orders", element: <Orders /> },
             { path: "standout-deals", element: <StandoutDeals /> },
             { path: "standout-deals/add", element: <AddDeal /> },
