@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 import { DataTable } from "@/components/ui/custom/data-table";
 import { columns } from "@/components/management/miwahdiss/columns";
 import type { IMiwahdissEvent } from "@/types/miwahdiss.type";
+import PageHeader from "@/components/ui/custom/page-header";
 
 const Miwahdiss = () => {
   const navigate = useNavigate();
@@ -78,7 +79,7 @@ const Miwahdiss = () => {
     <PageLayout>
       {/* Header */}
       <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="text-2xl font-bold text-foreground">MiWaahDiss Event Management</h1>
+        <PageHeader title="MiWaahDiss Event Management" description="Manage your events here" />
         <div className="flex items-center gap-4">
           <Button variant="outline" className="flex items-center gap-2" onClick={() => navigate("/miwahdiss/moderation")}>
             <ShieldCheck className="h-5 w-5" />

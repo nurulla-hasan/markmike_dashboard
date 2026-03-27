@@ -11,7 +11,7 @@ const PageHeader = ({
   showBack,
 }: {
   title: string;
-  description: string;
+  description?: string;
   length?: number;
   showBack?: boolean;
 }) => {
@@ -19,16 +19,18 @@ const PageHeader = ({
 
   return (
     <div className="flex flex-col gap-1.5">
-      <div className="flex items-start gap-4">
-        {showBack && (
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate(-1)}
-          >
-            <ArrowLeft />
-          </Button>
-        )}
+      <div className="flex items-center gap-4">
+        <div>
+          {showBack && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate(-1)}
+            >
+              <ArrowLeft />
+            </Button>
+          )}
+        </div>
         <div className="flex flex-col">
           <div className="flex items-center gap-3">
             <h1 className="text-xl font-bold uppercase tracking-widest text-foreground">
@@ -40,9 +42,11 @@ const PageHeader = ({
               </span>
             )}
           </div>
-          <p className="text-sm text-muted-foreground max-w-150 leading-relaxed">
-            {description}
-          </p>
+          {description && (
+            <p className="text-sm text-muted-foreground max-w-150 leading-relaxed">
+              {description}
+            </p>
+          )}
         </div>
       </div>
     </div>

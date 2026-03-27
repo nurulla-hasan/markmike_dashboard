@@ -28,6 +28,9 @@ const MiwahdissView = lazy(() => import("@/app/management/miwahdiss/view/Miwahdi
 const MiwahdissModeration = lazy(() => import("@/app/management/miwahdiss/moderation/MiwahdissModeration"));
 const Logo = lazy(() => import("@/app/management/logo/Logo"));
 const QuoteRequest = lazy(() => import("@/app/management/quote-request/QuoteRequest"));
+const Catalog = lazy(() => import("@/app/management/catalog/Catalog"));
+const AddCatalog = lazy(() => import("@/app/management/catalog/add/AddCatalog"));
+const CatalogView = lazy(() => import("@/app/management/catalog/view/CatalogView"));
 const StaffManagements = lazy(() => import("@/app/management/staff-managements/StaffManagements"));
 const MakeAdmin = lazy(() => import("@/app/management/make-admin/MakeAdmin"));
 const CanvasEditor = lazy(() => import("@/app/management/canvas-editor/CanvasEditor"));
@@ -71,6 +74,10 @@ export const router = createBrowserRouter([
             { path: "miwahdiss/edit/:id", element: <EditEvent /> },
             { path: "miwahdiss/view/:id", element: <MiwahdissView /> },
             { path: "miwahdiss/moderation", element: <MiwahdissModeration /> },
+            { path: "catalog", element: <Catalog /> },
+            { path: "catalog/add", element: <AddCatalog /> },
+            { path: "catalog/view/:id", element: <CatalogView /> },
+            { path: "catalog/edit/:id", element: <AddCatalog /> },
             { path: "logo", element: <Logo /> },
             { path: "quote-request", element: <QuoteRequest /> },
             { path: "staff-managements", element: <StaffManagements /> },
