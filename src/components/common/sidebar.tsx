@@ -9,7 +9,7 @@ import {
   Settings,
   LogOut,
   ChevronDown,
-  UserRoundPen,
+  // UserRoundPen,
   // MessageCircleQuestion,
   LayoutGrid,
   User,
@@ -22,7 +22,7 @@ import {
   MessageCircle,
   Image,
   FileQuestion,
-  Users,
+  // Users,
   ShieldAlert,
   Package,
   List,
@@ -31,6 +31,7 @@ import {
   Palette,
   Type as FontIcon,
   MapPin,
+  History as HistoryIcon,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
@@ -48,14 +49,14 @@ const MANAGEMENT_SUB_ITEMS = [
   { name: "Users", icon: User, href: "/users" },
   { name: "Standout Deals", icon: Percent, href: "/standout-deals" },
   { name: "Miwahdiss", icon: MessageCircle, href: "/miwahdiss" },
-  { name: "Catalog", icon: List, href: "/catalog" },
+  { name: "Create Catalog", icon: List, href: "/catalog" },
   { name: "Template Library", icon: Image, href: "/template-library" },
   { name: "Branch Management", icon: MapPin, href: "/branch" },
   { name: "Logo", icon: Image, href: "/logo" },
   { name: "Quote Request", icon: FileQuestion, href: "/quote-request" },
-  { name: "Staff Managements", icon: Users, href: "/staff-managements" },
+  // { name: "Staff Managements", icon: Users, href: "/staff-managements" },
   { name: "Make admin", icon: ShieldAlert, href: "/make-admin" },
-  { name: "Canvas Editor", icon: LayoutGrid, href: "/canvas-editor" },
+  // { name: "Canvas Editor", icon: LayoutGrid, href: "/canvas-editor" },
 ];
 
 const PRODUCTS_SUB_ITEMS = [
@@ -73,12 +74,13 @@ const DESIGN_TOOLS_SUB_ITEMS = [
 
 const SETTINGS_SUB_ITEMS = [
   { name: "Hero Banner", icon: Image, href: "/settings/hero-banner" },
-  { name: "Profile", icon: UserRoundPen, href: "/settings/profile" },
+  // { name: "Profile", icon: UserRoundPen, href: "/settings/profile" },
   // { name: "FAQ", icon: MessageCircleQuestion, href: "/settings/faq" },
   // { name: "About Us", icon: Info, href: "/settings/about" },
   { name: "Privacy policy", icon: Shield, href: "/settings/privacy" },
   { name: "Terms & Condition", icon: FileText, href: "/settings/terms" },
   { name: "Contact us", icon: MessageCircle, href: "/settings/contact-us" },
+  { name: "Audit Log", icon: HistoryIcon, href: "/settings/audit-log" },
 ];
 
 const Sidebar = ({

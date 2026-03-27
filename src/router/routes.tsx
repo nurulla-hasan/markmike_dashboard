@@ -13,6 +13,7 @@ const Privacy = lazy(() => import("@/app/settings/privacy/Privacy"));
 const Terms = lazy(() => import("@/app/settings/terms/Terms"));
 const HeroBanner = lazy(() => import("@/app/settings/hero-banner/HeroBanner"));
 const ContactUs = lazy(() => import("@/app/settings/contact-us/ContactUs"));
+const AuditLog = lazy(() => import("@/app/settings/audit-log/AuditLog"));
 
 const Dashboard = lazy(() => import("@/app/dashboard/Dashboard"));
 const Users = lazy(() => import("@/app/management/users/Users"));
@@ -33,9 +34,9 @@ const AddCatalog = lazy(() => import("@/app/management/catalog/add/AddCatalog"))
 const CatalogView = lazy(() => import("@/app/management/catalog/view/CatalogView"));
 const TemplateLibrary = lazy(() => import("@/app/management/template-library/TemplateLibrary"));
 const TemplateForm = lazy(() => import("@/components/management/template-library/TemplateForm"));
-const StaffManagements = lazy(() => import("@/app/management/staff-managements/StaffManagements"));
+// const StaffManagements = lazy(() => import("@/app/management/staff-managements/StaffManagements"));
 const MakeAdmin = lazy(() => import("@/app/management/make-admin/MakeAdmin"));
-const CanvasEditor = lazy(() => import("@/app/management/canvas-editor/CanvasEditor"));
+// const CanvasEditor = lazy(() => import("@/app/management/canvas-editor/CanvasEditor"));
 const ArtworkLibrary = lazy(() => import("@/app/design-tools/ArtworkLibrary"));
 const ArtworkSubCategories = lazy(() => import("@/app/design-tools/ArtworkSubCategories"));
 const ArtworkAssets = lazy(() => import("@/app/design-tools/ArtworkAssets"));
@@ -97,9 +98,9 @@ export const router = createBrowserRouter([
             { path: "branch/edit/:id", element: <BranchForm /> },
             { path: "branch/view/:id", element: <BranchView /> },
             { path: "quote-request", element: <QuoteRequest /> },
-            { path: "staff-managements", element: <StaffManagements /> },
+            // { path: "staff-managements", element: <StaffManagements /> },
             { path: "make-admin", element: <MakeAdmin /> },
-            { path: "canvas-editor", element: <CanvasEditor /> },
+            // { path: "canvas-editor", element: <CanvasEditor /> },
 
             // Design Tools
             { path: "design-tools/artwork-library", element: <ArtworkLibrary /> },
@@ -125,6 +126,7 @@ export const router = createBrowserRouter([
             { path: "settings/privacy", element: <Privacy /> },
             { path: "settings/hero-banner", element: <HeroBanner /> },
             { path: "settings/contact-us", element: <ContactUs /> },
+            { path: "settings/audit-log", element: <AuditLog /> },
         ]
     },
     {
