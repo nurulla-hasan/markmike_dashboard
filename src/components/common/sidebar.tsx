@@ -47,7 +47,7 @@ const MAIN_NAV_ITEMS = [
 const MANAGEMENT_SUB_ITEMS = [
   { name: "Orders", icon: ShoppingCart, href: "/orders" },
   { name: "Users", icon: User, href: "/users" },
-  { name: "Standout Deals", icon: Percent, href: "/standout-deals" },
+  // { name: "Standout Deals", icon: Percent, href: "/standout-deals" },
   { name: "Miwahdiss", icon: MessageCircle, href: "/miwahdiss" },
   { name: "Create Catalog", icon: List, href: "/catalog" },
   { name: "Template Library", icon: Image, href: "/template-library" },
@@ -114,7 +114,7 @@ const Sidebar = ({
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
   const [isManagementOpen, setIsManagementOpen] = useState(true);
-  const [isProductsOpen, setIsProductsOpen] = useState(true);
+  const [isProductsOpen, setIsProductsOpen] = useState(isProductsPath);
   const [isDesignToolsOpen, setIsDesignToolsOpen] = useState(isDesignToolsPath);
 
   useEffect(() => {
