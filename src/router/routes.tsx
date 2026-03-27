@@ -7,7 +7,7 @@ import AuthLayout from "@/layout/auth-layout";
 
 //======================================================================================================================
 // App pages (all under src/app)
-const Notifications = lazy(() => import("@/app/notifications/Notifications"));
+const Notifications = lazy(() => import("@/app/settings/notifications/Notifications"));
 const Profile = lazy(() => import("@/app/settings/profile/Profile"));
 const Privacy = lazy(() => import("@/app/settings/privacy/Privacy"));
 const Terms = lazy(() => import("@/app/settings/terms/Terms"));
@@ -36,9 +36,11 @@ const TemplateForm = lazy(() => import("@/components/management/template-library
 const StaffManagements = lazy(() => import("@/app/management/staff-managements/StaffManagements"));
 const MakeAdmin = lazy(() => import("@/app/management/make-admin/MakeAdmin"));
 const CanvasEditor = lazy(() => import("@/app/management/canvas-editor/CanvasEditor"));
-const ArtworkLibrary = lazy(() => import("@/app/artwork-library/ArtworkLibrary"));
-const ArtworkSubCategories = lazy(() => import("@/app/artwork-library/ArtworkSubCategories"));
-const ArtworkAssets = lazy(() => import("@/app/artwork-library/ArtworkAssets"));
+const ArtworkLibrary = lazy(() => import("@/app/design-tools/ArtworkLibrary"));
+const ArtworkSubCategories = lazy(() => import("@/app/design-tools/ArtworkSubCategories"));
+const ArtworkAssets = lazy(() => import("@/app/design-tools/ArtworkAssets"));
+const FontManager = lazy(() => import("@/app/design-tools/FontManager"));
+
 
 const AllProducts = lazy(() => import("@/app/products/all-products/AllProducts"));
 const AddProduct = lazy(() => import("@/app/products/add-product/AddProduct"));
@@ -96,6 +98,7 @@ export const router = createBrowserRouter([
             { path: "design-tools/artwork-library", element: <ArtworkLibrary /> },
             { path: "design-tools/artwork-library/category/:id", element: <ArtworkSubCategories /> },
             { path: "design-tools/artwork-library/assets/:id", element: <ArtworkAssets /> },
+            { path: "design-tools/font-manager", element: <FontManager /> },
 
             // Products
             { path: "products/all", element: <AllProducts /> },
