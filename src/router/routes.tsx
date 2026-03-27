@@ -34,6 +34,9 @@ const AllProducts = lazy(() => import("@/app/products/all-products/AllProducts")
 const AddProduct = lazy(() => import("@/app/products/add-product/AddProduct"));
 const Categories = lazy(() => import("@/app/products/categories/Categories"));
 const ProductAttributes = lazy(() => import("@/app/products/product-attributes/ProductAttributes"));
+const Campaigns = lazy(() => import("@/app/products/campaigns/Campaigns"));
+const CampaignView = lazy(() => import("@/app/products/campaigns/view/CampaignView"));
+
 
 const Login = lazy(() => import("@/app/auth/Login"));
 const ForgotPassword = lazy(() => import("@/app/auth/ForgotPassword"));
@@ -71,8 +74,12 @@ export const router = createBrowserRouter([
             // Products
             { path: "products/all", element: <AllProducts /> },
             { path: "products/add", element: <AddProduct /> },
-            { path: "products/categories", element: <Categories /> },
+         { path: "products/categories", element: <Categories /> },
             { path: "products/attributes", element: <ProductAttributes /> },
+            { path: "products/campaigns", element: <Campaigns /> },
+            { path: "products/campaigns/view/:id", element: <CampaignView /> },
+            
+            // Settings"products/campaigns", element: <Campaigns /> },
             
             // Settings
             { path: "notifications", element: <Notifications /> },

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
@@ -23,9 +23,9 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(0.98 0.01 25.23);
+  --background: oklch(100% 0.00011 271.152);
   --foreground: oklch(0.23 0.08 24.25);
-  --card: oklch(0.95 0.02 25.25);
+  --card: oklch(98.204% 0.00865 25.347);
   --card-foreground: oklch(0.18 0.01 29.18);
   --popover: oklch(0.94 0.01 25.23);
   --popover-foreground: oklch(0.22 0.01 29.09);
