@@ -76,7 +76,6 @@ export const createColumns = (
           <Button 
             variant="ghost" 
             size="icon" 
-            className="h-8 w-8 text-muted-foreground hover:text-foreground" 
             onClick={() => navigate(`/miwahdiss/edit/${event.id}`)}
             title="Edit Event"
           >
@@ -85,7 +84,6 @@ export const createColumns = (
           <Button 
             variant="ghost" 
             size="icon" 
-            className="h-8 w-8 text-muted-foreground hover:text-foreground"
             title="Catalog"
           >
             <LayoutGrid className="h-4 w-4" />
@@ -93,7 +91,6 @@ export const createColumns = (
           <Button 
             variant="ghost" 
             size="icon" 
-            className="h-8 w-8 text-muted-foreground hover:text-foreground" 
             onClick={() => navigate(`/miwahdiss/view/${event.id}`)}
             title="View Details"
           >

@@ -46,17 +46,16 @@ export function MiwahdissForm({ mode = "add", initialData }: MiwahdissFormProps)
 
   return (
     <PageLayout>
-      <div className="mb-8 flex items-center justify-between">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Button 
             variant="ghost" 
             size="icon" 
             onClick={() => navigate(-1)}
-            className="h-10 w-10 text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-6 w-6" />
           </Button>
-          <h1 className="text-2xl font-bold text-foreground">
+          <h1 className="text-xl font-semibold text-foreground"> 
             {mode === "add" ? "Add New Event" : "Edit Event"}
           </h1>
         </div>
@@ -64,13 +63,11 @@ export function MiwahdissForm({ mode = "add", initialData }: MiwahdissFormProps)
           <Button 
             variant="outline" 
             onClick={() => navigate(-1)}
-            className="h-11 px-8 rounded-lg border-destructive text-destructive hover:bg-destructive/5 font-semibold"
           >
             Cancel
           </Button>
           <Button 
             onClick={form.handleSubmit(onSubmit)}
-            className="h-11 px-8 rounded-lg bg-destructive hover:bg-destructive/90 text-white font-semibold"
           >
             {mode === "add" ? "Add Event" : "Update Event"}
           </Button>
@@ -78,7 +75,7 @@ export function MiwahdissForm({ mode = "add", initialData }: MiwahdissFormProps)
       </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 pb-12">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 pb-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
             {/* Left Column */}
