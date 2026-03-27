@@ -57,6 +57,7 @@ const PRODUCTS_SUB_ITEMS = [
   { name: "Categories", icon: List, href: "/products/categories" },
   { name: "Product Attributes", icon: Tags, href: "/products/attributes" },
   { name: "Campaigns", icon: Layers, href: "/products/campaigns" },
+  { name: "Deals", icon: Percent, href: "/products/deals" },
 ];
 
 const SETTINGS_SUB_ITEMS = [

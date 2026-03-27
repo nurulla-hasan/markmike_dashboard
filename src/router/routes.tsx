@@ -19,8 +19,8 @@ const Users = lazy(() => import("@/app/management/users/Users"));
 const UserDetails = lazy(() => import("@/app/management/users/details/UserDetails"));
 const Orders = lazy(() => import("@/app/management/orders/Orders"));
 const StandoutDeals = lazy(() => import("@/app/management/standout-deals/StandoutDeals"));
-const AddDeal = lazy(() => import("@/app/management/standout-deals/add-deal/AddDeal"));
-const EditDeal = lazy(() => import("@/app/management/standout-deals/edit-deal/EditDeal"));
+const StandoutAddDeal = lazy(() => import("@/app/management/standout-deals/add-deal/AddDeal"));
+const StandoutEditDeal = lazy(() => import("@/app/management/standout-deals/edit-deal/EditDeal"));
 const Miwahdiss = lazy(() => import("@/app/management/miwahdiss/Miwahdiss"));
 const AddEvent = lazy(() => import("@/app/management/miwahdiss/add-event/AddEvent"));
 const EditEvent = lazy(() => import("@/app/management/miwahdiss/edit-event/EditEvent"));
@@ -36,7 +36,9 @@ const Categories = lazy(() => import("@/app/products/categories/Categories"));
 const ProductAttributes = lazy(() => import("@/app/products/product-attributes/ProductAttributes"));
 const Campaigns = lazy(() => import("@/app/products/campaigns/Campaigns"));
 const CampaignView = lazy(() => import("@/app/products/campaigns/view/CampaignView"));
-
+const Deals = lazy(() => import("@/app/products/deals/Deals"));
+const DealsAddDeal = lazy(() => import("@/app/products/deals/add/AddDeal"));
+const DealsEditDeal = lazy(() => import("@/app/products/deals/edit/EditDeal"));
 
 const Login = lazy(() => import("@/app/auth/Login"));
 const ForgotPassword = lazy(() => import("@/app/auth/ForgotPassword"));
@@ -60,8 +62,8 @@ export const router = createBrowserRouter([
             { path: "users/:id", element: <UserDetails /> },
             { path: "orders", element: <Orders /> },
             { path: "standout-deals", element: <StandoutDeals /> },
-            { path: "standout-deals/add", element: <AddDeal /> },
-            { path: "standout-deals/edit/:id", element: <EditDeal /> },
+            { path: "standout-deals/add", element: <StandoutAddDeal /> },
+            { path: "standout-deals/edit/:id", element: <StandoutEditDeal /> },
             { path: "miwahdiss", element: <Miwahdiss /> },
             { path: "miwahdiss/add", element: <AddEvent /> },
             { path: "miwahdiss/edit/:id", element: <EditEvent /> },
@@ -78,8 +80,9 @@ export const router = createBrowserRouter([
             { path: "products/attributes", element: <ProductAttributes /> },
             { path: "products/campaigns", element: <Campaigns /> },
             { path: "products/campaigns/view/:id", element: <CampaignView /> },
-            
-            // Settings"products/campaigns", element: <Campaigns /> },
+            { path: "products/deals", element: <Deals /> },
+            { path: "products/deals/add", element: <DealsAddDeal /> },
+            { path: "products/deals/edit/:id", element: <DealsEditDeal /> },
             
             // Settings
             { path: "notifications", element: <Notifications /> },
