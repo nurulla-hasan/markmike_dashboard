@@ -30,6 +30,7 @@ import {
   Layers,
   Palette,
   Type as FontIcon,
+  MapPin,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
@@ -49,6 +50,7 @@ const MANAGEMENT_SUB_ITEMS = [
   { name: "Miwahdiss", icon: MessageCircle, href: "/miwahdiss" },
   { name: "Catalog", icon: List, href: "/catalog" },
   { name: "Template Library", icon: Image, href: "/template-library" },
+  { name: "Branch Management", icon: MapPin, href: "/branch" },
   { name: "Logo", icon: Image, href: "/logo" },
   { name: "Quote Request", icon: FileQuestion, href: "/quote-request" },
   { name: "Staff Managements", icon: Users, href: "/staff-managements" },
@@ -98,6 +100,7 @@ const Sidebar = ({
     "miwahdiss",
     "catalog",
     "template-library",
+    "branch",
     "logo",
     "quote-request",
     "staff-managements",

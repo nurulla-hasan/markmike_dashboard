@@ -39,6 +39,9 @@ const CanvasEditor = lazy(() => import("@/app/management/canvas-editor/CanvasEdi
 const ArtworkLibrary = lazy(() => import("@/app/design-tools/ArtworkLibrary"));
 const ArtworkSubCategories = lazy(() => import("@/app/design-tools/ArtworkSubCategories"));
 const ArtworkAssets = lazy(() => import("@/app/design-tools/ArtworkAssets"));
+const BranchList = lazy(() => import("@/app/management/branch/BranchList"));
+const BranchForm = lazy(() => import("@/components/management/branch/BranchForm"));
+const BranchView = lazy(() => import("@/app/management/branch/BranchView"));
 const FontManager = lazy(() => import("@/app/design-tools/FontManager"));
 
 
@@ -89,6 +92,10 @@ export const router = createBrowserRouter([
             { path: "template-library/add", element: <TemplateForm /> },
             { path: "template-library/edit/:id", element: <TemplateForm /> },
             { path: "logo", element: <Logo /> },
+            { path: "branch", element: <BranchList /> },
+            { path: "branch/add", element: <BranchForm /> },
+            { path: "branch/edit/:id", element: <BranchForm /> },
+            { path: "branch/view/:id", element: <BranchView /> },
             { path: "quote-request", element: <QuoteRequest /> },
             { path: "staff-managements", element: <StaffManagements /> },
             { path: "make-admin", element: <MakeAdmin /> },

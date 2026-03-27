@@ -1,6 +1,5 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Select,
@@ -11,7 +10,6 @@ import {
 } from "@/components/ui/select";
 import {
   Plus,
-  Search,
   Users,
   Calendar,
   CalendarCheck,
@@ -23,6 +21,7 @@ import { DataTable } from "@/components/ui/custom/data-table";
 import { columns } from "@/components/management/miwahdiss/columns";
 import type { IMiwahdissEvent } from "@/types/miwahdiss.type";
 import PageHeader from "@/components/ui/custom/page-header";
+import { SearchInput } from "@/components/ui/custom/search-input";
 
 const Miwahdiss = () => {
   const navigate = useNavigate();
@@ -85,7 +84,6 @@ const Miwahdiss = () => {
             <ShieldCheck className="h-5 w-5" />
             Moderation
             <Badge
-              variant="destructive"
               className="ml-1 h-5 min-w-5 flex items-center justify-center p-0 rounded-full">32</Badge>
           </Button>
           <Button
@@ -117,12 +115,9 @@ const Miwahdiss = () => {
       {/* Filter & Search */}
       <Card>
         <CardContent className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search events by name..." className="pl-9 bg-muted/20 border-none" />
-          </div>
+         <SearchInput placeholder="Search events by name..." />
           <Select defaultValue="all">
-            <SelectTrigger className="w-full md:w-45 bg-muted/20 border-none">
+            <SelectTrigger className="w-full md:w-45">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>
