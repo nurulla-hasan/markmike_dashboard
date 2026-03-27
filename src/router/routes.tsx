@@ -24,6 +24,8 @@ const StandoutEditDeal = lazy(() => import("@/app/management/standout-deals/edit
 const Miwahdiss = lazy(() => import("@/app/management/miwahdiss/Miwahdiss"));
 const AddEvent = lazy(() => import("@/app/management/miwahdiss/add-event/AddEvent"));
 const EditEvent = lazy(() => import("@/app/management/miwahdiss/edit-event/EditEvent"));
+const MiwahdissView = lazy(() => import("@/app/management/miwahdiss/view/MiwahdissView"));
+const MiwahdissModeration = lazy(() => import("@/app/management/miwahdiss/moderation/MiwahdissModeration"));
 const Logo = lazy(() => import("@/app/management/logo/Logo"));
 const QuoteRequest = lazy(() => import("@/app/management/quote-request/QuoteRequest"));
 const StaffManagements = lazy(() => import("@/app/management/staff-managements/StaffManagements"));
@@ -67,6 +69,8 @@ export const router = createBrowserRouter([
             { path: "miwahdiss", element: <Miwahdiss /> },
             { path: "miwahdiss/add", element: <AddEvent /> },
             { path: "miwahdiss/edit/:id", element: <EditEvent /> },
+            { path: "miwahdiss/view/:id", element: <MiwahdissView /> },
+            { path: "miwahdiss/moderation", element: <MiwahdissModeration /> },
             { path: "logo", element: <Logo /> },
             { path: "quote-request", element: <QuoteRequest /> },
             { path: "staff-managements", element: <StaffManagements /> },
