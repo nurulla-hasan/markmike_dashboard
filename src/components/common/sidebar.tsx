@@ -28,6 +28,8 @@ import {
   List,
   Tags,
   Layers,
+  Palette,
+  Type as FontIcon,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
@@ -60,6 +62,11 @@ const PRODUCTS_SUB_ITEMS = [
   { name: "Product Attributes", icon: Tags, href: "/products/attributes" },
   { name: "Campaigns", icon: Layers, href: "/products/campaigns" },
   { name: "Deals", icon: Percent, href: "/products/deals" },
+];
+
+const DESIGN_TOOLS_SUB_ITEMS = [
+  { name: "Artwork Library", icon: Image, href: "/design-tools/artwork-library" },
+  { name: "Font Manager", icon: FontIcon, href: "/design-tools/font-manager" },
 ];
 
 const SETTINGS_SUB_ITEMS = [
@@ -98,16 +105,19 @@ const Sidebar = ({
     "canvas-editor",
   ].includes(section);
   const isProductsPath = section === "products";
+  const isDesignToolsPath = section === "design-tools";
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
   const [isManagementOpen, setIsManagementOpen] = useState(true);
   const [isProductsOpen, setIsProductsOpen] = useState(true);
+  const [isDesignToolsOpen, setIsDesignToolsOpen] = useState(isDesignToolsPath);
 
   useEffect(() => {
     if (isSettingsPath) setIsSettingsOpen(true);
     // if (isManagementPath) setIsManagementOpen(true);
     if (isProductsPath) setIsProductsOpen(true);
-  }, [isSettingsPath, isManagementPath, isProductsPath]);
+    if (isDesignToolsPath) setIsDesignToolsOpen(true);
+  }, [isSettingsPath, isManagementPath, isProductsPath, isDesignToolsPath]);
 
   useEffect(() => {
     if (prevLocation.current !== location && isSidebarOpen) {
@@ -235,6 +245,52 @@ const Sidebar = ({
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-2">
               {PRODUCTS_SUB_ITEMS.map((item) => (
+                <NavLink
+                  key={item.href}
+                  to={item.href}
+                  className={({ isActive }) =>
+                    `w-[90%] ml-5 flex items-center justify-start px-2 py-2 rounded-sm text-sm font-medium transition-colors duration-200  
+                                ${
+                                  isActive
+                                    ? "bg-primary text-primary-foreground"
+                                    : "hover:bg-accent hover:text-accent-foreground"
+                                }`
+                  }
+                  onClick={() => setIsSidebarOpen(false)}
+                >
+                  <item.icon className="mr-2 w-4 h-4" />
+                  {item.name}
+                </NavLink>
+              ))}
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* Design Tools group */}
+          <Collapsible
+            open={isDesignToolsOpen}
+            onOpenChange={setIsDesignToolsOpen}
+          >
+            <CollapsibleTrigger
+              className={`w-full mb-2 flex items-center justify-between p-2 rounded-sm text-base font-medium cursor-pointer transition-colors duration-200 
+                    ${
+                      isDesignToolsPath
+                        ? "bg-primary text-primary-foreground"
+                        : "hover:bg-accent hover:text-accent-foreground"
+                    }
+                            `}
+            >
+              <div className="flex items-center text-sm px-2">
+                <Palette className="mr-2 h-4 w-4" />
+                Design Tools
+              </div>
+              <ChevronDown
+                className={`h-4 w-4 transition-transform duration-300 ${
+                  isDesignToolsOpen ? "-rotate-180" : ""
+                }`}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="space-y-2">
+              {DESIGN_TOOLS_SUB_ITEMS.map((item) => (
                 <NavLink
                   key={item.href}
                   to={item.href}

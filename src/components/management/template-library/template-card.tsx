@@ -56,20 +56,19 @@ export function TemplateCard({ item }: TemplateCardProps) {
             />
           </div>
         </div>
-        
+
         <div className="flex flex-wrap gap-1.5 mt-3">
           {item.tags.map((tag) => (
-            <Badge 
-              key={tag} 
-              variant="secondary" 
+            <Badge
+              key={tag}
+              variant="secondary"
               className="font-normal text-[10px] px-2 py-0 h-5 bg-muted/50 text-muted-foreground border-none"
             >
               {tag}
             </Badge>
           ))}
         </div>
-
-        <Button 
+        <Button
           className="w-full mt-4"
           size="sm"
         >

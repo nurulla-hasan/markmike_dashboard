@@ -36,6 +36,8 @@ const TemplateForm = lazy(() => import("@/components/management/template-library
 const StaffManagements = lazy(() => import("@/app/management/staff-managements/StaffManagements"));
 const MakeAdmin = lazy(() => import("@/app/management/make-admin/MakeAdmin"));
 const CanvasEditor = lazy(() => import("@/app/management/canvas-editor/CanvasEditor"));
+const ArtworkLibrary = lazy(() => import("@/app/design-tools/artwork-library/ArtworkLibrary"));
+const FontManager = lazy(() => import("@/app/design-tools/font-manager/FontManager"));
 
 const AllProducts = lazy(() => import("@/app/products/all-products/AllProducts"));
 const AddProduct = lazy(() => import("@/app/products/add-product/AddProduct"));
@@ -88,6 +90,10 @@ export const router = createBrowserRouter([
             { path: "staff-managements", element: <StaffManagements /> },
             { path: "make-admin", element: <MakeAdmin /> },
             { path: "canvas-editor", element: <CanvasEditor /> },
+
+            // Design Tools
+            { path: "design-tools/artwork-library", element: <ArtworkLibrary /> },
+            { path: "design-tools/font-manager", element: <FontManager /> },
 
             // Products
             { path: "products/all", element: <AllProducts /> },
