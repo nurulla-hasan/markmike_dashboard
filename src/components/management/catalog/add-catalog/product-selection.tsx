@@ -74,7 +74,8 @@ export function ProductSelection() {
             </FormItem>
             <Button 
               type="button" 
-              className="bg-destructive hover:bg-destructive/90 text-white font-bold h-10 px-6"
+              variant="destructive"
+              className="h-10 px-6"
             >
               Add
             </Button>

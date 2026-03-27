@@ -61,7 +61,7 @@ export function Web2PrintControls({ form }: { form: UseFormReturn<TCatalogFormVa
             </div>
             <Button 
               type="button" 
-              className="bg-destructive hover:bg-destructive/90 text-white"
+              variant="destructive"
             >
               Add
             </Button>

@@ -31,6 +31,8 @@ const QuoteRequest = lazy(() => import("@/app/management/quote-request/QuoteRequ
 const Catalog = lazy(() => import("@/app/management/catalog/Catalog"));
 const AddCatalog = lazy(() => import("@/app/management/catalog/add/AddCatalog"));
 const CatalogView = lazy(() => import("@/app/management/catalog/view/CatalogView"));
+const TemplateLibrary = lazy(() => import("@/app/management/template-library/TemplateLibrary"));
+const TemplateForm = lazy(() => import("@/components/management/template-library/TemplateForm"));
 const StaffManagements = lazy(() => import("@/app/management/staff-managements/StaffManagements"));
 const MakeAdmin = lazy(() => import("@/app/management/make-admin/MakeAdmin"));
 const CanvasEditor = lazy(() => import("@/app/management/canvas-editor/CanvasEditor"));
@@ -78,6 +80,9 @@ export const router = createBrowserRouter([
             { path: "catalog/add", element: <AddCatalog /> },
             { path: "catalog/view/:id", element: <CatalogView /> },
             { path: "catalog/edit/:id", element: <AddCatalog /> },
+            { path: "template-library", element: <TemplateLibrary /> },
+            { path: "template-library/add", element: <TemplateForm /> },
+            { path: "template-library/edit/:id", element: <TemplateForm /> },
             { path: "logo", element: <Logo /> },
             { path: "quote-request", element: <QuoteRequest /> },
             { path: "staff-managements", element: <StaffManagements /> },

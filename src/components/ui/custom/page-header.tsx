@@ -20,7 +20,6 @@ const PageHeader = ({
   return (
     <div className="flex flex-col gap-1.5">
       <div className="flex items-center gap-4">
-        <div>
           {showBack && (
             <Button
               variant="ghost"
@@ -30,7 +29,6 @@ const PageHeader = ({
               <ArrowLeft />
             </Button>
           )}
-        </div>
         <div className="flex flex-col">
           <div className="flex items-center gap-3">
             <h1 className="text-xl font-bold uppercase tracking-widest text-foreground">
