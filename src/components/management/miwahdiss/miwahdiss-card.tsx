@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ConfirmationModal } from "@/components/ui/custom/confirmation-modal";
-import type { Miwahdiss } from "@/types/miwahdiss.type";
+import type { IMiwahdissEvent } from "@/types/miwahdiss.type";
 
 interface MiwahdissCardProps {
-  item: Miwahdiss;
+  item: IMiwahdissEvent;
 }
 
 export function MiwahdissCard({ item }: MiwahdissCardProps) {
@@ -15,14 +15,14 @@ export function MiwahdissCard({ item }: MiwahdissCardProps) {
     <Card className="pt-0">
       <div className="relative aspect-12/8 overflow-hidden rounded-xl bg-muted mb-3">
         <img
-          src={item.image}
-          alt={item.title}
+          src={item.heroImage}
+          alt={item.name}
           className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
         />
       </div>
       <CardContent>
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-semibold text-base line-clamp-1">{item.title}</h3>
+          <h3 className="font-semibold text-base line-clamp-1">{item.name}</h3>
           <div className="flex items-center gap-1">
             <Button
               asChild

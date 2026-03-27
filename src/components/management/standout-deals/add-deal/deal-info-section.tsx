@@ -9,10 +9,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import type { DealFormValues, DealFormInput } from "@/schemas/deal.schema";
+import type { TDealFormValues } from "@/schemas/deal.schema";
 
 interface DealInfoSectionProps {
-  form: UseFormReturn<DealFormInput, any, DealFormValues>;
+  form: UseFormReturn<TDealFormValues, any>;
 }
 
 export function DealInfoSection({ form }: DealInfoSectionProps) {

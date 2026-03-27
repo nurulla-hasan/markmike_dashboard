@@ -11,6 +11,10 @@ export const dealSchema = z.object({
   showInStandoutCampaign: z.boolean().default(false),
   deliveryTimeframe: z.string().min(1, "Delivery timeframe is required"),
   reelVideo: z.any().optional(),
+  productionMethods: z.array(z.string()).default([]),
+  types: z.array(z.string()).default([]),
+  minQuantity: z.number().default(1),
+  deliveryOptions: z.array(z.string()).default([]),
   products: z.array(z.object({
     productId: z.string(),
     quantity: z.number().min(1)

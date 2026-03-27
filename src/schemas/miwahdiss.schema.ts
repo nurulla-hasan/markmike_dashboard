@@ -10,6 +10,7 @@ export const miwahdissSchema = z.object({
     name: z.string().min(1, "Event name is required"),
     description: z.string().min(1, "Description is required"),
     heroImage: z.any().optional(),
+    images: z.array(z.string()).default([]),
     eventDate: z.string().min(1, "Event date is required"),
     cutoffDate: z.string().min(1, "Cut-off date is required"),
     deliveryTimeline: z.string().min(1, "Delivery timeline is required"),

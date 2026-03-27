@@ -8,10 +8,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import type { DealFormValues, DealFormInput } from "@/schemas/deal.schema";
+import type { TDealFormValues } from "@/schemas/deal.schema";
 
 interface DealDescriptionSectionProps {
-  form: UseFormReturn<DealFormInput, any, DealFormValues>;
+  form: UseFormReturn<TDealFormValues, any>;
 }
 
 export function DealDescriptionSection({ form }: DealDescriptionSectionProps) {

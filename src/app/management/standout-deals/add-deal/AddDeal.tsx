@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { dealSchema, type DealFormValues } from "@/schemas/deal.schema";
+import { dealSchema, type TDealFormValues } from "@/schemas/deal.schema";
 import { DealMediaSection } from "@/components/management/standout-deals/add-deal/deal-media-section";
 import { DealInfoSection } from "@/components/management/standout-deals/add-deal/deal-info-section";
 import { DealOptionsSection } from "@/components/management/standout-deals/add-deal/deal-options-section";
@@ -18,25 +18,20 @@ import PageLayout from "@/components/common/page-layout";
 export function AddDeal() {
   const navigate = useNavigate();
 
-  const form = useForm<
-    z.input<typeof dealSchema>,
-    any,
-    z.output<typeof dealSchema>
-  >({
-    resolver: zodResolver(dealSchema),
+  const form = useForm<TDealFormValues>({
+    resolver: zodResolver(dealSchema as any),
     defaultValues: {
       name: "",
-      price: 0,
+      price: "0",
       description: "",
-      productionMethods: [],
-      types: [],
-      minQuantity: 10,
-      deliveryOptions: [],
-      dealProducts: [],
+      includeDigitizing: false,
+      showInStandoutCampaign: false,
+      deliveryTimeframe: "5-7 days",
+      products: [],
     },
   });
 
-  function onSubmit(data: DealFormValues) {
+  function onSubmit(data: TDealFormValues) {
     console.log(data);
     // Submit logic here
     // navigate(-1); // Go back after success

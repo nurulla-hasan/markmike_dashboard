@@ -9,18 +9,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { 
-  Plus, 
-  Search, 
-  Users, 
-  Calendar, 
-  CalendarCheck, 
+import {
+  Plus,
+  Search,
+  Users,
+  Calendar,
+  CalendarCheck,
   ShieldCheck
 } from "lucide-react";
 import PageLayout from "@/components/common/page-layout";
 import { useNavigate } from "react-router-dom";
 import { DataTable } from "@/components/ui/custom/data-table";
-import { createColumns } from "@/components/management/miwahdiss/columns";
+import { columns } from "@/components/management/miwahdiss/columns";
 import type { IMiwahdissEvent } from "@/types/miwahdiss.type";
 
 const Miwahdiss = () => {
@@ -33,12 +33,12 @@ const Miwahdiss = () => {
   ];
 
   const events: IMiwahdissEvent[] = [
-    { 
-      id: "1", 
-      name: "4th july", 
-      heroImage: "/logo.png", 
-      eventDate: "25-02-2026", 
-      cutoffDate: "25-02-2026", 
+    {
+      id: "1",
+      name: "4th july",
+      heroImage: "/logo.png",
+      eventDate: "25-02-2026",
+      cutoffDate: "25-02-2026",
       status: "Draft",
       description: "",
       deliveryTimeline: "5-7 days",
@@ -46,12 +46,12 @@ const Miwahdiss = () => {
       productCount: 6,
       sections: []
     },
-    { 
-      id: "2", 
-      name: "Grey", 
-      heroImage: "/logo.png", 
-      eventDate: "25-02-2026", 
-      cutoffDate: "25-02-2026", 
+    {
+      id: "2",
+      name: "Grey",
+      heroImage: "/logo.png",
+      eventDate: "25-02-2026",
+      cutoffDate: "25-02-2026",
       status: "Active",
       description: "",
       deliveryTimeline: "5-7 days",
@@ -59,12 +59,12 @@ const Miwahdiss = () => {
       productCount: 6,
       sections: []
     },
-    { 
-      id: "3", 
-      name: "Grey", 
-      heroImage: "/logo.png", 
-      eventDate: "25-02-2026", 
-      cutoffDate: "25-02-2026", 
+    {
+      id: "3",
+      name: "Grey",
+      heroImage: "/logo.png",
+      eventDate: "25-02-2026",
+      cutoffDate: "25-02-2026",
       status: "Expired",
       description: "",
       deliveryTimeline: "5-7 days",
@@ -73,8 +73,6 @@ const Miwahdiss = () => {
       sections: []
     },
   ];
-
-  const columns = createColumns(navigate);
 
   return (
     <PageLayout>
@@ -85,10 +83,14 @@ const Miwahdiss = () => {
           <Button variant="outline" className="flex items-center gap-2" onClick={() => navigate("/miwahdiss/moderation")}>
             <ShieldCheck className="h-5 w-5" />
             Moderation
-            <Badge variant="destructive" className="ml-1 h-5 min-w-5 flex items-center justify-center p-0 rounded-full">32</Badge>
+            <Badge
+              variant="destructive"
+              className="ml-1 h-5 min-w-5 flex items-center justify-center p-0 rounded-full">32</Badge>
           </Button>
-          <Button className="bg-destructive hover:bg-destructive/90 text-white font-bold" onClick={() => navigate("/miwahdiss/add")}>
-            <Plus className="h-4 w-4 mr-2" />
+          <Button
+            className="bg-destructive hover:bg-destructive/90 text-white font-bold"
+            onClick={() => navigate("/miwahdiss/add")}>
+            <Plus />
             Add New Events
           </Button>
         </div>
@@ -133,15 +135,11 @@ const Miwahdiss = () => {
       </Card>
 
       {/* Events Table */}
-      {/* <Card>
-        <CardContent> */}
-          <DataTable 
-            columns={columns} 
-            data={events} 
-            pageSize={10}
-          />
-        {/* </CardContent>
-      </Card> */}
+      <DataTable
+        columns={columns}
+        data={events}
+        pageSize={10}
+      />
     </PageLayout>
   );
 };

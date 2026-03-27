@@ -1,12 +1,12 @@
 import { Edit, Trash2, Star, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import type { Deal } from "@/types/deal.type";
+import type { IDeal } from "@/types/deal.type";
 import { Link } from "react-router-dom";
 import { ConfirmationModal } from "@/components/ui/custom/confirmation-modal";
 
 interface DealCardProps {
-  deal: Deal;
+  deal: IDeal;
 }
 
 export function DealCard({ deal }: DealCardProps) {
@@ -14,7 +14,7 @@ export function DealCard({ deal }: DealCardProps) {
     <Card className="pt-0 border-none shadow-none">
       <div className="relative aspect-12/8 overflow-hidden rounded-xl bg-muted mb-3">
         <img
-          src={deal.image}
+          src={deal.thumbnail}
           alt={deal.name}
           className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
         />
@@ -58,18 +58,18 @@ export function DealCard({ deal }: DealCardProps) {
         <div className="flex items-center gap-1 text-sm text-muted-foreground">
           <Star className="h-4 w-4 fill-muted-foreground text-muted-foreground" />
           <span className="font-medium text-foreground">{deal.rating}</span>
-          <span>({(deal.reviews / 1000).toFixed(1)}k+)</span>
+          <span>({(deal.reviewsCount / 1000).toFixed(1)}k+)</span>
         </div>
 
         <div className="text-lg font-bold text-red-500">
-          {deal.price.toFixed(2)} {deal.currency}
+          {deal.price.toFixed(2)} JMD
         </div>
 
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <div className="flex h-6 w-6 items-center justify-center rounded bg-secondary text-secondary-foreground">
             <Zap className="h-4 w-4 fill-current" />
           </div>
-          <span>{deal.deliveryTime}</span>
+          <span>{deal.deliveryTimeframe}</span>
         </div>
       </CardContent>
     </Card>

@@ -11,10 +11,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { DealFormValues, DealFormInput } from "@/schemas/deal.schema";
+import type { TDealFormValues } from "@/schemas/deal.schema";
 
 interface DealOptionsSectionProps {
-  form: UseFormReturn<DealFormInput, any, DealFormValues>;
+  form: UseFormReturn<TDealFormValues, any>;
 }
 
 const PRODUCTION_METHODS = [
@@ -66,7 +66,7 @@ export function DealOptionsSection({ form }: DealOptionsSectionProps) {
                                   ? field.onChange([...field.value, item.id])
                                   : field.onChange(
                                       field.value?.filter(
-                                        (value) => value !== item.id
+                                        (value: string) => value !== item.id
                                       )
                                     );
                               }}
@@ -117,7 +117,7 @@ export function DealOptionsSection({ form }: DealOptionsSectionProps) {
                                   ? field.onChange([...field.value, item.id])
                                   : field.onChange(
                                       field.value?.filter(
-                                        (value) => value !== item.id
+                                        (value: string) => value !== item.id
                                       )
                                     );
                               }}
@@ -197,7 +197,7 @@ export function DealOptionsSection({ form }: DealOptionsSectionProps) {
                                   ? field.onChange([...field.value, item.id])
                                   : field.onChange(
                                       field.value?.filter(
-                                        (value) => value !== item.id
+                                        (value: string) => value !== item.id
                                       )
                                     );
                               }}

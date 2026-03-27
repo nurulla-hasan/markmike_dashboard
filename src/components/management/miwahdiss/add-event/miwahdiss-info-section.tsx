@@ -10,10 +10,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import type { MiwahdissFormValues } from "@/schemas/miwahdiss.schema";
+import type { TMiwahdissFormValues } from "@/schemas/miwahdiss.schema";
 
 interface MiwahdissInfoSectionProps {
-  form: UseFormReturn<MiwahdissFormValues, any>;
+  form: UseFormReturn<TMiwahdissFormValues, any>;
 }
 
 export function MiwahdissInfoSection({ form }: MiwahdissInfoSectionProps) {

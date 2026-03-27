@@ -36,14 +36,13 @@ const MiwahdissModeration = () => {
                         variant="ghost" 
                         size="icon" 
                         onClick={() => navigate(-1)}
-                        className="h-10 w-10 text-muted-foreground hover:text-foreground"
                     >
                         <ArrowLeft className="h-6 w-6" />
                     </Button>
-                    <h1 className="text-2xl font-bold text-foreground">Community moderation</h1>
+                    <h1 className="text-xl font-bold text-foreground">Community moderation</h1>
                 </div>
                 <Select defaultValue="all">
-                    <SelectTrigger className="w-45 bg-muted/20 border-none">
+                    <SelectTrigger className="w-45">
                         <SelectValue placeholder="Filter" />
                     </SelectTrigger>
                     <SelectContent>

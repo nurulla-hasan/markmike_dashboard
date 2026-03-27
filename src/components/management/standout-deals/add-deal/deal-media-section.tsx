@@ -9,10 +9,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import type { DealFormValues, DealFormInput } from "@/schemas/deal.schema";
+import type { TDealFormValues } from "@/schemas/deal.schema";
 
 interface DealMediaSectionProps {
-  form: UseFormReturn<DealFormInput, any, DealFormValues>;
+  form: UseFormReturn<TDealFormValues, any>;
 }
 
 export function DealMediaSection({ form }: DealMediaSectionProps) {

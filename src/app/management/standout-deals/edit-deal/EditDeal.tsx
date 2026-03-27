@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { ArrowLeft } from "lucide-react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import {
   dealSchema,
-  type DealFormValues,
+  type TDealFormValues,
 } from "@/schemas/deal.schema";
 import { DealMediaSection } from "@/components/management/standout-deals/add-deal/deal-media-section";
 import { DealInfoSection } from "@/components/management/standout-deals/add-deal/deal-info-section";
@@ -18,53 +18,56 @@ import { DealOptionsSection } from "@/components/management/standout-deals/add-d
 import { DealDescriptionSection } from "@/components/management/standout-deals/add-deal/deal-description-section";
 import { DealProductsSection } from "@/components/management/standout-deals/add-deal/deal-products-section";
 import PageLayout from "@/components/common/page-layout";
-import type { Deal } from "@/types/deal.type";
+import type { IDeal } from "@/types/deal.type";
 
 export function EditDeal() {
   const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
-  const dealData = location.state as Deal | undefined;
+  const dealData = location.state as IDeal | undefined;
 
-  const form = useForm<
-    z.input<typeof dealSchema>,
-    any,
-    z.output<typeof dealSchema>
-  >({
-    resolver: zodResolver(dealSchema),
+  const form = useForm<TDealFormValues>({
+    resolver: zodResolver(dealSchema as any),
+    mode: "onChange",
     defaultValues: {
       name: "",
-      price: 0,
+      price: "",
       description: "",
+      includeDigitizing: false,
+      showInStandoutCampaign: false,
+      deliveryTimeframe: "",
       productionMethods: [],
       types: [],
-      minQuantity: 10,
+      minQuantity: 1,
       deliveryOptions: [],
-      dealProducts: [],
+      products: [],
     },
   });
 
   useEffect(() => {
     if (dealData) {
-      // In a real app, we would map the dealData to the form structure
-      // For now, we'll just set some basic fields if they match
       form.reset({
         name: dealData.name,
-        price: dealData.price,
-        description: "", // dealData doesn't have description in the type yet
-        productionMethods: ["printing"], // Mock data
-        types: ["male"], // Mock data
-        minQuantity: 10,
-        deliveryOptions: ["standard"], // Mock data
-        dealProducts: [],
+        price: dealData.price.toString(),
+        description: dealData.description || "",
+        includeDigitizing: dealData.includeDigitizing,
+        showInStandoutCampaign: dealData.showInStandoutCampaign,
+        deliveryTimeframe: dealData.deliveryTimeframe,
+        productionMethods: [], // Data missing in IDeal
+        types: [], // Data missing in IDeal
+        minQuantity: 1, // Data missing in IDeal
+        deliveryOptions: [], // Data missing in IDeal
+        products: dealData.products?.map(p => ({
+          productId: p.id,
+          quantity: p.quantity
+        })) || [],
       });
     } else {
-      // Fetch deal by ID if not in state (mock implementation)
       console.log("Fetching deal with ID:", id);
     }
   }, [dealData, form, id]);
 
-  function onSubmit(data: DealFormValues) {
+  function onSubmit(data: TDealFormValues) {
     console.log("Updating deal:", data);
     // Update logic here
     navigate(-1); // Go back after success

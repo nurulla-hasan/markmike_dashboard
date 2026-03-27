@@ -1,39 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useRef } from "react";
-import type { UseFormReturn } from "react-hook-form";
-import { Button } from "@/components/ui/button";
-import type { MiwahdissFormValues } from "@/schemas/miwahdiss.schema";
 
-interface MiwahdissDesignUploadSectionProps {
-  form: UseFormReturn<MiwahdissFormValues, any>;
-}
+import { useRef } from "react";
+import { Button } from "@/components/ui/button";
+
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-export function MiwahdissDesignUploadSection({
-  form,
-}: MiwahdissDesignUploadSectionProps) {
+export function MiwahdissDesignUploadSection() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleAddDesign = () => {
-    const file = fileInputRef.current?.files?.[0];
-    if (file) {
-      const currentDesigns = form.getValues("designs") || [];
-
-      if (currentDesigns.length >= 5) {
-        alert("You can only add up to 5 designs.");
-        return;
-      }
-
-      const newDesign = {
-        id: Math.random().toString(36).substr(2, 9),
-        image: URL.createObjectURL(file),
-      };
-      form.setValue("designs", [...currentDesigns, newDesign]);
-      // Reset input
-      if (fileInputRef.current) fileInputRef.current.value = "";
-    }
+    // Logic to add design to sections
+    console.log("Add design logic needs to be updated for sections");
   };
 
   return (

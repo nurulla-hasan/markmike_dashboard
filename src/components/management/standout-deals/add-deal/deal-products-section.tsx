@@ -22,10 +22,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { DealFormValues, DealFormInput } from "@/schemas/deal.schema";
+import type { TDealFormValues } from "@/schemas/deal.schema";
 
 interface DealProductsSectionProps {
-  form: UseFormReturn<DealFormInput, any, DealFormValues>;
+  form: UseFormReturn<TDealFormValues, any>;
 }
 
 const PRODUCTS = [
@@ -49,34 +49,26 @@ const PRODUCTS = [
   },
 ];
 
-const SIZES = ["S", "M", "L", "XL", "XXL"];
+// const SIZES = ["S", "M", "L", "XL", "XXL"];
 
 export function DealProductsSection({ form }: DealProductsSectionProps) {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: "dealProducts",
+    name: "products",
   });
 
   const [selectedProductId, setSelectedProductId] = useState<string>("");
-  const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState<string>("");
 
   const handleAddProduct = () => {
-    if (selectedProductId && selectedSize && quantity) {
-      const product = PRODUCTS.find((p) => p.id === selectedProductId);
-      if (product) {
-        append({
-          id: product.id,
-          name: product.name,
-          image: product.image,
-          size: selectedSize,
-          quantity: parseInt(quantity),
-        });
-        // Reset fields
-        setSelectedProductId("");
-        setSelectedSize("");
-        setQuantity("");
-      }
+    if (selectedProductId && quantity) {
+      append({
+        productId: selectedProductId,
+        quantity: parseInt(quantity),
+      });
+      // Reset fields
+      setSelectedProductId("");
+      setQuantity("");
     }
   };
 
@@ -117,40 +109,24 @@ export function DealProductsSection({ form }: DealProductsSectionProps) {
             </Select>
           </div>
 
-          <div className="w-full md:w-32 space-y-2">
-            <FormLabel>Size</FormLabel>
-            <Select value={selectedSize} onValueChange={setSelectedSize}>
-              <SelectTrigger>
-                <SelectValue placeholder="Size" />
-              </SelectTrigger>
-              <SelectContent>
-                {SIZES.map((size) => (
-                  <SelectItem key={size} value={size}>
-                    {size}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <div className="flex-1 space-y-2">
+            <FormLabel>Quantity</FormLabel>
+            <Input
+              type="number"
+              placeholder="Type here"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+            />
           </div>
 
-            <div className="w-full md:w-32 space-y-2">
-              <FormLabel>Quantity</FormLabel>
-              <Input
-                type="number"
-                placeholder="Type here"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-              />
-            </div>
-
-            <Button
-              type="button"
-              className="w-full md:w-auto"
-              onClick={handleAddProduct}
-              disabled={!selectedProductId || !selectedSize || !quantity}
-            >
-              Add
-            </Button>
+          <Button
+            type="button"
+            className="w-full md:w-auto"
+            onClick={handleAddProduct}
+            disabled={!selectedProductId || !quantity}
+          >
+            Add
+          </Button>
         </div>
 
         {/* Product Variants Table */}
@@ -161,9 +137,7 @@ export function DealProductsSection({ form }: DealProductsSectionProps) {
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-12.5">#</TableHead>
-                  <TableHead>Color</TableHead>{" "}
-                  {/* User image says "Color" but shows Product Name/Image */}
-                  <TableHead>Size</TableHead>
+                  <TableHead>Product</TableHead>
                   <TableHead>Quantity</TableHead>
                   <TableHead className="text-right">Action</TableHead>
                 </TableRow>
@@ -171,40 +145,42 @@ export function DealProductsSection({ form }: DealProductsSectionProps) {
               <TableBody>
                 {fields.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={5} className="h-24 text-center">
+                    <TableCell colSpan={4} className="h-24 text-center">
                       No products added.
                     </TableCell>
                   </TableRow>
                 ) : (
-                  fields.map((field, index) => (
-                    <TableRow key={field.id}>
-                      <TableCell>{index + 1}</TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          {field.image && (
-                            <img
-                              src={field.image}
-                              alt={field.name}
-                              className="h-8 w-8 rounded object-cover"
-                            />
-                          )}
-                          <span>{field.name}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell>{field.size}</TableCell>
-                      <TableCell>{field.quantity as number}</TableCell>
-                      <TableCell className="text-right">
-                        <Button
-                          variant="ghost"
-                          size="icon-sm"
-                          onClick={() => remove(index)}
-                          className="text-destructive"
-                        >
-                          <Trash2 />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))
+                  fields.map((field, index) => {
+                    const productInfo = PRODUCTS.find((p) => p.id === field.productId);
+                    return (
+                      <TableRow key={field.id}>
+                        <TableCell>{index + 1}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            {productInfo?.image && (
+                              <img
+                                src={productInfo.image}
+                                alt={productInfo.name}
+                                className="h-8 w-8 rounded object-cover"
+                              />
+                            )}
+                            <span>{productInfo?.name || "Unknown Product"}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>{field.quantity}</TableCell>
+                        <TableCell className="text-right">
+                          <Button
+                            variant="ghost"
+                            size="icon-sm"
+                            onClick={() => remove(index)}
+                            className="text-destructive"
+                          >
+                            <Trash2 />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
                 )}
               </TableBody>
             </Table>

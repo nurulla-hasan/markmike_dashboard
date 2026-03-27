@@ -9,11 +9,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import type { MiwahdissFormValues } from "@/schemas/miwahdiss.schema";
+import type { TMiwahdissFormValues } from "@/schemas/miwahdiss.schema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface MiwahdissMediaSectionProps {
-  form: UseFormReturn<MiwahdissFormValues, any>;
+  form: UseFormReturn<TMiwahdissFormValues, any>;
 }
 
 export function MiwahdissMediaSection({ form }: MiwahdissMediaSectionProps) {
