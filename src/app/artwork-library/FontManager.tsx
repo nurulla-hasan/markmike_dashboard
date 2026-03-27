@@ -1,18 +1,18 @@
 import PageLayout from "@/components/common/page-layout";
 import PageHeader from "@/components/ui/custom/page-header";
 
-const ArtworkLibrary = () => {
+const FontManager = () => {
   return (
     <PageLayout>
       <PageHeader
-        title="Artwork Library"
-        description="Manage your artwork and designs here."
+        title="Font Manager"
+        description="Manage and upload your custom fonts here."
       />
       <div className="mt-8 p-12 border-2 border-dashed rounded-xl flex items-center justify-center text-muted-foreground">
-        Artwork Editor Placeholder (Coming Soon)
+        Font Manager Placeholder (Coming Soon)
       </div>
     </PageLayout>
   );
 };
 
-export default ArtworkLibrary;
+export default FontManager;
