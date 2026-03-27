@@ -9,6 +9,7 @@ import { ConfirmationModal } from "@/components/ui/custom/confirmation-modal";
 import type { ColumnDef } from "@tanstack/react-table";
 import type { IBranchStaff } from "@/types/branch.type";
 import PageHeader from "@/components/ui/custom/page-header";
+import { AddStaffModal } from "@/components/management/branch/add-staff-modal";
 
 const BranchView = () => {
   const navigate = useNavigate();
@@ -128,7 +129,7 @@ const BranchView = () => {
               <div className="lg:w-1/3 space-y-6">
                 <div className="space-y-4">
                   <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Account Statistics</h3>
-                  <div className="flex items-center justify-between py-4 border-b border-muted/50">
+                  <div className="flex items-center justify-between py-4 border-b">
                     <span className="text-muted-foreground">Total Order:</span>
                     <span className="text-2xl font-bold">{mockBranch.totalOrders}</span>
                   </div>
@@ -140,10 +141,8 @@ const BranchView = () => {
 
         {/* Staff Management Section */}
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-bold">Staff Management</h1>
-          <Button variant="destructive" size="sm">
-            +Add New Staff
-          </Button>
+          <h1 className="text-xl font-bold text-foreground">Staff Management</h1>
+          <AddStaffModal/>
         </div>
         <DataTable
           columns={columns}
