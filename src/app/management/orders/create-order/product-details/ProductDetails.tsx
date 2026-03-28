@@ -18,6 +18,8 @@ import {
   Plus,
   Maximize2
 } from "lucide-react";
+import { QuantityModal } from "@/components/management/orders/quantity-modal";
+import { Label } from "@/components/ui/label";
 
 const ProductDetails = () => {
   const [selectedSize, setSelectedSize] = useState("M");
@@ -150,37 +152,37 @@ const ProductDetails = () => {
         </div>
 
         {/* Fake Editor Section */}
-        <Card className="overflow-hidden">
+        <Card>
           <CardContent>
             <div className="flex flex-col lg:flex-row min-h-125 lg:min-h-150">
               {/* Editor Sidebar */}
               <div className="w-full lg:w-20 bg-background border-b lg:border-b-0 lg:border-r flex flex-row lg:flex-col items-center justify-center lg:justify-start py-4 lg:py-6 gap-6 lg:gap-8 overflow-x-auto lg:overflow-x-visible">
                 <div className="flex flex-col items-center gap-1 cursor-pointer text-muted-foreground hover:text-primary shrink-0">
                   <Upload className="h-5 w-5" />
-                  <span className="text-[10px] font-bold">Upload</span>
+                  <span className="text-[10px] font-bold text-center">Upload</span>
                 </div>
                 <div className="flex flex-col items-center gap-1 cursor-pointer text-muted-foreground hover:text-primary shrink-0">
                   <Type className="h-5 w-5" />
-                  <span className="text-[10px] font-bold">Add Text</span>
+                  <span className="text-[10px] font-bold text-center">Add Text</span>
                 </div>
                 <div className="flex flex-col items-center gap-1 cursor-pointer text-muted-foreground hover:text-primary shrink-0">
                   <ImageIcon className="h-5 w-5" />
-                  <span className="text-[10px] font-bold">Add Art</span>
+                  <span className="text-[10px] font-bold text-center">Add Art</span>
                 </div>
                 <div className="flex flex-col items-center gap-1 cursor-pointer text-muted-foreground hover:text-primary shrink-0">
                   <LayoutGrid className="h-5 w-5" />
-                  <span className="text-[10px] font-bold">Product Details</span>
+                  <span className="text-[10px] font-bold text-center">Product Details</span>
                 </div>
                 <div className="flex flex-col items-center gap-1 cursor-pointer text-muted-foreground hover:text-primary shrink-0">
                   <UserPlus className="h-5 w-5" />
-                  <span className="text-[10px] font-bold">Add Names</span>
+                  <span className="text-[10px] font-bold text-center">Add Names</span>
                 </div>
               </div>
 
               {/* Editor Main Content Area */}
-              <div className="flex-1 relative flex flex-col md:flex-row overflow-hidden">
+              <div className="flex-1 relative flex flex-col lg:flex-row">
                 {/* Editor Tools Sub-Sidebar */}
-                <div className="w-full md:w-64 bg-background border-b md:border-b-0 md:border-r p-4 lg:p-8 space-y-8 lg:space-y-12 shrink-0">
+                <div className="w-full lg:w-64 bg-background border-b lg:border-b-0 lg:border-r p-4 lg:p-8 space-y-8 lg:space-y-12 shrink-0">
                   <div className="space-y-4 lg:space-y-6 text-center">
                     <h3 className="font-bold text-base lg:text-lg">What's next for you?</h3>
                     <div className="grid grid-cols-2 lg:grid-cols-2 gap-4 lg:gap-6">
@@ -211,7 +213,7 @@ const ProductDetails = () => {
                     </div>
                   </div>
 
-                  <div className="pt-6 lg:pt-12 border-t space-y-4 text-center hidden md:block">
+                  <div className="pt-6 lg:pt-12 border-t space-y-4 text-center hidden lg:block">
                     <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Uploading anytime is simple!</p>
                     <div className="space-y-3 text-[10px] font-medium text-left">
                       <div className="flex items-center gap-2">
@@ -231,7 +233,7 @@ const ProductDetails = () => {
                 </div>
 
                 {/* Canvas Area */}
-                <div className="flex-1 bg-[#e5e5e5] relative flex items-center justify-center p-6 lg:p-12 min-h-100">
+                <div className="flex-1 bg-muted relative flex items-center justify-center p-6 lg:p-12 min-h-100">
                   <div className="absolute top-4 left-4 lg:top-6 lg:left-6 flex flex-col gap-2 z-10">
                     <Button variant="outline" size="icon" className="bg-background rounded-lg h-8 w-8 lg:h-10 lg:w-10">
                       <Undo2 className="h-4 w-4" />
@@ -277,7 +279,7 @@ const ProductDetails = () => {
         {/* Bottom Action Bar */}
         <Card>
           <CardContent>
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
               <div className="flex items-center gap-4">
                 <Button variant="outline">
                   + Add Products
@@ -293,23 +295,27 @@ const ProductDetails = () => {
                 </div>
               </div>
 
-              <div className="flex-1 flex flex-col md:flex-row items-center gap-8 justify-center">
+              <div className="flex-1 flex flex-col lg:flex-row items-center gap-8 justify-center">
                 <div className="flex flex-col">
                   <h4 className="font-bold">Canvas Jersey T-Shirt</h4>
                   <button className="text-[10px] text-primary underline text-left">Change product</button>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-4 h-4 rounded bg-gray-300 border shadow-sm" />
-                  <div className="flex flex-col">
-                    <span className="text-xs font-medium">Grey</span>
-                    <button className="text-[10px] text-primary underline text-left">Change color</button>
+
+                <div className="flex items-center gap-6">
+                  <div className="flex flex-col items-center">
+                    <span className="text-[10px] text-muted-foreground uppercase font-bold">Quantity</span>
+                    <span className="font-bold">0</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <span className="text-[10px] text-muted-foreground uppercase font-bold">Total price</span>
+                    <span className="font-bold">0.00 JMD</span>
                   </div>
                 </div>
               </div>
 
-              <Button>
-                Get Prices
-              </Button>
+              <div className="flex items-center gap-3">
+                <QuantityModal  />
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -317,9 +323,5 @@ const ProductDetails = () => {
     </PageLayout>
   );
 };
-
-const Label = ({ children, className }: { children: React.ReactNode, className?: string }) => (
-  <p className={`text-sm font-medium leading-none ${className}`}>{children}</p>
-);
 
 export default ProductDetails;
