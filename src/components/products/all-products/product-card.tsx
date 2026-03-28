@@ -2,14 +2,16 @@ import { Edit, ShoppingBag, Star, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import type { TProduct } from "@/types/product.type";
+import { useNavigate } from "react-router-dom";
 
 export interface ProductCardProps {
   product: TProduct;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const navigate = useNavigate();
   return (
-    <Card className="pt-0">
+    <Card className="pt-0 cursor-pointer" onClick={() => navigate("/create-new-order/details")}>
       <div className="relative aspect-12/8 overflow-hidden rounded-xl bg-muted mb-3">
         <img
           src={product.image}
@@ -28,6 +30,7 @@ export function ProductCard({ product }: ProductCardProps) {
               variant="ghost"
               size="icon"
               className="h-8 w-8 hover:text-primary"
+              onClick={(e) => e.stopPropagation()}
             >
               <Edit className="h-4 w-4" />
             </Button>
@@ -35,6 +38,7 @@ export function ProductCard({ product }: ProductCardProps) {
               variant="ghost"
               size="icon"
               className="h-8 w-8 hover:text-destructive"
+              onClick={(e) => e.stopPropagation()}
             >
               <ShoppingBag className="h-4 w-4" />
             </Button>

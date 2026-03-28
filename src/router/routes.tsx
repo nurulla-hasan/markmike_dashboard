@@ -15,6 +15,7 @@ const HeroBanner = lazy(() => import("@/app/settings/hero-banner/HeroBanner"));
 const ContactUs = lazy(() => import("@/app/settings/contact-us/ContactUs"));
 const AuditLog = lazy(() => import("@/app/settings/audit-log/AuditLog"));
 const CreateOrder = lazy(() => import("@/app/management/orders/create-order/CreateOrder"));
+const ProductDetails = lazy(() => import("@/app/management/orders/create-order/product-details/ProductDetails"));
 
 const Dashboard = lazy(() => import("@/app/dashboard/Dashboard"));
 const Users = lazy(() => import("@/app/management/users/Users"));
@@ -79,6 +80,7 @@ export const router = createBrowserRouter([
             { path: "users/:id", element: <UserDetails /> },
             { path: "orders", element: <Orders /> },
             { path: "create-new-order", element: <CreateOrder /> },
+            { path: "create-new-order/details", element: <ProductDetails /> },
             // { path: "standout-deals", element: <StandoutDeals /> },
             // { path: "standout-deals/add", element: <StandoutAddDeal /> },
             // { path: "standout-deals/edit/:id", element: <StandoutEditDeal /> },
