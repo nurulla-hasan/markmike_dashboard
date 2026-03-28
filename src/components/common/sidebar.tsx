@@ -32,16 +32,37 @@ import {
   Type as FontIcon,
   MapPin,
   History as HistoryIcon,
+  Smartphone,
+  Upload
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select";
+import type { TDashboardRole } from "@/components/dashboard/dashboard-stats";
 // import { useAppDispatch } from "@/redux/hooks";
 // import { Logout } from "@/redux/feature/auth/authSlice";
 import { Button } from "../ui/button";
 
 const MAIN_NAV_ITEMS = [
-  { name: "Overview", icon: LayoutGrid, href: "/" },
+  { name: "Dashboard", icon: LayoutGrid, href: "/" },
+];
+
+const POS_STAFF_NAV_ITEMS = [
+  { name: "Dashboard", icon: LayoutGrid, href: "/" },
+  { name: "New order", icon: Package, href: "/create-new-order" },
+  { name: "Order Managements", icon: Package, href: "/orders" },
+];
+
+const PRODUCTION_STAFF_NAV_ITEMS = [
+  { name: "Dashboard", icon: LayoutGrid, href: "/" },
+  { name: "Assigned order", icon: Package, href: "/orders" },
 ];
 
 const MANAGEMENT_SUB_ITEMS = [
@@ -70,6 +91,19 @@ const PRODUCTS_SUB_ITEMS = [
 const DESIGN_TOOLS_SUB_ITEMS = [
   { name: "Artwork Library", icon: Image, href: "/design-tools/artwork-library" },
   { name: "Font Manager", icon: FontIcon, href: "/design-tools/font-manager" },
+];
+
+const KIOSK_SUB_ITEMS = [
+  { 
+    name: "Print Job", 
+    icon: ShoppingCart, 
+    href: "/kiosk/print-job" 
+  },
+  { 
+    name: "Upload Queue", 
+    icon: Upload, 
+    href: "/kiosk/upload-queue" 
+  },
 ];
 
 const SETTINGS_SUB_ITEMS = [
@@ -111,18 +145,22 @@ const Sidebar = ({
   ].includes(section);
   const isProductsPath = section === "products";
   const isDesignToolsPath = section === "design-tools";
+  const isKioskPath = section === "kiosk";
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
   const [isManagementOpen, setIsManagementOpen] = useState(true);
   const [isProductsOpen, setIsProductsOpen] = useState(isProductsPath);
   const [isDesignToolsOpen, setIsDesignToolsOpen] = useState(isDesignToolsPath);
+  const [isKioskOpen, setIsKioskOpen] = useState(true);
+  const [role, setRole] = useState<TDashboardRole>("super_admin");
 
   useEffect(() => {
     if (isSettingsPath) setIsSettingsOpen(true);
-    // if (isManagementPath) setIsManagementOpen(true);
+    if (isManagementPath) setIsManagementOpen(true);
     if (isProductsPath) setIsProductsOpen(true);
     if (isDesignToolsPath) setIsDesignToolsOpen(true);
-  }, [isSettingsPath, isManagementPath, isProductsPath, isDesignToolsPath]);
+    if (isKioskPath) setIsKioskOpen(true);
+  }, [isSettingsPath, isManagementPath, isProductsPath, isDesignToolsPath, isKioskPath]);
 
   useEffect(() => {
     if (prevLocation.current !== location && isSidebarOpen) {
@@ -143,7 +181,7 @@ const Sidebar = ({
       } lg:translate-x-0 flex flex-col`}
     >
       {/* Brand */}
-      <div className="flex flex-col items-center px-6 py-4">
+      <div className="flex flex-col items-center px-6 py-4 space-y-4">
         <Link to="/" className="flex flex-col items-center">
           <img
             src="/logo.png"
@@ -151,213 +189,385 @@ const Sidebar = ({
             className="h-8 w-auto dark:invert"
           />
         </Link>
+        <div className="w-full">
+          <Select 
+            value={role} 
+            onValueChange={(v) => setRole(v as TDashboardRole)}
+          >
+            <SelectTrigger className="bg-card border-none shadow-sm h-8 text-xs">
+              <SelectValue placeholder="Select Role" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="super_admin">Super Admin</SelectItem>
+              <SelectItem value="pos_staff">POS Staff</SelectItem>
+              <SelectItem value="production_staff">Production Staff</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {/* Main Navigation */}
       <ScrollArea className="h-[calc(100vh-133px)]">
         <nav className="grow space-y-2 p-4">
-          {MAIN_NAV_ITEMS.map((item) => (
-            <NavLink
-              key={item.href}
-              to={item.href}
-              end={item.href === "/"}
-              className={({ isActive }) =>
-                `w-full flex items-center justify-start p-2 rounded-sm text-sm font-medium transition-colors duration-200
-                ${
-                  isActive
-                    ? "bg-primary text-primary-foreground"
-                    : "hover:bg-accent hover:text-accent-foreground"
-                }`
-              }
-              onClick={() => setIsSidebarOpen(false)}
-            >
-              <div className="flex items-center text-sm px-2">
-                <item.icon className="mr-2 h-4 w-4" />
-                {item.name}
-              </div>
-            </NavLink>
-          ))}
-
-          {/* Management group */}
-          <Collapsible
-            open={isManagementOpen}
-            onOpenChange={setIsManagementOpen}
-          >
-            <CollapsibleTrigger
-              className={`w-full mb-2 flex items-center justify-between p-2 rounded-sm text-base font-medium cursor-pointer transition-colors duration-200 
-                    ${
-                      isManagementPath
-                        ? "bg-primary text-primary-foreground"
-                        : "hover:bg-accent hover:text-accent-foreground"
-                    }
-                            `}
-            >
-              <div className="flex items-center text-sm px-2">
-                <Briefcase className="mr-2 h-4 w-4" />
-                Management
-              </div>
-              <ChevronDown
-                className={`h-4 w-4 transition-transform duration-300 ${
-                  isManagementOpen ? "-rotate-180" : ""
-                }`}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-2">
-              {MANAGEMENT_SUB_ITEMS.map((item) => (
+          {/* POS Staff Navigation */}
+          {role === "pos_staff" && (
+            <>
+              {POS_STAFF_NAV_ITEMS.map((item) => (
                 <NavLink
                   key={item.href}
                   to={item.href}
+                  end={item.href === "/"}
                   className={({ isActive }) =>
-                    `w-[90%] ml-5 flex items-center justify-start px-2 py-2 rounded-sm text-sm font-medium transition-colors duration-200  
-                                ${
-                                  isActive
-                                    ? "bg-primary text-primary-foreground"
-                                    : "hover:bg-accent hover:text-accent-foreground"
-                                }`
+                    `w-full flex items-center justify-start p-2 rounded-sm text-sm font-medium transition-colors duration-200
+                    ${
+                      isActive
+                        ? "bg-primary text-primary-foreground"
+                        : "hover:bg-accent hover:text-accent-foreground text-muted-foreground"
+                    }`
                   }
                   onClick={() => setIsSidebarOpen(false)}
                 >
-                  <item.icon className="mr-2 w-4 h-4" />
-                  {item.name}
+                  <div className="flex items-center text-sm px-2">
+                    <item.icon className="mr-2 h-4 w-4" />
+                    {item.name}
+                  </div>
                 </NavLink>
               ))}
-            </CollapsibleContent>
-          </Collapsible>
 
-          {/* Products group */}
-          <Collapsible
-            open={isProductsOpen}
-            onOpenChange={setIsProductsOpen}
-          >
-            <CollapsibleTrigger
-              className={`w-full mb-2 flex items-center justify-between p-2 rounded-sm text-base font-medium cursor-pointer transition-colors duration-200 
-                    ${
-                      isProductsPath
-                        ? "bg-primary text-primary-foreground"
-                        : "hover:bg-accent hover:text-accent-foreground"
-                    }
-                            `}
-            >
-              <div className="flex items-center text-sm px-2">
-                <Layers className="mr-2 h-4 w-4" />
-                Products
-              </div>
-              <ChevronDown
-                className={`h-4 w-4 transition-transform duration-300 ${
-                  isProductsOpen ? "-rotate-180" : ""
-                }`}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-2">
-              {PRODUCTS_SUB_ITEMS.map((item) => (
+              {/* Kiosk group for POS Staff */}
+              <Collapsible
+                open={isKioskOpen}
+                onOpenChange={setIsKioskOpen}
+              >
+                <CollapsibleTrigger
+                  className={`w-full mb-2 flex items-center justify-between p-2 rounded-sm text-base font-medium cursor-pointer transition-colors duration-200 
+                        ${
+                          isKioskPath
+                            ? "bg-primary text-primary-foreground"
+                            : "hover:bg-accent hover:text-accent-foreground text-muted-foreground"
+                        }
+                                `}
+                >
+                  <div className="flex items-center text-sm px-2">
+                    <Smartphone className="mr-2 h-4 w-4" />
+                    Kiosk
+                  </div>
+                  <ChevronDown
+                    className={`h-4 w-4 transition-transform duration-300 ${
+                      isKioskOpen ? "-rotate-180" : ""
+                    }`}
+                  />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="space-y-2">
+                  {KIOSK_SUB_ITEMS.map((item) => (
+                    <NavLink
+                      key={item.href}
+                      to={item.href}
+                      className={({ isActive }) =>
+                        `w-[90%] ml-5 flex items-center justify-start px-2 py-2 rounded-sm text-sm font-medium transition-colors duration-200  
+                                    ${
+                                      isActive
+                                        ? "bg-primary text-primary-foreground"
+                                        : "hover:bg-accent hover:text-accent-foreground text-muted-foreground"
+                                    }`
+                      }
+                      onClick={() => setIsSidebarOpen(false)}
+                    >
+                      <item.icon className="mr-2 w-4 h-4" />
+                      {item.name}
+                    </NavLink>
+                  ))}
+                </CollapsibleContent>
+              </Collapsible>
+            </>
+          )}
+
+          {/* Production Staff Navigation */}
+          {role === "production_staff" && (
+            <>
+              {PRODUCTION_STAFF_NAV_ITEMS.map((item) => (
                 <NavLink
                   key={item.href}
                   to={item.href}
+                  end={item.href === "/"}
                   className={({ isActive }) =>
-                    `w-[90%] ml-5 flex items-center justify-start px-2 py-2 rounded-sm text-sm font-medium transition-colors duration-200  
-                                ${
-                                  isActive
-                                    ? "bg-primary text-primary-foreground"
-                                    : "hover:bg-accent hover:text-accent-foreground"
-                                }`
+                    `w-full flex items-center justify-start p-2 rounded-sm text-sm font-medium transition-colors duration-200
+                    ${
+                      isActive
+                        ? "bg-primary text-primary-foreground"
+                        : "hover:bg-accent hover:text-accent-foreground text-muted-foreground"
+                    }`
                   }
                   onClick={() => setIsSidebarOpen(false)}
                 >
-                  <item.icon className="mr-2 w-4 h-4" />
-                  {item.name}
+                  <div className="flex items-center text-sm px-2">
+                    <item.icon className="mr-2 h-4 w-4" />
+                    {item.name}
+                  </div>
                 </NavLink>
               ))}
-            </CollapsibleContent>
-          </Collapsible>
+            </>
+          )}
 
-          {/* Design Tools group */}
-          <Collapsible
-            open={isDesignToolsOpen}
-            onOpenChange={setIsDesignToolsOpen}
-          >
-            <CollapsibleTrigger
-              className={`w-full mb-2 flex items-center justify-between p-2 rounded-sm text-base font-medium cursor-pointer transition-colors duration-200 
-                    ${
-                      isDesignToolsPath
-                        ? "bg-primary text-primary-foreground"
-                        : "hover:bg-accent hover:text-accent-foreground"
-                    }
-                            `}
-            >
-              <div className="flex items-center text-sm px-2">
-                <Palette className="mr-2 h-4 w-4" />
-                Design Tools
-              </div>
-              <ChevronDown
-                className={`h-4 w-4 transition-transform duration-300 ${
-                  isDesignToolsOpen ? "-rotate-180" : ""
-                }`}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-2">
-              {DESIGN_TOOLS_SUB_ITEMS.map((item) => (
+          {/* Super Admin & Other Roles Navigation */}
+          {role !== "pos_staff" && role !== "production_staff" && (
+            <>
+              {MAIN_NAV_ITEMS.map((item) => (
                 <NavLink
                   key={item.href}
                   to={item.href}
+                  end={item.href === "/"}
                   className={({ isActive }) =>
-                    `w-[90%] ml-5 flex items-center justify-start px-2 py-2 rounded-sm text-sm font-medium transition-colors duration-200  
-                                ${
-                                  isActive
-                                    ? "bg-primary text-primary-foreground"
-                                    : "hover:bg-accent hover:text-accent-foreground"
-                                }`
-                  }
-                  onClick={() => setIsSidebarOpen(false)}
-                >
-                  <item.icon className="mr-2 w-4 h-4" />
-                  {item.name}
-                </NavLink>
-              ))}
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* Settings group */}
-          <Collapsible open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
-            <CollapsibleTrigger
-              className={`w-full mb-2 flex items-center justify-between p-2 rounded-sm text-base font-medium cursor-pointer transition-colors duration-200 
+                    `w-full flex items-center justify-start p-2 rounded-sm text-sm font-medium transition-colors duration-200
                     ${
-                      isSettingsPath
+                      isActive
                         ? "bg-primary text-primary-foreground"
-                        : "hover:bg-accent hover:text-accent-foreground"
-                    }
-                            `}
-            >
-              <div className="flex items-center text-sm px-2">
-                <Settings className="mr-2 h-4 w-4" />
-                Settings
-              </div>
-              <ChevronDown
-                className={`h-4 w-4 transition-transform duration-300 ${
-                  isSettingsOpen ? "-rotate-180" : ""
-                }`}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-2">
-              {SETTINGS_SUB_ITEMS.map((item) => (
-                <NavLink
-                  key={item.href}
-                  to={item.href}
-                  className={({ isActive }) =>
-                    `w-[90%] ml-5 flex items-center justify-start px-2 py-2 rounded-sm text-sm font-medium transition-colors duration-200  
-                                ${
-                                  isActive
-                                    ? "bg-primary text-primary-foreground"
-                                    : "hover:bg-accent hover:text-accent-foreground"
-                                }`
+                        : "hover:bg-accent hover:text-accent-foreground text-muted-foreground"
+                    }`
                   }
                   onClick={() => setIsSidebarOpen(false)}
                 >
-                  <item.icon className="mr-2 w-4 h-4" />
-                  {item.name}
+                  <div className="flex items-center text-sm px-2">
+                    <item.icon className="mr-2 h-4 w-4" />
+                    {item.name}
+                  </div>
                 </NavLink>
               ))}
-            </CollapsibleContent>
-          </Collapsible>
+
+              {/* Management group */}
+              <Collapsible
+                open={isManagementOpen}
+                onOpenChange={setIsManagementOpen}
+              >
+                <CollapsibleTrigger
+                  className={`w-full mb-2 flex items-center justify-between p-2 rounded-sm text-base font-medium cursor-pointer transition-colors duration-200 
+                        ${
+                          isManagementPath
+                            ? "bg-primary text-primary-foreground"
+                            : "hover:bg-accent hover:text-accent-foreground text-muted-foreground"
+                        }
+                                `}
+                >
+                  <div className="flex items-center text-sm px-2">
+                    <Briefcase className="mr-2 h-4 w-4" />
+                    Management
+                  </div>
+                  <ChevronDown
+                    className={`h-4 w-4 transition-transform duration-300 ${
+                      isManagementOpen ? "-rotate-180" : ""
+                    }`}
+                  />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="space-y-2">
+                  {MANAGEMENT_SUB_ITEMS.map((item) => (
+                    <NavLink
+                      key={item.href}
+                      to={item.href}
+                      className={({ isActive }) =>
+                        `w-[90%] ml-5 flex items-center justify-start px-2 py-2 rounded-sm text-sm font-medium transition-colors duration-200  
+                                    ${
+                                      isActive
+                                        ? "bg-primary text-primary-foreground"
+                                        : "hover:bg-accent hover:text-accent-foreground text-muted-foreground"
+                                    }`
+                      }
+                      onClick={() => setIsSidebarOpen(false)}
+                    >
+                      <item.icon className="mr-2 w-4 h-4" />
+                      {item.name}
+                    </NavLink>
+                  ))}
+                </CollapsibleContent>
+              </Collapsible>
+
+              {/* Products group */}
+              {(role === "super_admin" || role === "production_staff") && (
+                <Collapsible
+                  open={isProductsOpen}
+                  onOpenChange={setIsProductsOpen}
+                >
+                  <CollapsibleTrigger
+                    className={`w-full mb-2 flex items-center justify-between p-2 rounded-sm text-base font-medium cursor-pointer transition-colors duration-200 
+                          ${
+                            isProductsPath
+                              ? "bg-primary text-primary-foreground"
+                              : "hover:bg-accent hover:text-accent-foreground text-muted-foreground"
+                          }
+                                  `}
+                  >
+                    <div className="flex items-center text-sm px-2">
+                      <Layers className="mr-2 h-4 w-4" />
+                      Products
+                    </div>
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform duration-300 ${
+                        isProductsOpen ? "-rotate-180" : ""
+                      }`}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="space-y-2">
+                    {PRODUCTS_SUB_ITEMS.map((item) => (
+                      <NavLink
+                        key={item.href}
+                        to={item.href}
+                        className={({ isActive }) =>
+                          `w-[90%] ml-5 flex items-center justify-start px-2 py-2 rounded-sm text-sm font-medium transition-colors duration-200  
+                                      ${
+                                        isActive
+                                          ? "bg-primary text-primary-foreground"
+                                          : "hover:bg-accent hover:text-accent-foreground text-muted-foreground"
+                                      }`
+                        }
+                        onClick={() => setIsSidebarOpen(false)}
+                      >
+                        <item.icon className="mr-2 w-4 h-4" />
+                        {item.name}
+                      </NavLink>
+                    ))}
+                  </CollapsibleContent>
+                </Collapsible>
+              )}
+
+              {/* Design Tools group */}
+              {(role === "super_admin") && (
+                <Collapsible
+                  open={isDesignToolsOpen}
+                  onOpenChange={setIsDesignToolsOpen}
+                >
+                  <CollapsibleTrigger
+                    className={`w-full mb-2 flex items-center justify-between p-2 rounded-sm text-base font-medium cursor-pointer transition-colors duration-200 
+                          ${
+                            isDesignToolsPath
+                              ? "bg-primary text-primary-foreground"
+                              : "hover:bg-accent hover:text-accent-foreground text-muted-foreground"
+                          }
+                                  `}
+                  >
+                    <div className="flex items-center text-sm px-2">
+                      <Palette className="mr-2 h-4 w-4" />
+                      Design Tools
+                    </div>
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform duration-300 ${
+                        isDesignToolsOpen ? "-rotate-180" : ""
+                      }`}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="space-y-2">
+                    {DESIGN_TOOLS_SUB_ITEMS.map((item) => (
+                      <NavLink
+                        key={item.href}
+                        to={item.href}
+                        className={({ isActive }) =>
+                          `w-[90%] ml-5 flex items-center justify-start px-2 py-2 rounded-sm text-sm font-medium transition-colors duration-200  
+                                      ${
+                                        isActive
+                                          ? "bg-primary text-primary-foreground"
+                                          : "hover:bg-accent hover:text-accent-foreground text-muted-foreground"
+                                      }`
+                        }
+                        onClick={() => setIsSidebarOpen(false)}
+                      >
+                        <item.icon className="mr-2 w-4 h-4" />
+                        {item.name}
+                      </NavLink>
+                    ))}
+                  </CollapsibleContent>
+                </Collapsible>
+              )}
+
+              {/* Kiosk group */}
+              {(role !== "super_admin" && role !== "production_staff") && (
+                <Collapsible
+                  open={isKioskOpen}
+                  onOpenChange={setIsKioskOpen}
+                >
+                  <CollapsibleTrigger
+                    className={`w-full mb-2 flex items-center justify-between p-2 rounded-sm text-base font-medium cursor-pointer transition-colors duration-200 
+                          ${
+                            isKioskPath
+                              ? "bg-primary text-primary-foreground"
+                              : "hover:bg-accent hover:text-accent-foreground text-muted-foreground"
+                          }
+                                  `}
+                  >
+                    <div className="flex items-center text-sm px-2">
+                      <Smartphone className="mr-2 h-4 w-4" />
+                      Kiosk
+                    </div>
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform duration-300 ${
+                        isKioskOpen ? "-rotate-180" : ""
+                      }`}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="space-y-2">
+                    {KIOSK_SUB_ITEMS.map((item) => (
+                      <NavLink
+                        key={item.href}
+                        to={item.href}
+                        className={({ isActive }) =>
+                          `w-[90%] ml-5 flex items-center justify-start px-2 py-2 rounded-sm text-sm font-medium transition-colors duration-200  
+                                      ${
+                                        isActive
+                                          ? "bg-primary text-primary-foreground"
+                                          : "hover:bg-accent hover:text-accent-foreground text-muted-foreground"
+                                      }`
+                        }
+                        onClick={() => setIsSidebarOpen(false)}
+                      >
+                        <item.icon className="mr-2 w-4 h-4" />
+                        {item.name}
+                      </NavLink>
+                    ))}
+                  </CollapsibleContent>
+                </Collapsible>
+              )}
+
+              {/* Settings group */}
+              <Collapsible open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
+                <CollapsibleTrigger
+                  className={`w-full mb-2 flex items-center justify-between p-2 rounded-sm text-base font-medium cursor-pointer transition-colors duration-200 
+                        ${
+                          isSettingsPath
+                            ? "bg-primary text-primary-foreground"
+                            : "hover:bg-accent hover:text-accent-foreground text-muted-foreground"
+                        }
+                                `}
+                >
+                  <div className="flex items-center text-sm px-2">
+                    <Settings className="mr-2 h-4 w-4" />
+                    Settings
+                  </div>
+                  <ChevronDown
+                    className={`h-4 w-4 transition-transform duration-300 ${
+                      isSettingsOpen ? "-rotate-180" : ""
+                    }`}
+                  />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="space-y-2">
+                  {SETTINGS_SUB_ITEMS.map((item) => (
+                    <NavLink
+                      key={item.href}
+                      to={item.href}
+                      className={({ isActive }) =>
+                        `w-[90%] ml-5 flex items-center justify-start px-2 py-2 rounded-sm text-sm font-medium transition-colors duration-200  
+                                    ${
+                                      isActive
+                                        ? "bg-primary text-primary-foreground"
+                                        : "hover:bg-accent hover:text-accent-foreground text-muted-foreground"
+                                    }`
+                      }
+                      onClick={() => setIsSidebarOpen(false)}
+                    >
+                      <item.icon className="mr-2 w-4 h-4" />
+                      {item.name}
+                    </NavLink>
+                  ))}
+                </CollapsibleContent>
+              </Collapsible>
+            </>
+          )}
         </nav>
       </ScrollArea>
 
