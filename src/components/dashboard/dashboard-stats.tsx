@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Wallet, Package, Clock, Activity, CheckCircle2 } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 export type TDashboardRole = "super_admin" | "pos_staff" | "production_staff";
 
@@ -89,26 +90,27 @@ const DashboardStats = ({ role, data }: DashboardStatsProps) => {
   const items = getStats();
 
   return (
-    <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-${role === 'production_staff' ? '3' : role === 'pos_staff' ? '2' : '4'} gap-6`}>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {items.map((s, idx) => (
         <Card
           key={idx}
-          className={`rounded-2xl p-6 ${s.bgColor} border-none shadow-sm transition-all duration-300 hover:shadow-md h-40`}
         >
-          <div className="flex flex-col h-full justify-between">
-            <div className="p-2 w-fit rounded-lg bg-white/50 dark:bg-black/20">
-              <s.icon className={`w-5 h-5 ${s.iconColor}`} />
-            </div>
+          <CardContent>
+            <div className="flex flex-col h-full justify-between space-y-4">
+              <div className="p-2 w-fit rounded-lg bg-muted">
+                <s.icon className={`w-5 h-5 ${s.iconColor}`} />
+              </div>
 
-            <div className="space-y-1">
-              <span className="text-3xl font-bold text-foreground block">
-                {s.value}
-              </span>
-              <h3 className="text-sm font-medium text-muted-foreground">
-                {s.label}
-              </h3>
+              <div className="space-y-1">
+                <span className="text-3xl font-bold text-foreground block">
+                  {s.value}
+                </span>
+                <h3 className="text-sm font-medium text-muted-foreground">
+                  {s.label}
+                </h3>
+              </div>
             </div>
-          </div>
+          </CardContent>
         </Card>
       ))}
     </div>

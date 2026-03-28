@@ -14,6 +14,7 @@ const Terms = lazy(() => import("@/app/settings/terms/Terms"));
 const HeroBanner = lazy(() => import("@/app/settings/hero-banner/HeroBanner"));
 const ContactUs = lazy(() => import("@/app/settings/contact-us/ContactUs"));
 const AuditLog = lazy(() => import("@/app/settings/audit-log/AuditLog"));
+const CreateOrder = lazy(() => import("@/app/management/orders/create-order/CreateOrder"));
 
 const Dashboard = lazy(() => import("@/app/dashboard/Dashboard"));
 const Users = lazy(() => import("@/app/management/users/Users"));
@@ -68,7 +69,7 @@ export const router = createBrowserRouter([
         path: "/",
         element: (
             // <ProtectedRoute>
-                <MainLayout />
+            <MainLayout />
             // {/* </ProtectedRoute> */}
         ),
         children: [
@@ -77,6 +78,7 @@ export const router = createBrowserRouter([
             { path: "users", element: <Users /> },
             { path: "users/:id", element: <UserDetails /> },
             { path: "orders", element: <Orders /> },
+            { path: "create-new-order", element: <CreateOrder /> },
             // { path: "standout-deals", element: <StandoutDeals /> },
             // { path: "standout-deals/add", element: <StandoutAddDeal /> },
             // { path: "standout-deals/edit/:id", element: <StandoutEditDeal /> },
@@ -111,14 +113,14 @@ export const router = createBrowserRouter([
             // Products
             { path: "products/all", element: <AllProducts /> },
             { path: "products/add", element: <AddProduct /> },
-         { path: "products/categories", element: <Categories /> },
+            { path: "products/categories", element: <Categories /> },
             { path: "products/attributes", element: <ProductAttributes /> },
             { path: "products/campaigns", element: <Campaigns /> },
             { path: "products/campaigns/view/:id", element: <CampaignView /> },
             { path: "products/deals", element: <Deals /> },
             { path: "products/deals/add", element: <DealsAddDeal /> },
             { path: "products/deals/edit/:id", element: <DealsEditDeal /> },
-            
+
             // Settings
             { path: "notifications", element: <Notifications /> },
             { path: "settings/profile", element: <Profile /> },

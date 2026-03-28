@@ -22,11 +22,11 @@ interface DashboardTrendProps {
 
 const DashboardTrend = ({ title }: DashboardTrendProps) => {
   return (
-    <Card className="border-none shadow-sm h-full">
+    <Card>
       <CardHeader>
-        <CardTitle className="text-xl font-bold">{title}</CardTitle>
+        <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent className="pt-4 pl-0">
+      <CardContent>
         <div className="h-80 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>
