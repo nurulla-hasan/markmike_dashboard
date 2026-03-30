@@ -1,4 +1,4 @@
-import { X, Upload, Type, Image, Box, Scissors, Search, Plus } from "lucide-react";
+import { X, Upload, Type, Image, Box, Scissors, Search, Plus, Circle, Square, Triangle, Star, Hexagon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRef } from "react";
 import type { ToolType } from "./ProductEditor";
@@ -7,36 +7,24 @@ interface ToolPanelProps {
   tool: ToolType;
   onClose: () => void;
   onFileSelect?: (file: File) => void;
-  onRequestPlaceText?: (text?: string) => void;
+  onAddText?: (text?: string) => void;
+  onAddShape?: (shapeType: "rect" | "circle" | "triangle" | "star" | "pentagon") => void;
 }
 
-export function ToolPanel({ tool, onClose, onFileSelect, onRequestPlaceText }: ToolPanelProps) {
+export function ToolPanel({ tool, onClose, onFileSelect, onAddText, onAddShape }: ToolPanelProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleBrowseClick = () => {
-    fileInputRef.current?.click();
-  };
+  const handleBrowseClick = () => fileInputRef.current?.click();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file && onFileSelect) {
-      onFileSelect(file);
-    }
-    // Reset input
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
+    if (file && onFileSelect) onFileSelect(file);
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const renderUploadPanel = () => (
     <div className="space-y-6">
-      <input
-        type="file"
-        ref={fileInputRef}
-        accept="image/*"
-        onChange={handleFileChange}
-        className="hidden"
-      />
+      <input type="file" ref={fileInputRef} accept="image/*" onChange={handleFileChange} className="hidden" />
       <div 
         className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-primary transition-colors cursor-pointer bg-white"
         onClick={handleBrowseClick}
@@ -49,20 +37,10 @@ export function ToolPanel({ tool, onClose, onFileSelect, onRequestPlaceText }: T
       <div className="bg-gray-50 p-4 rounded-lg">
         <div className="flex items-start gap-3">
           <Image className="h-5 w-5 text-muted-foreground mt-0.5" />
-          <div>
-            <p className="text-xs text-muted-foreground">
-              Vector or high resolution artwork of 300 DPI or more will look the best. Max size of 20 MB.
-            </p>
-          </div>
+          <p className="text-xs text-muted-foreground">
+            Vector or high resolution artwork of 300 DPI or more will look the best. Max size of 20 MB.
+          </p>
         </div>
-      </div>
-      
-      <div className="pt-4 border-t">
-        <p className="text-sm font-medium mb-2">Need help with your upload?</p>
-        <p className="text-xs text-muted-foreground">
-          <a href="#" className="text-blue-600 hover:underline">Chat now</a> or email{" "}
-          <a href="#" className="text-blue-600 hover:underline">service@customink.com</a>
-        </p>
       </div>
     </div>
   );
@@ -70,20 +48,17 @@ export function ToolPanel({ tool, onClose, onFileSelect, onRequestPlaceText }: T
   const renderTextPanel = () => (
     <div className="space-y-4">
       <h3 className="font-semibold text-sm">Add Text</h3>
-      <Button className="w-full" variant="outline" onClick={() => onRequestPlaceText?.()}>
+      <Button className="w-full" variant="outline" onClick={() => onAddText?.()}>
         <Plus className="h-4 w-4 mr-2" />
         Add Text Element
       </Button>
-      <div className="space-y-2">
-        <p className="text-xs text-muted-foreground">Click on canvas to place text</p>
-      </div>
       <div className="border-t pt-4 space-y-2">
         <p className="text-xs font-medium">Quick Add:</p>
-        {["Event Name", "Team Name", "Date", "Location"].map((text) => (
+        {["Event Name", "Team Name", "Date", "Location"].map(text => (
           <button
             key={text}
             className="w-full text-left px-3 py-2 text-sm hover:bg-muted rounded transition-colors"
-            onClick={() => onRequestPlaceText?.(text)}
+            onClick={() => onAddText?.(text)}
           >
             {text}
           </button>
@@ -94,7 +69,7 @@ export function ToolPanel({ tool, onClose, onFileSelect, onRequestPlaceText }: T
 
   const renderArtPanel = () => (
     <div className="space-y-4">
-      <h3 className="font-semibold text-sm">Add Art</h3>
+      <h3 className="font-semibold text-sm">Add Art / Shapes</h3>
       <div className="relative">
         <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <input 
@@ -102,13 +77,21 @@ export function ToolPanel({ tool, onClose, onFileSelect, onRequestPlaceText }: T
           className="w-full pl-8 pr-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
         />
       </div>
-      <div className="grid grid-cols-2 gap-2">
-        {["Heart", "Star", "Shield", "Trophy", "Flame", "Crown"].map((art) => (
+      <div className="grid grid-cols-3 gap-2">
+        {([
+          { type: 'rect', icon: Square, label: "Square" },
+          { type: 'circle', icon: Circle, label: "Circle" },
+          { type: 'triangle', icon: Triangle, label: "Triangle" },
+          { type: 'star', icon: Star, label: "Star" },
+          { type: 'pentagon', icon: Hexagon, label: "Pentagon" },
+        ] as const).map(shape => (
           <button
-            key={art}
-            className="aspect-square border rounded-lg p-2 hover:border-primary transition-colors flex items-center justify-center bg-white"
+            key={shape.type}
+            onClick={() => onAddShape?.(shape.type)}
+            className="aspect-square border rounded-lg p-2 hover:border-primary transition-colors flex flex-col items-center justify-center bg-white gap-1 group"
           >
-            <span className="text-2xl">🎨</span>
+            <shape.icon className="w-6 h-6 text-gray-600 group-hover:text-primary transition-colors" />
+            <span className="text-[10px] text-gray-500">{shape.label}</span>
           </button>
         ))}
       </div>
@@ -120,20 +103,7 @@ export function ToolPanel({ tool, onClose, onFileSelect, onRequestPlaceText }: T
       <h3 className="font-semibold text-sm">Product Details</h3>
       <div className="space-y-3">
         <div>
-          <p className="text-xs text-muted-foreground mb-1">Size</p>
-          <div className="flex flex-wrap gap-1">
-            {["XS", "S", "M", "L", "XL", "2XL"].map((size) => (
-              <button
-                key={size}
-                className="w-8 h-8 text-xs border rounded hover:border-primary transition-colors bg-white"
-              >
-                {size}
-              </button>
-            ))}
-          </div>
-        </div>
-        <div>
-          <p className="text-xs text-muted-foreground mb-1">Color</p>
+          <p className="text-xs text-muted-foreground mb-1">Color (mock)</p>
           <div className="flex flex-wrap gap-1">
             {[
               { name: "Black", hex: "#000000" },
@@ -141,12 +111,12 @@ export function ToolPanel({ tool, onClose, onFileSelect, onRequestPlaceText }: T
               { name: "Navy", hex: "#1e3a5f" },
               { name: "Red", hex: "#dc2626" },
               { name: "Blue", hex: "#2563eb" },
-            ].map((color) => (
+            ].map(col => (
               <button
-                key={color.name}
-                className="w-6 h-6 rounded-full border shadow-sm"
-                style={{ backgroundColor: color.hex }}
-                title={color.name}
+                key={col.name}
+                className="w-6 h-6 rounded-full border border-gray-300 shadow-sm"
+                style={{ backgroundColor: col.hex }}
+                title={col.name}
               />
             ))}
           </div>
@@ -158,17 +128,7 @@ export function ToolPanel({ tool, onClose, onFileSelect, onRequestPlaceText }: T
   const renderNamesPanel = () => (
     <div className="space-y-4">
       <h3 className="font-semibold text-sm">Add Names/Numbers</h3>
-      <Button className="w-full" variant="outline">
-        <Plus className="h-4 w-4 mr-2" />
-        Add Name List
-      </Button>
-      <div className="border rounded-lg p-4 bg-white">
-        <p className="text-xs text-muted-foreground mb-2">Enter names (one per line):</p>
-        <textarea
-          className="w-full h-32 p-2 text-sm border rounded resize-none focus:outline-none focus:ring-2 focus:ring-primary"
-          placeholder="John Doe&#10;Jane Smith&#10;..."
-        />
-      </div>
+      <Button className="w-full" variant="outline"><Plus className="h-4 w-4 mr-2" />Add Name List</Button>
     </div>
   );
 
@@ -183,8 +143,8 @@ export function ToolPanel({ tool, onClose, onFileSelect, onRequestPlaceText }: T
   const renderPanel = panels[tool as keyof typeof panels] || (() => null);
 
   return (
-    <div className="w-72 border-r bg-white flex flex-col h-full shrink-0 z-10 shadow-lg">
-      <div className="flex items-center justify-between p-4 border-b">
+    <div className="w-72 border-r bg-white flex flex-col h-full shrink-0 z-10 shadow-lg relative">
+      <div className="flex items-center justify-between p-4 border-b shrink-0">
         <h2 className="font-semibold text-sm capitalize flex items-center gap-2">
           {tool === "upload" && <Upload className="h-4 w-4" />}
           {tool === "text" && <Type className="h-4 w-4" />}
@@ -197,7 +157,7 @@ export function ToolPanel({ tool, onClose, onFileSelect, onRequestPlaceText }: T
           <X className="h-4 w-4" />
         </Button>
       </div>
-      <div className="flex-1 p-4 overflow-auto">
+      <div className="flex-1 p-4 overflow-y-auto">
         {renderPanel()}
       </div>
     </div>
